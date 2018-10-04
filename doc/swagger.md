@@ -15,11 +15,10 @@ https://github.com/andresbarroe/voting-system
 
 |oauth2|*OAuth 2.0*|
 |---|---|
-|Authorization URL|http://petstore.swagger.io/oauth/dialog|
 |Flow|implicit|
 |**Scopes**||
-|write:pets|modify pets in your account|
-|read:pets|read your pets|
+|write:users|modify users in the system|
+|read:polls|read poll data|
 
 **api_key**  
 
