@@ -6,7 +6,9 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "eslint": "^5.6.1"
+  },
   "devDependencies": {
     "mocha": "^5.2.0"
   },
