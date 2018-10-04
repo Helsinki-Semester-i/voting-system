@@ -309,7 +309,7 @@ paths:
         '404':
           description: Vote not found
 securityDefinitions:
-  petstore_auth:
+  voting_auth:
     type: oauth2
     flow: implicit
     scopes:
