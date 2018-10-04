@@ -11,7 +11,7 @@ https://github.com/andresbarroe/voting-system
 
 ### Security
 ---
-**petstore_auth**  
+**voting_auth**  
 
 |oauth2|*OAuth 2.0*|
 |---|---|
