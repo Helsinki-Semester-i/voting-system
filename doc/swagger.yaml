@@ -1,0 +1,404 @@
+swagger: '2.0'
+info:
+  description: Helsinki Voting System REST API.`
+  version: 0.0.1
+  title: Helsinki e-Voting
+  termsOfService: 'https://github.com/andresbarroe/voting-system'
+  license:
+    name: MIT License
+    url: >-
+      https://raw.githubusercontent.com/andresbarroe/voting-system/master/LICENSE
+tags:
+  - name: users
+    description: User data
+  - name: polls
+    description: Polls and their details
+  - name: votes
+    description: Individial votes directed to polls.
+schemes:
+  - https
+paths:
+  /user:
+    post:
+      tags:
+        - users
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        default:
+          description: successful operation
+  /user/login:
+    get:
+      tags:
+        - users
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+          headers:
+            X-Rate-Limit:
+              type: integer
+              format: int32
+              description: calls per hour allowed by the user
+            X-Expires-After:
+              type: string
+              format: date-time
+              description: date in UTC when token expires
+        '400':
+          description: Invalid username/password supplied
+  /user/logout:
+    get:
+      tags:
+        - users
+      summary: Logs out current logged in user session
+      description: ''
+      operationId: logoutUser
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+  '/user/{username}':
+    get:
+      tags:
+        - users
+      summary: Get user by user name
+      description: ''
+      operationId: getUserByName
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be fetched.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/User'
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+    put:
+      tags:
+        - users
+      summary: Updated user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: path
+          description: name that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: User not found
+    delete:
+      tags:
+        - users
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+  /poll:
+    post:
+      tags:
+        - polls
+      summary: Create a new poll
+      description: Creates poll in the organization
+      operationId: createPoll
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: path
+          description: The name of the poll
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Created poll object
+          required: true
+          schema:
+            $ref: '#/definitions/Poll'
+      responses:
+        '201':
+          description: Poll created
+        '403':
+          description: Not enough permissions to perform this action
+  '/poll/byuser/{username}':
+    get:
+      tags:
+        - polls
+      summary: Find polls for user
+      description: Returns a collection of polls available for the user
+      operationId: getPollsByUser
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          in: path
+          description: username that can participate in the poll
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Poll'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Poll not found
+  '/poll/{poll_id}':
+    put:
+      tags:
+        - polls
+      summary: Updates a poll by Id
+      description: >-
+        This can only be done by the logged in user with administrator
+        privileges.
+      operationId: updatePoll
+      produces:
+        - application/json
+      parameters:
+        - name: poll_id
+          in: path
+          description: poll that need to be updated
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Updated poll object
+          required: true
+          schema:
+            $ref: '#/definitions/Poll'
+      responses:
+        '200':
+          description: Poll updated
+        '400':
+          description: Invalid poll supplied
+        '403':
+          description: Not enough permissions to perform this action.
+        '404':
+          description: Poll not found
+    delete:
+      tags:
+        - polls
+      summary: Delete a poll
+      description: >-
+        This can only be done by the logged in user with administrator
+        privileges.
+      operationId: deletepoll
+      produces:
+        - application/json
+      parameters:
+        - name: poll_id
+          in: path
+          description: The id of the poll that needs to be deleted
+          required: true
+          type: string
+      responses:
+        '204':
+          description: Poll deleted. No further data to show
+        '400':
+          description: Invalid poll id supplied
+        '403':
+          description: Not enough permissions to perform this action.
+        '404':
+          description: User not found
+  /vote:
+    post:
+      tags:
+        - votes
+      summary: Create vote
+      description: This can only be done by the logged in user.
+      operationId: createVote
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Created vote object
+          required: true
+          schema:
+            $ref: '#/definitions/Vote'
+      responses:
+        default:
+          description: successful operation
+  '/vote/{unique_code}':
+    get:
+      tags:
+        - votes
+      summary: Retrieve vote
+      description: Get details of an individual vote
+      operationId: getVoteByCode
+      produces:
+        - application/json
+      parameters:
+        - name: unique_code
+          in: path
+          description: Get a vote by an unique code
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Vote'
+        '400':
+          description: Invalid Vote ID
+        '404':
+          description: Vote not found
+securityDefinitions:
+  petstore_auth:
+    type: oauth2
+    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
+    flow: implicit
+    scopes:
+      'write:pets': modify pets in your account
+      'read:pets': read your pets
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      username:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      userStatus:
+        type: integer
+        format: int32
+        description: User Status
+  Poll:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      participants:
+        type: array
+        items:
+          type: string
+      anonymous:
+        type: boolean
+      questions:
+        type: array
+        items:
+          $ref: '#/definitions/Question'
+  Question:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      question:
+        type: string
+      open:
+        type: boolean
+      answers:
+        type: array
+        items:
+          type: string
+  Vote:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      unique_code:
+        type: string
+      date:
+        type: string
+        format: date
+      poll_id:
+        type: integer
+        format: int64
+      voter_id:
+        type: integer
+        format: int64
+        default: null
+      votes:
+        type: array
+        items:
+          type: object
+          properties:
+            question_id:
+              type: integer
+              format: int64
+            answer_index:
+              type: integer
+              format: int64
