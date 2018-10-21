@@ -6,6 +6,7 @@ import sampleConfig from '@/.samples.config';
 
 import HelloWorld from './components/HelloWorld.vue';
 import LoginComponent from './components/Login.vue';
+import ProfileComponent from './components/Profile.vue';
 
 Vue.use(Router);
 Vue.use(Auth, {
@@ -26,6 +27,13 @@ const router = new Router({
     {
       path: '/login',
       component: LoginComponent,
+    },
+    {
+      path: '/profile',
+      component: ProfileComponent,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: '/implicit/callback',

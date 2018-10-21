@@ -25,6 +25,13 @@
           Logout
           </router-link>
         </li>
+        <li>
+          <router-link
+          to="/profile"
+          v-if="authenticated">
+          Profile
+          </router-link>
+        </li>
       </ul>
     </div>
   </nav>
@@ -34,8 +41,7 @@
 
 
 <script>
-/* eslint-disable */ 
-// https://github.com/okta/samples-js-vue
+/* eslint-disable */
 export default {
 
   name: 'app',
