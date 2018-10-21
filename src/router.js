@@ -1,16 +1,19 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Auth from '@okta/okta-vue';
-import HelloWorld from './components/HelloWorld.vue';
 
-Vue.use(Auth, {
-  issuer: 'https://dev-749221.oktapreview.com/oauth2/default',
-  client_id: '0oagngnmpqmKB0S6t0h7',
-  redirect_uri: 'http://localhost:8080/implicit/callback',
-  scope: 'openid profile email',
-});
+import Auth from '@okta/okta-vue';
+import sampleConfig from '@/.samples.config';
+
+import HelloWorld from './components/HelloWorld.vue';
+import LoginComponent from './components/Login.vue';
 
 Vue.use(Router);
+Vue.use(Auth, {
+  issuer: sampleConfig.oidc.issuer,
+  client_id: sampleConfig.oidc.clientId,
+  redirect_uri: sampleConfig.oidc.redirectUri,
+  scope: sampleConfig.oidc.scope,
+});
 
 const router = new Router({
   mode: 'history',
@@ -21,11 +24,27 @@ const router = new Router({
       component: HelloWorld,
     },
     {
+      path: '/login',
+      component: LoginComponent,
+    },
+    {
       path: '/implicit/callback',
       component: Auth.handleCallback(),
     },
   ],
 });
+
+/* eslint-disable */ 
+const onAuthRequired = async (from, to, next) => {
+  if (from.matched.some(record => record.meta.requiresAuth) &&
+  !(await Vue.prototype.$auth.isAuthenticated())) {
+    // Navigate to custom login page
+    next({ path: '/login' });
+  } else {
+    next();
+  }
+};
+
 
 router.beforeEach(Vue.prototype.$auth.authRedirectGuard());
 

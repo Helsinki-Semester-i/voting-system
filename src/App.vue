@@ -1,17 +1,33 @@
 <template>
   <div id="app">
-    <b-navbar toggleable="md" type="dark" variant="dark">
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand to="/">My Vue App</b-navbar-brand>
-      <b-collapse is-nav id="nav_collapse">
-        <b-navbar-nav>
-          <b-nav-item to="/">Home</b-nav-item>
-          <b-nav-item href="#" @click.prevent="login" v-if="!activeUser">Login</b-nav-item>
-          <b-nav-item href="#" @click.prevent="logout" v-else>Logout</b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+    <nav>
+    <div class="nav-wrapper">
 
+      <router-link
+      to="/"
+      class="brand-logo">
+      Helsinki voting system
+      </router-link>
+
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+          <router-link
+          to="/login"
+          v-if="!authenticated">
+          Login
+          </router-link>
+        </li>
+        <li>
+          <router-link
+          to="/"
+          v-if="authenticated"
+          v-on:click.native="logout()">
+          Logout
+          </router-link>
+        </li>
+      </ul>
+    </div>
+  </nav>
     <router-view />
   </div>
 </template>
@@ -25,7 +41,8 @@ export default {
   name: 'app',
   data () {
     return {
-      activeUser: null
+      activeUser: null,
+      authenticated: false,
     }
   },
   async created () {
@@ -36,16 +53,14 @@ export default {
     '$route': 'refreshActiveUser'
   },
   methods: {
-    login () {
-      this.$auth.loginRedirect()
-    },
     async refreshActiveUser () {
-      this.activeUser = await this.$auth.getUser()
+      this.activeUser = await this.$auth.getUser();
+      this.authenticated = await this.$auth.isAuthenticated();
     },
     async logout () {
+      console.log("lgoda")
       await this.$auth.logout()
       await this.refreshActiveUser()
-      this.$router.push('/')
     }
   }
 }

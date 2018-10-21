@@ -9,9 +9,8 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@okta/okta-signin-widget": "^2.13.0",
     "@okta/okta-vue": "^1.0.4",
-    "bootstrap": "^4.1.3",
-    "bootstrap-vue": "^2.0.0-rc.11",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1"
   },
