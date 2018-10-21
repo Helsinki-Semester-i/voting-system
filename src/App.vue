@@ -6,7 +6,6 @@
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item to="/">Home</b-nav-item>
-          <b-nav-item to="/posts-manager">Posts Manager</b-nav-item>
           <b-nav-item href="#" @click.prevent="login" v-if="!activeUser">Login</b-nav-item>
           <b-nav-item href="#" @click.prevent="logout" v-else>Logout</b-nav-item>
         </b-navbar-nav>
@@ -20,7 +19,7 @@
 
 <script>
 /* eslint-disable */ 
-
+// https://github.com/okta/samples-js-vue
 export default {
 
   name: 'app',

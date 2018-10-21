@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Auth from '@okta/okta-vue';
 import HelloWorld from './components/HelloWorld.vue';
-import PostsManager from './components/PostsManager.vue';
 
 Vue.use(Auth, {
   issuer: 'https://dev-749221.oktapreview.com/oauth2/default',
@@ -24,14 +23,6 @@ const router = new Router({
     {
       path: '/implicit/callback',
       component: Auth.handleCallback(),
-    },
-    {
-      path: '/posts-manager',
-      name: 'PostsManager',
-      component: PostsManager,
-      meta: {
-        requiresAuth: true,
-      },
     },
   ],
 });
