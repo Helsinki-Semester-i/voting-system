@@ -11,11 +11,11 @@
 /* eslint-disable */
 
 export default {
-    data () {
-      return {
-        activeUser: null,
-      }
-    },
+  data () {
+    return {
+      activeUser: null,
+    }
+  },
   async created () {
     this.activeUser = await this.$auth.getUser();
   }

@@ -53,7 +53,7 @@ const onAuthRequired = async (from, to, next) => {
   }
 };
 
-
-router.beforeEach(Vue.prototype.$auth.authRedirectGuard());
+// router.beforeEach(Vue.prototype.$auth.authRedirectGuard());
+router.beforeEach(onAuthRequired);
 
 export default router;

@@ -43,7 +43,6 @@
 <script>
 /* eslint-disable */
 export default {
-
   name: 'app',
   data () {
     return {
@@ -52,7 +51,7 @@ export default {
     }
   },
   async created () {
-    await this.refreshActiveUser()
+    await this.refreshActiveUser();
   },
   watch: {
     // everytime a route is changed refresh the activeUser
@@ -64,9 +63,8 @@ export default {
       this.authenticated = await this.$auth.isAuthenticated();
     },
     async logout () {
-      console.log("lgoda")
-      await this.$auth.logout()
-      await this.refreshActiveUser()
+      await this.$auth.logout();
+      await this.refreshActiveUser();
     }
   }
 }
