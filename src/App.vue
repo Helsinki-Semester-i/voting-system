@@ -1,28 +1,71 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <nav>
+    <div class="nav-wrapper">
+
+      <router-link
+      to="/"
+      class="brand-logo">
+      Helsinki voting system
+      </router-link>
+
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+          <router-link
+          to="/login"
+          v-if="!authenticated">
+          Login
+          </router-link>
+        </li>
+        <li>
+          <router-link
+          to="/"
+          v-if="authenticated"
+          v-on:click.native="logout()">
+          Logout
+          </router-link>
+        </li>
+        <li>
+          <router-link
+          to="/profile"
+          v-if="authenticated">
+          Profile
+          </router-link>
+        </li>
+      </ul>
+    </div>
+  </nav>
+    <router-view />
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue';
 
+<script>
+/* eslint-disable */
 export default {
   name: 'app',
-  components: {
-    HelloWorld,
+  data () {
+    return {
+      activeUser: null,
+      authenticated: false,
+    }
   },
-};
-</script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  async created () {
+    await this.refreshActiveUser();
+  },
+  watch: {
+    // everytime a route is changed refresh the activeUser
+    '$route': 'refreshActiveUser'
+  },
+  methods: {
+    async refreshActiveUser () {
+      this.activeUser = await this.$auth.getUser();
+      this.authenticated = await this.$auth.isAuthenticated();
+    },
+    async logout () {
+      await this.$auth.logout();
+      await this.refreshActiveUser();
+    }
+  }
 }
-</style>
+</script>

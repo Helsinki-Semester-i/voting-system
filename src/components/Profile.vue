@@ -1,11 +1,26 @@
 <template>
   <div class="hero">
     <div>
-      <h1 class="display-3">Hello World</h1>
-      <p class="lead">This is the homepage of your vue app</p>
+      <h1 class="display-3">You are:</h1>
+      <p class="lead">{{activeUser}}</p>
     </div>
   </div>
 </template>
+
+<script>
+/* eslint-disable */
+
+export default {
+  data () {
+    return {
+      activeUser: null,
+    }
+  },
+  async created () {
+    this.activeUser = await this.$auth.getUser();
+  }
+}
+</script>
 
 <style>
   .hero {
