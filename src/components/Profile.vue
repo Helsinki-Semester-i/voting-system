@@ -4,7 +4,7 @@
       <h1 class="display-3">You are:</h1>
       <p class="lead">{{activeUser}}</p>
     </div>
-
+    <br>
     <div>
       <h1 class="display-3" v-show="loading">Loading...</h1>
       <p class="lead">{{parts}}</p>

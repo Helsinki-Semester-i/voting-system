@@ -36,11 +36,7 @@ export default {
           issuer: sampleConfig.oidc.issuer,
           display: 'page',
           scopes: sampleConfig.oidc.scope.split(' ')
-        },
-        features: {
-         registration: true,
-        },
-        authScheme: 'SESSION',
+        }
       })
 
       this.widget.renderEl(
