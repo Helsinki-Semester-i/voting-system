@@ -3,7 +3,7 @@ import Vue from 'vue';
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: 'http://localhost:8081/',
+  baseURL: process.env.VUE_APP_API_BASE_URL,
   json: true,
 });
 
