@@ -34,10 +34,7 @@ export default {
           issuer: process.env.VUE_APP_AUTH_ISSUER,
           display: 'page',
           scopes: process.env.VUE_APP_AUTH_SCOPE.split(' '),
-        },
-        features: {
-         registration: true,
-        },
+        }
       })
 
       this.widget.renderEl(
