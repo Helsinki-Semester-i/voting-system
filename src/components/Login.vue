@@ -11,8 +11,6 @@ import OktaSignIn from '@okta/okta-signin-widget'
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css'
 import '@okta/okta-signin-widget/dist/css/okta-theme.css'
 
-import sampleConfig from '../.samples.config'
-
 export default {
   mounted: function () {
     this.$nextTick(function () {
@@ -22,9 +20,9 @@ export default {
          * needs to be configured with the base URL for your Okta Org. Here
          * we derive it from the given issuer for convenience.
          */
-        baseUrl: sampleConfig.oidc.issuer.split('/oauth2')[0],
-        clientId: sampleConfig.oidc.clientId,
-        redirectUri: sampleConfig.oidc.redirectUri,
+        baseUrl: process.env.VUE_APP_AUTH_BASE_URL,
+        clientId: process.env.VUE_APP_AUTH_CLIENT_ID,
+        redirectUri: process.env.VUE_APP_AUTH_REDIRECT_URI,
         logo: require('@/assets/logo.png'),
         i18n: {
           en: {
@@ -33,9 +31,9 @@ export default {
         },
         authParams: {
           responseType: ['id_token', 'token'],
-          issuer: sampleConfig.oidc.issuer,
+          issuer: process.env.VUE_APP_AUTH_ISSUER,
           display: 'page',
-          scopes: sampleConfig.oidc.scope.split(' ')
+          scopes: process.env.VUE_APP_AUTH_SCOPE.split(' '),
         }
       })
 
