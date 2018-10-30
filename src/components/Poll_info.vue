@@ -1,6 +1,11 @@
 <template>
-    <div>     
-        <h3>{{poll.title}}</h3> Se cierra el: {{poll.closeDate}}   
+    <div class="poll">     
+        <h5>{{poll.title}}</h5> 
+        <div class="right-align">Se cierra el: {{poll.closeDate}}</div>
+        <div v-if="details">
+            {{poll.description}}
+            <div class="center-align"><a class="waves-effect waves-light btn-small">Participar</a></div>
+        </div>
     </div>
 </template>
 <script>
@@ -9,11 +14,15 @@
             poll:{
                 type: Object,
                 required: true
+            },
+            details:{
+                type: Boolean,
+                required: true
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .poll{}
 </style>
