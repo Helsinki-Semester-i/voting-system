@@ -27,7 +27,7 @@
                     title: 'Definición de reglamento 2', 
                     description: 'En esta votación se definirá si se aceptan o no las nuevas reglas para formar parte de la asamblea de Wikipolítica. Entre ellas están: Haber participado por lo menos en 3 proyectos sociales \n Completar todo registro de nuevos asambleistas \n Proponer una idea nueva', 
                     closeDate: '11/01/2018',
-                    participation = True
+                    participation : True
                 },
                 {
                     id: 3, 
