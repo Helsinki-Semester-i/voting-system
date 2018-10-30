@@ -1,15 +1,20 @@
 <template>
-    <div class="poll">     
+    <div class="poll" @click="selectPoll">     
         <h5>{{poll.title}}</h5> 
         <div class="right-align">Se cierra el: {{poll.closeDate}}</div>
-        <div v-if="details">
+        <div v-if="selected">
             {{poll.description}}
-            <div class="center-align"><a class="waves-effect waves-light btn-small">Participar</a></div>
+            <div class="center-align" v-if="!poll.participation"><a class="waves-effect waves-light btn-small">Participar</a></div>
         </div>
     </div>
 </template>
 <script>
     export default{
+        data(){
+            return{
+                selected: false
+            }
+        },
         props:{
             poll:{
                 type: Object,
@@ -19,10 +24,17 @@
                 type: Boolean,
                 required: true
             }
+        },
+        methods:{
+            selectPoll(){
+                this.selected = !this.selected;
+            }
         }
     }
 </script>
 
 <style scoped>
-    .poll{}
+    .poll{
+
+    }
 </style>
