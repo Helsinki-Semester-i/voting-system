@@ -6,6 +6,8 @@ import Auth from '@okta/okta-vue';
 import HelloWorld from './components/HelloWorld.vue';
 import LoginComponent from './components/Login.vue';
 import ProfileComponent from './components/Profile.vue';
+import PollComponent from './components/Poll.vue';
+import PollInformation from './components/Gera_SinglePollInfo.vue';
 
 Vue.use(Router);
 Vue.use(Auth, {
@@ -33,6 +35,14 @@ const router = new Router({
       meta: {
         requiresAuth: true,
       },
+    },
+    {
+      path: '/poll',
+      component: PollInformation,
+    },
+    {
+      path: '/poll/:id',
+      component: PollComponent,
     },
     {
       path: '/implicit/callback',
