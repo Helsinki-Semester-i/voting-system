@@ -33,17 +33,28 @@ const VOTES_FOR_POLL_TEST = [
   {
     id: 1,
     question: 'Do you agree with rule 1?',
-    open: true,
+    open: false,
     answers: {
       1: 'Agree',
       2: 'Disagree',
       3: 'Neutral',
     },
-  }
+  },
+  {
+    id: 2,
+    question: 'Do you agree with rule 2?',
+    open: false,
+    answers: {
+      1: 'Agree',
+      2: 'Disagree',
+      3: 'Neutral',
+    },
+  },
 ];
 
 const POLLTEST = {
   id: 1,
+  title: 'Poll 1',
   description: 'This is a test Poll',
   participants: [],
   anonymous: true,
