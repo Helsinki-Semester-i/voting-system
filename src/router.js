@@ -6,10 +6,8 @@ import Auth from '@okta/okta-vue';
 import HelloWorld from './components/HelloWorld.vue';
 import LoginComponent from './components/Login.vue';
 import ProfileComponent from './components/Profile.vue';
-
-import PollsView from './components/Polls_view.vue';
+import PollsViewComponent from './components/PollsDashboard.vue';
 import PollComponent from './components/Poll.vue';
-import PollInformation from './components/Gera_SinglePollInfo.vue';
 
 Vue.use(Router);
 Vue.use(Auth, {
@@ -40,14 +38,10 @@ const router = new Router({
     },
     {
       path: '/polls',
-      component: PollsView,
+      component: PollsViewComponent,
     },
     {
-      path: '/poll',
-      component: PollInformation,
-    },
-    {
-      path: '/poll/:id',
+      path: '/polls/:id',
       component: PollComponent,
     },
     {
