@@ -32,9 +32,8 @@ export default {
   },
   methods: {
     async getPollData() {
-      // const id = this.$route.params.id;
-      // console.log(id);
-      this.poll = await api.test_getSinglePoll();
+      const { id } = this.$route.params;
+      this.poll = await api.test_getSinglePoll(id);
       this.questions = this.poll.questions;
     },
   },

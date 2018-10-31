@@ -4,10 +4,10 @@
     <div class="right-align">Se cierra el: {{poll.closeDate}}</div>
     <div v-if="selected">
       {{poll.description}}
-      <div class="center-align" v-if="available">        
+      <div class="center-align" v-if="available">
           <router-link :to="`/polls/${poll.id}`" class="waves-effect waves-light btn-small">
             Participar
-          </router-link>    
+          </router-link>
       </div>
     </div>
   </div>
