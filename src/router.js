@@ -7,6 +7,7 @@ import HelloWorld from './components/HelloWorld.vue';
 import LoginComponent from './components/Login.vue';
 import ProfileComponent from './components/Profile.vue';
 import PollComponent from './components/Poll.vue';
+import ResultComponent from './components/Result.vue';
 import PollInformation from './components/Gera_SinglePollInfo.vue';
 
 Vue.use(Router);
@@ -43,6 +44,10 @@ const router = new Router({
     {
       path: '/poll/:id',
       component: PollComponent,
+    },
+    {
+      path: '/result/:id',
+      component: ResultComponent,
     },
     {
       path: '/implicit/callback',

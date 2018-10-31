@@ -26,6 +26,10 @@ export default {
   },
   test_getSinglePoll() {
     return POLLTEST;
+  },
+  test_getPollResults(id) {
+    console.log(id);
+    return RESULT_TEST[0];
   }
 };
 
@@ -60,3 +64,53 @@ const POLLTEST = {
   anonymous: true,
   questions: VOTES_FOR_POLL_TEST,
 };
+
+const RESULT_TEST = [
+  {
+    id: 123,
+    title: 'Poll 1',
+    description: 'This is a test Poll',
+    participants: [],
+    anonymous: true,
+    questions: [
+      {
+        id: 1,
+        question: 'Do you agree with rule 1?',
+        open: false,
+        answers: [
+          {
+            text: 'Agree',
+            votes: 10
+          },
+          {
+            text: 'Disagree',
+            votes: 10
+          },
+          {
+            text: 'Neutral',
+            votes: 10
+          },
+        ],
+      },
+      {
+        id: 2,
+        question: 'Do you agree with rule 2?',
+        open: false,
+        answers: [
+          {
+            text: 'Agree',
+            votes: 10
+          },
+          {
+            text: 'Disagree',
+            votes: 10
+          },
+          {
+            text: 'Neutral',
+            votes: 10
+          },
+        ],
+      }
+    ]
+  }
+];
