@@ -95,9 +95,9 @@ export default {
     },
   },
   methods: {
-    changeSide(){
+    changeSide() {
       this.side = !this.side;
-    }
-  }
+    },
+  },
 };
 </script>

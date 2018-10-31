@@ -7,7 +7,7 @@ import HelloWorld from './components/HelloWorld.vue';
 import LoginComponent from './components/Login.vue';
 import ProfileComponent from './components/Profile.vue';
 
-import Polls_view from './components/Polls_view.vue';
+import PollsView from './components/Polls_view.vue';
 import PollComponent from './components/Poll.vue';
 import PollInformation from './components/Gera_SinglePollInfo.vue';
 
@@ -40,7 +40,7 @@ const router = new Router({
     },
     {
       path: '/polls',
-      component: Polls_view,
+      component: PollsView,
     },
     {
       path: '/poll',
