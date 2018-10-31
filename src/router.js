@@ -7,6 +7,7 @@ import sampleConfig from '@/.samples.config';
 import HelloWorld from './components/HelloWorld.vue';
 import LoginComponent from './components/Login.vue';
 import ProfileComponent from './components/Profile.vue';
+import Polls_view from './components/Polls_view.vue';
 
 Vue.use(Router);
 Vue.use(Auth, {
@@ -34,6 +35,10 @@ const router = new Router({
       meta: {
         requiresAuth: true,
       },
+    },
+    {
+      path: '/polls',
+      component: Polls_view,
     },
     {
       path: '/implicit/callback',
