@@ -34,8 +34,8 @@
         </li>
         <li>
           <router-link
-          to="/poll">
-          Poll view Demo
+          to="/polls">
+          Polls Demo
           </router-link>
         </li>
       </ul>
