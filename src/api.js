@@ -28,7 +28,6 @@ export default {
     return POLLTEST;
   },
   test_getPollResults(id) {
-    console.log(id);
     return RESULT_TEST[0];
   }
 };
@@ -80,7 +79,7 @@ const RESULT_TEST = [
         answers: [
           {
             text: 'Agree',
-            votes: 10
+            votes: 100
           },
           {
             text: 'Disagree',
@@ -88,7 +87,7 @@ const RESULT_TEST = [
           },
           {
             text: 'Neutral',
-            votes: 10
+            votes: 95
           },
         ],
       },
@@ -99,15 +98,15 @@ const RESULT_TEST = [
         answers: [
           {
             text: 'Agree',
-            votes: 10
+            votes: 1003
           },
           {
             text: 'Disagree',
-            votes: 10
+            votes: 3023
           },
           {
             text: 'Neutral',
-            votes: 10
+            votes: 1235
           },
         ],
       }
