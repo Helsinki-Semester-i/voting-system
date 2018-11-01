@@ -32,12 +32,6 @@
           Profile
           </router-link>
         </li>
-        <li>
-          <router-link
-          to="/poll">
-          Poll view Demo
-          </router-link>
-        </li>
       </ul>
     </div>
   </nav>

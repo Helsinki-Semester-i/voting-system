@@ -5,9 +5,9 @@
       <div v-for="question in questions" :key="question.id">
         <closed-question :question="question" :disabled="false" />
       </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action">
+      <router-link to="/vote" class="btn waves-effect waves-light" >
         Submit
-      </button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -32,9 +32,8 @@ export default {
   },
   methods: {
     async getPollData() {
-      // const id = this.$route.params.id;
-      // console.log(id);
-      this.poll = await api.test_getSinglePoll();
+      const { id } = this.$route.params;
+      this.poll = await api.test_getSinglePoll(id);
       this.questions = this.poll.questions;
     },
   },
