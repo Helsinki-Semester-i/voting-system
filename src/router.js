@@ -6,9 +6,10 @@ import Auth from '@okta/okta-vue';
 import HelloWorld from './components/HelloWorld.vue';
 import LoginComponent from './components/Login.vue';
 import ProfileComponent from './components/Profile.vue';
+import PollsViewComponent from './components/PollsDashboard.vue';
 import PollComponent from './components/Poll.vue';
 import ResultComponent from './components/Result.vue';
-import PollInformation from './components/Gera_SinglePollInfo.vue';
+import ShowCodeComponent from './demo_components/submitVote.vue';
 
 Vue.use(Router);
 Vue.use(Auth, {
@@ -38,11 +39,11 @@ const router = new Router({
       },
     },
     {
-      path: '/poll',
-      component: PollInformation,
+      path: '/polls',
+      component: PollsViewComponent,
     },
     {
-      path: '/poll/:id',
+      path: '/polls/:id',
       component: PollComponent,
     },
     {
@@ -52,6 +53,10 @@ const router = new Router({
     {
       path: '/implicit/callback',
       component: Auth.handleCallback(),
+    },
+    {
+      path: '/vote',
+      component: ShowCodeComponent,
     },
   ],
 });
