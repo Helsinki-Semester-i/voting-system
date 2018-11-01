@@ -53,11 +53,7 @@ const router = new Router({
       component: ResultComponent,
     },
     {
-      path: '/implicit/callback',
-      component: Auth.handleCallback(),
-    },
-    {
-      path: '/vote/',
+      path: '/vote',
       component: EnterCodeComponent,
     },
     {
@@ -65,8 +61,12 @@ const router = new Router({
       component: ViewVoteComponent,
     },
     {
-      path: '/vote',
+      path: '/displaycode',
       component: ShowCodeComponent,
+    },
+    {
+      path: '/implicit/callback',
+      component: Auth.handleCallback(),
     },
   ],
 });
