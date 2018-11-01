@@ -11,6 +11,7 @@
   "dependencies": {
     "@okta/okta-signin-widget": "^2.13.0",
     "@okta/okta-vue": "^1.0.4",
+    "axios": "^0.18.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1"
   },

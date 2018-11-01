@@ -2,19 +2,21 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Auth from '@okta/okta-vue';
-import sampleConfig from '@/.samples.config';
 
 import HelloWorld from './components/HelloWorld.vue';
 import LoginComponent from './components/Login.vue';
 import ProfileComponent from './components/Profile.vue';
+
 import Polls_view from './components/Polls_view.vue';
+import PollComponent from './components/Poll.vue';
+import PollInformation from './components/Gera_SinglePollInfo.vue';
 
 Vue.use(Router);
 Vue.use(Auth, {
-  issuer: sampleConfig.oidc.issuer,
-  client_id: sampleConfig.oidc.clientId,
-  redirect_uri: sampleConfig.oidc.redirectUri,
-  scope: sampleConfig.oidc.scope,
+  issuer: process.env.VUE_APP_AUTH_ISSUER,
+  client_id: process.env.VUE_APP_AUTH_CLIENT_ID,
+  redirect_uri: process.env.VUE_APP_AUTH_REDIRECT_URI,
+  scope: process.env.VUE_APP_AUTH_SCOPE,
 });
 
 const router = new Router({
@@ -39,6 +41,14 @@ const router = new Router({
     {
       path: '/polls',
       component: Polls_view,
+    },
+    {
+      path: '/poll',
+      component: PollInformation,
+    },
+    {
+      path: '/poll/:id',
+      component: PollComponent,
     },
     {
       path: '/implicit/callback',

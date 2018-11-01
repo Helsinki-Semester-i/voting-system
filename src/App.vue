@@ -34,8 +34,13 @@
         </li>
         <li>
           <router-link
+<<<<<<< HEAD
           to="/polls">
           Polls
+=======
+          to="/poll">
+          Poll view Demo
+>>>>>>> bfc5062cbd81dabecaeb069e2fc241c9750bfb92
           </router-link>
         </li>
       </ul>
