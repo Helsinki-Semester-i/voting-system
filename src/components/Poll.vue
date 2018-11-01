@@ -5,9 +5,9 @@
       <div v-for="question in questions" :key="question.id">
         <closed-question :question="question" :disabled="false" />
       </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action">
+      <router-link to="/vote" class="btn waves-effect waves-light" >
         Submit
-      </button>
+      </router-link>
     </div>
   </div>
 </template>
