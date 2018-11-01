@@ -29,7 +29,10 @@ export default {
   },
   test_getUserPolls() {
     return USERPOLLS;
-  }
+  },
+  test_getPollResults(id) {
+    return RESULT_TEST[0];
+  },
 };
 
 const VOTES_FOR_POLL_TEST = [
@@ -55,6 +58,55 @@ const VOTES_FOR_POLL_TEST = [
   },
 ];
 
+const RESULT_TEST = [
+  {
+    id: 123,
+    title: 'Poll 1',
+    description: 'This is a test Poll',
+    participants: [],
+    anonymous: true,
+    questions: [
+      {
+        id: 1,
+        question: 'Do you agree with rule 1?',
+        open: false,
+        answers: [
+          {
+            text: 'Agree',
+            votes: 100
+          },
+          {
+            text: 'Disagree',
+            votes: 10
+          },
+          {
+            text: 'Neutral',
+            votes: 95
+          },
+        ],
+      },
+      {
+        id: 2,
+        question: 'Do you agree with rule 2?',
+        open: false,
+        answers: [
+          {
+            text: 'Agree',
+            votes: 1003
+          },
+          {
+            text: 'Disagree',
+            votes: 3023
+          },
+          {
+            text: 'Neutral',
+            votes: 1235
+          },
+        ],
+      }
+    ]
+  }
+];
 const USERPOLLS = [
   {
     id: 1,

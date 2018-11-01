@@ -8,6 +8,7 @@ import LoginComponent from './components/Login.vue';
 import ProfileComponent from './components/Profile.vue';
 import PollsViewComponent from './components/PollsDashboard.vue';
 import PollComponent from './components/Poll.vue';
+import ResultComponent from './components/Result.vue';
 import ShowCodeComponent from './demo_components/submitVote.vue';
 
 Vue.use(Router);
@@ -44,6 +45,10 @@ const router = new Router({
     {
       path: '/polls/:id',
       component: PollComponent,
+    },
+    {
+      path: '/result/:id',
+      component: ResultComponent,
     },
     {
       path: '/implicit/callback',

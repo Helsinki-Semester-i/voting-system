@@ -66,9 +66,9 @@ export default{
     available() {
       return !this.poll.participation && this.poll.active;
     },
-    participated(){
-      return this.poll.participation
-    }
+    participated() {
+      return this.poll.participation;
+    },
   },
 };
 </script>
