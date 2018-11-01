@@ -1,30 +1,27 @@
 <template>
   <div class="container center-align">
-    <h1>{{poll.title}}</h1>
-    <vote-chart
-      :key="question.id"
-      v-for="question in questions"
-      :title="question.question"
-      :chart-data="getAnswersForChart(question.answers)"
-    ></vote-chart>
-    <br />
-    <router-link :to="'/vote'" class="btn waves-effect waves-light">
-      Click Here to Enter your Unique Code.
+    <h1>Ingresa el código de confimación:</h1>
+    <div class="input-field">
+      <input type="text" v-model="unique_code">
+      <label>Código Unico</label>
+    </div>
+    <router-link
+      v-show="unique_code"
+      :to="`/vote/${unique_code}`"
+      class="btn waves-effect waves-light"
+    >
+      Siguiente.
     </router-link>
   </div>
 </template>
 
 <script>
 import api from '@/api';
-import VoteChart from './VoteChart.vue';
 
 export default {
-  components: {
-    VoteChart,
-  },
   data() {
     return {
-      poll: {},
+      unique_code: null,
     };
   },
   async created() {
