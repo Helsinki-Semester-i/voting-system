@@ -33,6 +33,9 @@ export default {
   test_getPollResults(id) {
     return RESULT_TEST[0];
   },
+  test_getVote(unique_code){
+    return VOTECODETEST;
+  },
 };
 
 const VOTES_FOR_POLL_TEST = [
@@ -58,6 +61,51 @@ const VOTES_FOR_POLL_TEST = [
   },
 ];
 
+const POLLTEST = {
+  id: 1,
+  title: 'Poll 1',
+  description: 'This is a test Poll',
+  participants: [],
+  anonymous: true,
+  questions: VOTES_FOR_POLL_TEST,
+};
+
+const VOTECODETEST = {
+  id: 1,
+  unique_code: 8358,
+  date: '1/11/18',
+  poll: POLLTEST,
+  voter_id: null,
+  votes: [
+    {
+      question: {
+        id: 1,
+        question: 'Do you agree with rule 1?',
+        open: false,
+        answers: {
+          1: 'Agree',
+          2: 'Disagree',
+          3: 'Neutral',
+        },
+      },
+      answer_id: 1,
+    },
+    {
+      question: {
+        id: 2,
+        question: 'Do you agree with rule 2?',
+        open: false,
+        answers: {
+          1: 'Agree',
+          2: 'Disagree',
+          3: 'Neutral',
+        },
+      },
+      answer_id: 2,
+    },
+
+  ],
+};
 const RESULT_TEST = [
   {
     id: 123,

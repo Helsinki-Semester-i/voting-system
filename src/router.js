@@ -8,6 +8,7 @@ import LoginComponent from './components/Login.vue';
 import ProfileComponent from './components/Profile.vue';
 import PollsViewComponent from './components/PollsDashboard.vue';
 import PollComponent from './components/Poll.vue';
+import ViewVoteComponent from './components/ViewVote.vue';
 import ResultComponent from './components/Result.vue';
 import ShowCodeComponent from './demo_components/submitVote.vue';
 
@@ -53,6 +54,10 @@ const router = new Router({
     {
       path: '/implicit/callback',
       component: Auth.handleCallback(),
+    },
+    {
+      path: '/vote/:unique_code',
+      component: ViewVoteComponent,
     },
     {
       path: '/vote',
