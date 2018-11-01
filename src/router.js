@@ -7,6 +7,7 @@ import HelloWorld from './components/HelloWorld.vue';
 import LoginComponent from './components/Login.vue';
 import ProfileComponent from './components/Profile.vue';
 import PollComponent from './components/Poll.vue';
+import ViewVoteComponent from './components/ViewVote.vue';
 import PollInformation from './components/Gera_SinglePollInfo.vue';
 
 Vue.use(Router);
@@ -47,6 +48,10 @@ const router = new Router({
     {
       path: '/implicit/callback',
       component: Auth.handleCallback(),
+    },
+    {
+      path: '/vote/:unique_code',
+      component: ViewVoteComponent,
     },
   ],
 });
