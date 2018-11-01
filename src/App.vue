@@ -39,7 +39,7 @@
           </router-link>
         </li>
         <li>
-          <router-link>
+          <router-link
           to="/poll">
           Poll view Demo
           </router-link>
