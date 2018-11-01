@@ -38,12 +38,6 @@
           Poll view Demo
           </router-link>
         </li>
-        <li>
-          <router-link
-          to="/result/123">
-          Result view Demo
-          </router-link>
-        </li>
       </ul>
     </div>
   </nav>
