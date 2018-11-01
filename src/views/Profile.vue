@@ -13,16 +13,15 @@
 </template>
 
 <script>
-/* eslint-disable */
 import api from '@/api';
 
 export default {
-  data () {
+  data() {
     return {
       activeUser: null,
       parts: [],
       loading: false,
-    }
+    };
   },
   methods: {
     async refreshInfo() {
@@ -31,11 +30,11 @@ export default {
       this.loading = false;
     },
   },
-  async created () {
+  async created() {
     this.activeUser = await this.$auth.getUser();
     this.refreshInfo();
-  }
-}
+  },
+};
 </script>
 
 <style>

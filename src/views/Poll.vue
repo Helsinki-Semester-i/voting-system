@@ -15,7 +15,7 @@
 <script>
 
 import api from '@/api';
-import ClosedQuestion from './ClosedQuestion.vue';
+import ClosedQuestion from '../components/ClosedQuestion.vue';
 
 export default {
   components: {

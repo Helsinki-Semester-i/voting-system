@@ -22,7 +22,7 @@
 <script>
 
 import api from '@/api';
-import PollCard from './PollCardInformation.vue';
+import PollCard from '../components/PollCardInformation.vue';
 
 export default {
   components: {

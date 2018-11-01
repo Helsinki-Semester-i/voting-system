@@ -3,14 +3,14 @@ import Router from 'vue-router';
 
 import Auth from '@okta/okta-vue';
 
-import HelloWorld from './components/HelloWorld.vue';
-import LoginComponent from './components/Login.vue';
-import ProfileComponent from './components/Profile.vue';
-import PollsViewComponent from './components/PollsDashboard.vue';
-import PollComponent from './components/Poll.vue';
-import ViewVoteComponent from './components/ViewVote.vue';
-import ResultComponent from './components/Result.vue';
-import EnterCodeComponent from './components/EnterCode.vue';
+import HelloWorld from './views/HelloWorld.vue';
+import LoginComponent from './views/Login.vue';
+import ProfileComponent from './views/Profile.vue';
+import PollsViewComponent from './views/PollsDashboard.vue';
+import PollComponent from './views/Poll.vue';
+import ViewVoteComponent from './views/ViewVote.vue';
+import ResultComponent from './views/Result.vue';
+import EnterCodeComponent from './views/EnterCode.vue';
 import ShowCodeComponent from './demo_components/submitVote.vue';
 
 Vue.use(Router);
