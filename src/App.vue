@@ -19,9 +19,9 @@
         </li>
         <li>
           <router-link
-          to="/"
+          to="/login"
           v-if="authenticated"
-          v-on:click.native="logout()">
+          @click.native="logout()">
           Logout
           </router-link>
         </li>
