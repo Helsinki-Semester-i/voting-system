@@ -1,14 +1,18 @@
 <template>
-  <div class="row container">
-    <div class="col s12">
-      <h1 class="center-align">Tus votaciones abiertas</h1>
+  <div>
+    <div class="section container">
+      <h1 class="center-align section">Tus votaciones abiertas</h1>
       <div :key="poll.id" v-for="poll in completedPolls">
         <PollCard :poll=poll :details=false />
       </div>
       <div :key="poll.id" v-for="poll in pendingPolls">
         <PollCard :poll=poll :details=false />
       </div>
-      <h1 class="center-align">Historial</h1>
+    </div>
+    <br/><br/><br/>
+    <div class="divider"></div>
+    <div class="section container">
+      <h1 class="center-align section">Historial</h1>
       <div :key="poll.id" v-for="poll in closedPolls">
         <PollCard :poll=poll :details=false />
       </div>
