@@ -1,32 +1,20 @@
 <template>
-  <div class="row">
-    <div v-if="side">
-      <div class="col s1">
-        <div class="waves-effect waves-light btn blue lighten-2"
-        style="min-height: 100vh; width: 7vw" @click="changeSide">
-        </div>
+  <div>
+    <div class="section container">
+      <h1 class="center-align section">Tus votaciones abiertas</h1>
+      <div :key="poll.id" v-for="poll in completedPolls">
+        <PollCard :poll=poll :details=false />
       </div>
-      <div class="col s11">
-        <h1 class="center-align">Tus votaciones abiertas</h1>
-        <div :key="poll.id" v-for="poll in completedPolls">
-          <PollCard :poll=poll :details=false />
-        </div>
-        <div :key="poll.id" v-for="poll in pendingPolls">
-          <PollCard :poll=poll :details=false />
-        </div>
+      <div :key="poll.id" v-for="poll in pendingPolls">
+        <PollCard :poll=poll :details=false />
       </div>
     </div>
-    <div v-else>
-      <div class="col s11">
-        <h1 class="center-align">Historial</h1>
-        <div :key="poll.id" v-for="poll in closedPolls">
-          <PollCard :poll=poll :details=false />
-        </div>
-      </div>
-      <div class="col s1">
-        <div class="waves-effect waves-light btn blue lighten-2"
-        style="min-height: 100vh; width: 7vw" @click="changeSide">
-        </div>
+    <br/><br/><br/>
+    <div class="divider"></div>
+    <div class="section container">
+      <h1 class="center-align section">Historial</h1>
+      <div :key="poll.id" v-for="poll in closedPolls">
+        <PollCard :poll=poll :details=false />
       </div>
     </div>
   </div>
