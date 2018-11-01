@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div class="container center-align">
     <h1>{{poll.title}}</h1>
-    <pie-chart
+    <vote-chart
       :key="question.id"
       v-for="question in questions"
-      :data="getAnswersForChart(question.answers)">
-    </pie-chart>
+      :title="question.question"
+      :chart-data="getAnswersForChart(question.answers)"
+    ></vote-chart>
+    <br />
     <router-link :to="`/unique_code/${poll.id}`" class="btn waves-effect waves-light">
       Click Here to Enter your Unique Code.
     </router-link>
@@ -14,11 +16,12 @@
 
 <script>
 import api from '@/api';
+import VoteChart from './VoteChart.vue';
 
 export default {
-  // components: {
-  //   PieChart: VueChartkick,
-  // },
+  components: {
+    VoteChart,
+  },
   data() {
     return {
       poll: {},
@@ -39,7 +42,6 @@ export default {
     },
     getAnswersForChart(answers) {
       return answers.map(answer => [answer.text, answer.votes]);
-      // return [['Blueberry', 44], ['Strawberry', 23]];
     },
   },
 };
