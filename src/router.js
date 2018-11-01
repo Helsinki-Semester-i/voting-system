@@ -10,6 +10,7 @@ import PollsViewComponent from './components/PollsDashboard.vue';
 import PollComponent from './components/Poll.vue';
 import ViewVoteComponent from './components/ViewVote.vue';
 import ResultComponent from './components/Result.vue';
+import EnterCodeComponent from './components/EnterCode.vue';
 import ShowCodeComponent from './demo_components/submitVote.vue';
 
 Vue.use(Router);
@@ -54,6 +55,10 @@ const router = new Router({
     {
       path: '/implicit/callback',
       component: Auth.handleCallback(),
+    },
+    {
+      path: '/vote/',
+      component: EnterCodeComponent,
     },
     {
       path: '/vote/:unique_code',
