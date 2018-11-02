@@ -1,71 +1,61 @@
 <template>
-  <div id="app">
-    <nav>
-    <div class="nav-wrapper">
-
-      <router-link
-      to="/"
-      class="brand-logo">
-      Helsinki voting system
-      </router-link>
-
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li>
-          <router-link
-          to="/login"
-          v-if="!authenticated">
-          Login
-          </router-link>
-        </li>
-        <li>
-          <router-link
-          to="/login"
-          v-if="authenticated"
-          @click.native="logout()">
-          Logout
-          </router-link>
-        </li>
-        <li>
-          <router-link
-          to="/profile"
-          v-if="authenticated">
-          Profile
-          </router-link>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <v-app>
+    <v-toolbar dark>
+      <v-toolbar-title>
+        <router-link to="/">
+          Helsinki voting system
+        </router-link>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <router-link
+        to="/login"
+        v-if="!authenticated">
+          <v-btn flat>Login</v-btn>
+        </router-link>
+        <router-link
+        to="/login"
+        v-if="authenticated"
+        @click.native="logout()">
+          <v-btn flat>Logout</v-btn>
+        </router-link>
+        <router-link
+        to="/profile"
+        v-if="authenticated">
+          <v-btn flat>Profile</v-btn>
+        </router-link>
+      </v-toolbar-items>
+    </v-toolbar>
     <router-view />
-  </div>
+  </v-app>
 </template>
 
 
 <script>
-/* eslint-disable */
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
       activeUser: null,
       authenticated: false,
-    }
+    };
   },
-  async created () {
+  async created() {
     await this.refreshActiveUser();
   },
   watch: {
     // everytime a route is changed refresh the activeUser
-    '$route': 'refreshActiveUser'
+    $route: 'refreshActiveUser',
   },
   methods: {
-    async refreshActiveUser () {
+    async refreshActiveUser() {
       this.activeUser = await this.$auth.getUser();
       this.authenticated = await this.$auth.isAuthenticated();
     },
-    async logout () {
+    async logout() {
       await this.$auth.logout();
       await this.refreshActiveUser();
-    }
-  }
-}
+    },
+  },
+};
 </script>
