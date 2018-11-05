@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-lg>
     <v-layout row wrap>
-      <v-flex xs9>        
+      <v-flex xs9>
         <v-card>
           <v-card-title primary-title>
             <div class="headline">Hello World</div>
@@ -9,7 +9,7 @@
           <v-card-text>
             <div>This is the homepage of your vue app</div>
           </v-card-text>
-        </v-card>          
+        </v-card>
       </v-flex>
       <v-flex xs3>
         <v-layout row wrap>
@@ -21,7 +21,7 @@
               <v-card-text>
                 <div>{{demoBodyVote}}</div>
               </v-card-text>
-              <v-card-actions>          
+              <v-card-actions>
                 <router-link
                   to="/polls">
                   <v-btn flat dark>{{demoLinkVote}}</v-btn>
@@ -35,7 +35,7 @@
                 <div class="headline">{{demoTitleResults}}</div>
                 <div>{{demoBodyResults}}</div>
               </v-card-title>
-              <v-card-actions>          
+              <v-card-actions>
                 <router-link
                   to="/result/1">
                   <v-btn flat dark>{{demoLinkResults}}</v-btn>
@@ -44,7 +44,7 @@
             </v-card>
           </v-flex>
         </v-layout>
-      </v-flex>       
+      </v-flex>
     </v-layout>
   </v-container>
 </template>

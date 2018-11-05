@@ -10,15 +10,18 @@
           <v-dialog v-model="dialog" persistent max-width="290">
             <v-btn slot="activator" color="primary" dark>Submit</v-btn>
             <v-card>
-              <v-card-title class="headline" primary-title="">Estas seguro de tu desicion?</v-card-title>
+              <v-card-title class="headline" primary-title="">
+                Estas seguro de tu desicion?
+              </v-card-title>
               <v-card-text>Ya no podras cambiar tu voto</v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                color="green darken-1" flat @click.native="dialog = false">No acepto</v-btn>                
-                <v-btn color="green darken-1" flat @click.native="dialog = false; loadingDialog = true">
+                color="green darken-1" flat @click.native="dialog = false">No acepto</v-btn>
+                <v-btn color="green darken-1" flat
+                @click.native="dialog = false; loadingDialog = true">
                   Acepto
-                </v-btn>                
+                </v-btn>
                 <v-dialog
                   v-model="loadingDialog"
                   hide-overlay
@@ -35,10 +38,10 @@
                       ></v-progress-linear>
                     </v-card-text>
                   </v-card>
-                </v-dialog> 
+                </v-dialog>
               </v-card-actions>
             </v-card>
-          </v-dialog>        
+          </v-dialog>
         </v-form>
       </v-flex>
     </v-layout>
@@ -73,14 +76,14 @@ export default {
     },
   },
   watch: {
-    dialog (val) {
+    loadingDialog(val) {
       if (!val) return;
-      setTimeout(() => (
-        this.loadingDialog = false,
-        this.$router.push({path:'/displaycode'})
-      ), 4000);
+      setTimeout(() => {
+        this.loadingDialog = false;
+        this.$router.push({ path: '/displaycode' });
+      }, 4000);
     },
   },
-  
+
 };
 </script>
