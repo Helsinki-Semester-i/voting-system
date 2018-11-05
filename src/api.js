@@ -88,7 +88,7 @@ const VOTECODETEST = {
           3: 'Neutral',
         },
       },
-      answer_id: 1,
+      answer_id: '1',
     },
     {
       question: {
@@ -101,7 +101,7 @@ const VOTECODETEST = {
           3: 'Neutral',
         },
       },
-      answer_id: 2,
+      answer_id: '2',
     },
 
   ],

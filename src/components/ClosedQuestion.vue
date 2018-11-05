@@ -1,17 +1,13 @@
 <template>
-  <div>
+  <v-radio-group v-model="checkedAnswer">
     <h5>{{question.question}}</h5>
-    <form action="#">
-      <p v-for="(answer, index) in question.answers" :key="index">
-        <label>
-          <input v-if="checkedAnswer == index" checked
-          :name="question.id" type="radio" :disabled="disabled" />
-          <input v-else :name="question.id" type="radio" :disabled="disabled" />
-          <span>{{answer}}</span>
-        </label>
-      </p>
-    </form>
-  </div>
+    <v-radio v-for="(answer, index) in question.answers" :key="index"
+    :label="answer"
+    :value="index"
+    :disabled="disabled"
+    >
+    </v-radio>
+  </v-radio-group>
 </template>
 
 <script>
@@ -25,7 +21,7 @@ export default {
       type: Boolean,
     },
     checkedAnswer: {
-      type: Number,
+      type: String,
     },
   },
 };

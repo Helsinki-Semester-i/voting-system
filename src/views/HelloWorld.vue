@@ -1,5 +1,4 @@
 <template>
-<v-app>  
   <v-container
     grid-list-lg
   >
@@ -50,7 +49,6 @@
       </v-flex>       
     </v-layout>
   </v-container>
-</v-app>
 </template>
 
 <script>
