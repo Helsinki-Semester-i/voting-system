@@ -1,42 +1,56 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <br>
-      <br>
-      <br>
-      <br>
-      <div class="col s9 center-align">
-        <h1>Hello World</h1>
-        <p>This is the homepage of your vue app</p>
-      </div>
-      <div class="col s3">
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <span class="card-title">{{demoTitleVote}}</span>
-            <p>{{demoBodyVote}}</p>
-          </div>
-          <div class="card-action">
-            <router-link
-            to="/polls">
-            {{demoLinkVote}}
-            </router-link>
-          </div>
-        </div>
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <span class="card-title">{{demoTitleResults}}</span>
-            <p>{{demoBodyResults}}</p>
-          </div>
-          <div class="card-action">
-            <router-link
-            to="/result/1">
-            {{demoLinkResults}}
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<v-app>  
+  <v-container
+    grid-list-lg
+  >
+    <v-layout row wrap>
+      <v-flex xs9>        
+        <v-card>
+          <v-card-title primary-title>
+            <div class="headline">Hello World</div>
+          </v-card-title>
+          <v-card-text>
+            <div>This is the homepage of your vue app</div>
+          </v-card-text>
+        </v-card>          
+      </v-flex>
+      <v-flex xs3>
+        <v-layout row wrap>
+          <v-flex d-flex>
+            <v-card color="blue-grey darken-2" class="white--text">
+              <v-card-title primary-title>
+                <div class="headline">{{demoTitleVote}}</div>
+              </v-card-title>
+              <v-card-text>
+                <div>{{demoBodyVote}}</div>
+              </v-card-text>
+              <v-card-actions>          
+                <router-link
+                  to="/polls">
+                  <v-btn flat dark>{{demoLinkVote}}</v-btn>
+                </router-link>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+          <v-flex d-flex>
+            <v-card color="blue-grey darken-2" class="white--text">
+              <v-card-title primary-title>
+                <div class="headline">{{demoTitleResults}}</div>
+                <div>{{demoBodyResults}}</div>
+              </v-card-title>
+              <v-card-actions>          
+                <router-link
+                  to="/result/1">
+                  <v-btn flat dark>{{demoLinkResults}}</v-btn>
+                </router-link>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-flex>       
+    </v-layout>
+  </v-container>
+</v-app>
 </template>
 
 <script>
