@@ -1,7 +1,5 @@
 <template>
-  <v-container
-    grid-list-lg
-  >
+  <v-container grid-list-lg>
     <v-layout row wrap>
       <v-flex xs9>        
         <v-card>
