@@ -9,6 +9,16 @@
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <router-link
+        to="/profile"
+        v-if="authenticated">
+          <v-btn flat>Profile</v-btn>
+        </router-link>
+        <router-link
+        to="/register_panelist"
+        :v-if="isAdmin">
+          <v-btn flat>Register Panelist</v-btn>
+        </router-link>
+        <router-link
         to="/login"
         v-if="!authenticated">
           <v-btn flat>Login</v-btn>
@@ -19,11 +29,6 @@
         @click.native="logout()">
           <v-btn flat>Logout</v-btn>
         </router-link>
-        <router-link
-        to="/profile"
-        v-if="authenticated">
-          <v-btn flat>Profile</v-btn>
-        </router-link>
       </v-toolbar-items>
     </v-toolbar>
     <router-view />
@@ -32,6 +37,8 @@
 
 
 <script>
+import userGroups from './utils/constants';
+
 export default {
   name: 'app',
   data() {
@@ -55,6 +62,13 @@ export default {
     async logout() {
       await this.$auth.logout();
       await this.refreshActiveUser();
+    },
+  },
+  computed: {
+    isAdmin() {
+      return this.authenticated &&
+      this.activeUser != null &&
+      this.activeUser.groups.includes(userGroups.adminGroup);
     },
   },
 };

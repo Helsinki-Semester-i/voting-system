@@ -12,6 +12,7 @@ import ViewVoteComponent from './views/ViewVote.vue';
 import ResultComponent from './views/Result.vue';
 import EnterCodeComponent from './views/EnterCode.vue';
 import ShowCodeComponent from './demo_components/submitVote.vue';
+import AddPanelistComponent from './views/AddPanelist.vue';
 
 Vue.use(Router);
 Vue.use(Auth, {
@@ -67,6 +68,10 @@ const router = new Router({
     {
       path: '/implicit/callback',
       component: Auth.handleCallback(),
+    },
+    {
+      path: '/register_panelist',
+      component: AddPanelistComponent,
     },
   ],
 });
