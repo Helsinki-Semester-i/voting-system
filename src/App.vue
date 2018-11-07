@@ -14,8 +14,8 @@
           <v-btn flat>Profile</v-btn>
         </router-link>
         <router-link
-        to="/register_panelist"
-        :v-if="isAdmin">
+        to="/registerPanelist"
+        v-if="isAdmin">
           <v-btn flat>Register Panelist</v-btn>
         </router-link>
         <router-link
