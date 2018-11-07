@@ -66,9 +66,9 @@ export default {
   },
   computed: {
     isAdmin() {
-      return this.authenticated &&
-      this.activeUser != null &&
-      this.activeUser.groups.includes(userGroups.adminGroup);
+      return this.authenticated
+      && this.activeUser != null
+      && this.activeUser.groups.includes(userGroups.adminGroup);
     },
   },
 };
