@@ -34,7 +34,47 @@
           <v-btn @click="submit">submit</v-btn>
           <v-btn @click="clear">clear</v-btn>
         </v-form>
-        {{response}}
+         <v-progress-circular
+            v-show="loading"
+            :size="70"
+            :width="7"
+            color="purple"
+            indeterminate
+          ></v-progress-circular>
+        <v-dialog
+          v-model="dialog"
+          width="500"
+          >
+          <v-card>
+            <v-card-title
+              class="headline grey lighten-2"
+              primary-title
+            >
+              Operacion realizada
+            </v-card-title>
+            <v-card-text v-if="success">
+              Nuevo usuario creado <br>
+              First name: {{response.data.profile.firstName}} <br>
+              Last name: {{response.data.profile.lastName}} <br>
+              Email: {{response.data.profile.email}}    
+            </v-card-text>
+            <v-card-text v-else>
+              Error, contacta al administrador <br>
+              {{response}}
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="primary"
+                flat
+                @click="response = ''"
+              >
+                Ok
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-flex>
     </v-layout>
   </v-container>
@@ -59,7 +99,8 @@ export default {
       fname: '',
       lname: '',
       email: '',
-      response: 'no response',
+      response: '',
+      loading: false,
     };
   },
 
@@ -85,12 +126,21 @@ export default {
       if (!this.$v.email.required) errors.push('E-mail is required');
       return errors;
     },
+    dialog() {
+      return this.response !== '';
+    },
+    success() {
+      return this.response.data;
+    }
   },
 
   methods: {
     async submit() {
       this.$v.$touch();
+      this.loading = true;
       this.response = await api.postUser(this.fname, this.lname, this.email);
+      this.clear();
+      this.loading = false;
     },
     clear() {
       this.$v.$reset();

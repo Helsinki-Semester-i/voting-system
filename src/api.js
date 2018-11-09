@@ -20,7 +20,9 @@ export default {
       params,
     }).then(response => {
       return response;
-    })
+    }).catch(err => {
+      return err;
+    });
   },
   postUser(fname, lname, email) {
     let groupId = process.env.VUE_APP_PANELIST_ID;
