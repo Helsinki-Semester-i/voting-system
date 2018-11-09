@@ -9,7 +9,6 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@okta/okta-sdk-nodejs": "^1.2.0",
     "@okta/okta-signin-widget": "^2.13.0",
     "@okta/okta-vue": "^1.0.4",
     "axios": "^0.18.0",

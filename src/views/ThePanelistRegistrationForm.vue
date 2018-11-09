@@ -34,6 +34,7 @@
           <v-btn @click="submit">submit</v-btn>
           <v-btn @click="clear">clear</v-btn>
         </v-form>
+        {{response}}
       </v-flex>
     </v-layout>
   </v-container>
@@ -42,7 +43,7 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
-import authApi from '@/okta_api';
+import api from '@/api';
 
 export default {
   mixins: [validationMixin],
@@ -58,6 +59,7 @@ export default {
       fname: '',
       lname: '',
       email: '',
+      response: 'no response',
     };
   },
 
@@ -86,9 +88,9 @@ export default {
   },
 
   methods: {
-    submit() {
+    async submit() {
       this.$v.$touch();
-      authApi.postUser(this.fname, this.lname, this.email);
+      this.response = await api.postUser(this.fname, this.lname, this.email);
     },
     clear() {
       this.$v.$reset();
