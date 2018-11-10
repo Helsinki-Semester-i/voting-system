@@ -56,11 +56,10 @@
               Nuevo usuario creado <br>
               First name: {{response.data.profile.firstName}} <br>
               Last name: {{response.data.profile.lastName}} <br>
-              Email: {{response.data.profile.email}}    
+              Email: {{response.data.profile.email}}
             </v-card-text>
             <v-card-text v-else>
-              Error, contacta al administrador <br>
-              {{response}}
+              Error, contacta al administrador
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
@@ -131,7 +130,7 @@ export default {
     },
     success() {
       return this.response.data;
-    }
+    },
   },
 
   methods: {
