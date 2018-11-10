@@ -14,8 +14,8 @@
           <v-btn flat>Profile</v-btn>
         </router-link>
         <router-link
-        to="/register_panelist"
-        :v-if="isAdmin">
+        to="/registerPanelist"
+        v-if="isAdmin">
           <v-btn flat>Register Panelist</v-btn>
         </router-link>
         <router-link
@@ -66,9 +66,9 @@ export default {
   },
   computed: {
     isAdmin() {
-      return this.authenticated &&
-      this.activeUser != null &&
-      this.activeUser.groups.includes(userGroups.adminGroup);
+      return this.authenticated
+      && this.activeUser != null
+      && this.activeUser.groups.includes(userGroups.adminGroup);
     },
   },
 };

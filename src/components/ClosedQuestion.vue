@@ -1,5 +1,5 @@
 <template>
-  <v-radio-group v-model="checkedAnswer">
+  <v-radio-group v-model="selectedAnswer">
     <h5>{{question.question}}</h5>
     <v-radio v-for="(answer, index) in question.answers" :key="index"
     :label="answer"
@@ -23,6 +23,11 @@ export default {
     checkedAnswer: {
       type: String,
     },
+  },
+  data() {
+    return {
+      selectedAnswer: this.checkedAnswer,
+    };
   },
 };
 </script>
