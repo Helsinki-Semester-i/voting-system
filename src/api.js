@@ -37,7 +37,7 @@ export default {
         groupId,
       ],
     };
-    return this.execute('post', '/api/users', newOktaUser, { activate: true });
+    return this.execute('post', '/oauth', newOktaUser, { activate: true });
   },
   getParts() {
     return this.execute('get', '/parts');
