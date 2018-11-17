@@ -47,8 +47,8 @@ export default {
       authenticated: false,
     };
   },
-  async created() {
-    await this.refreshActiveUser();
+  created() {
+    this.refreshActiveUser();
   },
   watch: {
     // everytime a route is changed refresh the activeUser
