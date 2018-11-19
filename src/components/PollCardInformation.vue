@@ -2,8 +2,9 @@
   <v-flex xs12 sm6 offset-sm3>
     <v-card
     @click="selectPoll"
-    :color="asignColor">
-
+    :color="asignColor"
+    class="white--text"
+    >
       <v-card-title primary-title>
         <div>
           <div class="headline">{{poll.title}}</div>
@@ -63,9 +64,9 @@ export default{
   computed: {
     asignColor() {
       if (this.poll.participation) {
-        return 'purple';
+        return 'pink darken-4';
       }
-      return 'cyan darken-2';
+      return 'deep-purple darken-1';
     },
     available() {
       return !this.poll.participation && this.poll.active;

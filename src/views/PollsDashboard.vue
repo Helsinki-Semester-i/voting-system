@@ -3,7 +3,7 @@
     <v-container
       fluid
       grid-list-md>
-      <h3 class="text-xs-center">Tus votaciones abiertas</h3>
+      <h3 class="text-xs-center display-2">Tus votaciones abiertas</h3>
       <v-layout row wrap :key="poll.id" v-for="poll in completedPolls">
         <PollCard :poll=poll :details=false />
       </v-layout>
@@ -15,7 +15,7 @@
     <v-container
       fluid
       grid-list-lg>
-      <h3 class="text-xs-center">Historial</h3>
+      <h3 class="text-xs-center display-2">Historial</h3>
       <v-layout row wrap :key="poll.id" v-for="poll in closedPolls">
         <PollCard :poll=poll :details=false />
       </v-layout>
