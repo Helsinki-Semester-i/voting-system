@@ -1,18 +1,24 @@
 <template>
-  <div class="container center-align">
-    <h1>Ingresa el código de confimación:</h1>
-    <div class="input-field">
-      <input type="text" v-model="unique_code">
-      <label>Código Unico</label>
-    </div>
-    <router-link
-      v-show="unique_code"
-      :to="`/vote/${unique_code}`"
-      class="btn waves-effect waves-light"
-    >
-      Siguiente.
-    </router-link>
-  </div>
+  <v-container>
+    <v-layout row wrap>
+      <v-flex xs6 offset-xs2>
+        <h1>Ingresa el código de confimación:</h1>
+        <v-form>
+          <v-text-field
+            v-model="unique_code"
+            label="Código Unico"
+            required
+          ></v-text-field>
+          <router-link
+            v-show="unique_code"
+            :to="`/vote/${unique_code}`"
+          >
+          <v-btn>Siguiente.</v-btn>
+          </router-link>
+        </v-form>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
