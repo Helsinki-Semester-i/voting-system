@@ -1,37 +1,40 @@
 <template>
-  <div v-bind:class="asignColor" @click="selectPoll">
-    <div class="row">
-      <div class="col s9">
-        <h5>{{poll.title}}</h5>
-      </div>
-      <div class="col s3">
-        <div class="right-align">
-          <div v-if="poll.active">
-            Se cierra el: {{poll.closeDate}}
-          </div>
-          <div v-else>
-            Cerró el: {{poll.closeDate}}
-          </div>
+  <v-flex xs12 sm6 offset-sm3>
+    <v-card
+    @click="selectPoll"
+    :color="asignColor">
+
+      <v-card-title primary-title>
+        <div>
+          <div class="headline">{{poll.title}}</div>
+          <span class="grey--text">
+              <p v-if="poll.active">cierra el: {{poll.closeDate}}</p>
+              <p v-else>Cerró el: {{poll.closeDate}}</p>
+          </span>
         </div>
-      </div>
-    </div>
-    <div class="center-align" v-if="selected">
-      <div class="container left-align">{{poll.description}}</div>
-      <div v-if="available">
-        <br />
-        <router-link :to="`/polls/${poll.id}`" class="waves-effect waves-light btn-small">
-          Participar
+      </v-card-title>
+      <v-divider light></v-divider>
+      <v-card-actions>
+        <router-link v-if="available" :to="`/polls/${poll.id}`">
+          <v-btn flat color="orange">
+            Participar
+          </v-btn>
         </router-link>
-      </div>
-      <div v-else-if="participated">
-        <br />
-        Ya participaste
-      </div>
-      <div v-else>
-        No participaste
-      </div>
-    </div>
-  </div>
+        <div v-else-if="participated">Ya participaste</div>
+        <div v-else>No participastee</div>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="show = !show">
+          <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+        </v-btn>
+      </v-card-actions>
+
+      <v-slide-y-transition>
+        <v-card-text v-show="show">
+          {{poll.description}}
+        </v-card-text>
+      </v-slide-y-transition>
+    </v-card>
+  </v-flex>
 </template>
 
 <script>
@@ -39,6 +42,7 @@ export default{
   data() {
     return {
       selected: false,
+      show: false,
     };
   },
   props: {
@@ -59,9 +63,9 @@ export default{
   computed: {
     asignColor() {
       if (this.poll.participation) {
-        return 'card-panel purple lighten-5 hoverable';
+        return 'purple';
       }
-      return 'card-panel purple lighten-3 hoverable';
+      return 'cyan darken-2';
     },
     available() {
       return !this.poll.participation && this.poll.active;
