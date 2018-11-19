@@ -3,7 +3,7 @@
     <v-container
       fluid
       grid-list-md>
-      <h3 class="text-xs-center">{{poll.title}}</h3>
+      <h3 class="text-xs-center display-2">{{poll.title}}</h3>
       <v-layout row wrap
         :key="question.id"
         v-for="question in questions">

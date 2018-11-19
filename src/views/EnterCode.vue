@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row wrap>
       <v-flex xs6 offset-xs2>
-        <h1>Ingresa el código de confimación:</h1>
+        <h4 class="display-1">Ingresa el código de confimación:</h4>
         <v-form>
           <v-text-field
             v-model="unique_code"

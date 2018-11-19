@@ -3,7 +3,7 @@
     <v-layout align-center>
       <v-flex xs6 offset-xs2>
         <v-form>
-          <h2>{{poll.title}}</h2>
+          <h3 class="display-2">{{poll.title}}</h3>
           <div v-for="question in questions" :key="question.id">
             <closed-question :question="question" :disabled="false" />
           </div>

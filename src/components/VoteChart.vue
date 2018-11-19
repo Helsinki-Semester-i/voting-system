@@ -8,7 +8,7 @@
       </v-card-title>
       <v-divider light></v-divider>
       <v-card-text>
-        <h5>Winner:<br/>{{winner}}</h5>
+        <h5 class="subheading">Winner:<br/>{{winner}}</h5>
       </v-card-text>
       <v-card-media>
         <pie-chart :data="chartData"></pie-chart>

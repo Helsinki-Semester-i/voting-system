@@ -1,34 +1,34 @@
 <template>
   <v-app>
     <v-toolbar dark>
-      <v-toolbar-title>
-        <router-link to="/">
-          Helsinki voting system
-        </router-link>
-      </v-toolbar-title>
+      <v-toolbar-title>Helsinki voting system</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <router-link
-        to="/profile"
-        v-if="authenticated">
-          <v-btn flat>Profile</v-btn>
-        </router-link>
-        <router-link
-        to="/registerPanelist"
-        v-if="isAdmin">
-          <v-btn flat>Register Panelist</v-btn>
-        </router-link>
-        <router-link
-        to="/login"
-        v-if="!authenticated">
-          <v-btn flat>Login</v-btn>
-        </router-link>
-        <router-link
-        to="/login"
-        v-if="authenticated"
-        @click.native="logout()">
-          <v-btn flat>Logout</v-btn>
-        </router-link>
+        <v-btn
+          flat
+          to="/"
+        >Home</v-btn>
+        <v-btn
+          flat
+          to="/profile"
+          v-if="authenticated"
+        >Profile</v-btn>
+        <v-btn
+          flat
+          to="/registerPanelist"
+          v-if="isAdmin"
+        >Register Panelist</v-btn>
+        <v-btn
+          flat
+          to="/login"
+          v-if="!authenticated"
+        >Login</v-btn>
+        <v-btn
+          flat
+          to="/login"
+          v-if="authenticated"
+          @click.native="logout()"
+        >Logout</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <router-view />

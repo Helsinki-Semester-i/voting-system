@@ -3,10 +3,10 @@
     <v-layout align-center>
       <v-flex xs6 offset-xs2>
         <v-form>
-          <h1>Vote for Code: {{result.unique_code}}</h1>
-          <h2>{{result.poll.title}}</h2>
-          <p>{{result.poll.description}}</p>
-          <p>{{result.date}}</p>
+          <h2 class="display-3">Vote for Code: {{result.unique_code}}</h2>
+          <h3 class="display-2">{{result.poll.title}}</h3>
+          <h5 class="headline">{{result.poll.description}}</h5>
+          <p class="subheading">{{result.date}}</p>
           <div v-for="vote in result.votes" :key="vote.question.id">
             <closed-question
               :question="vote.question"

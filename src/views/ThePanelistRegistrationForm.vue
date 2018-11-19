@@ -1,8 +1,10 @@
 <template>
   <v-container grid-list-lg>
+    <v-layout row align-center justify-center>
+      <h3 class="display-2">Register a new Panelist</h3>
+    </v-layout>
     <v-layout row wrap>
-      <v-flex xs8 offset-xs2>
-        <h3>Register a new Panelist</h3>
+      <v-flex xs6 offset-xs3>
         <v-form>
           <v-text-field
             v-model="fname"

@@ -1,6 +1,6 @@
 <template>
   <v-radio-group v-model="selectedAnswer">
-    <h5>{{question.question}}</h5>
+    <h5 class="headline">{{question.question}}</h5>
     <v-radio v-for="(answer, index) in question.answers" :key="index"
     :label="answer"
     :value="index"
