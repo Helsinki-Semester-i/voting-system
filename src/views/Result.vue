@@ -1,22 +1,31 @@
 <template>
-  <div class="container center-align">
-    <h1>{{poll.title}}</h1>
-    <vote-chart
-      :key="question.id"
-      v-for="question in questions"
-      :title="question.question"
-      :chart-data="getAnswersForChart(question.answers)"
-    ></vote-chart>
-    <br />
-    <router-link :to="'/vote'" class="btn waves-effect waves-light">
-      Click Here to Enter your Unique Code.
-    </router-link>
-  </div>
+<v-card>
+    <v-container
+      fluid
+      grid-list-md>
+      <h3 class="text-xs-center">{{poll.title}}</h3>
+      <v-layout row wrap
+        :key="question.id"
+        v-for="question in questions">
+        <vote-chart
+          :title="question.question"
+          :chart-data="getAnswersForChart(question.answers)"
+        ></vote-chart>
+      </v-layout>
+    </v-container>
+    <div class="text-xs-center">
+      <router-link :to="'/vote'">
+        <v-btn round color="primary" dark>
+          Click Here to Enter your Unique Code.
+        </v-btn>
+      </router-link>
+    </div>
+</v-card>
 </template>
 
 <script>
 import api from '@/api';
-import VoteChart from './VoteChart.vue';
+import VoteChart from '../components/VoteChart.vue';
 
 export default {
   components: {
