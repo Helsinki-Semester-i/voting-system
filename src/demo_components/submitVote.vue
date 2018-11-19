@@ -3,6 +3,18 @@
     <v-layout row wrap align-center justify-center>
       <v-card>
         <div class="text-xs-center">
+          <v-alert
+            :value="copySuccess"
+            type="success"
+            dismissible
+            outline
+          >You copied {{code}} to the clipboard</v-alert>
+          <v-alert
+            :value="copyError"
+            type="error"
+            dismissible
+            outline
+          >Failed to copy</v-alert>
           <v-card-text primary-title>
             <h2 class="display-3">Gracias por participar.</h2>
           </v-card-text>
@@ -15,7 +27,14 @@
             <h4 class="display-1">Guarda este código, desaparecerá al continuar.</h4>
             <h4 class="display-1">Es necesario para verificar tu voto al finalizar la votación</h4>
             <br> <v-divider></v-divider> <br>
-            <h1 class="display-4">{{code}}</h1>
+            <h1 class="display-4">
+              <v-btn
+              flat large color="info"
+              v-clipboard:copy="code"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+              ><h1 class="display-4">{{code}}</h1></v-btn>
+            </h1>
             <br> <v-divider></v-divider> <br>
             <v-btn
               to="/"
@@ -32,7 +51,17 @@ export default {
   data() {
     return {
       code: 'TSLVHL',
+      copyError: false,
+      copySuccess: false,
     };
+  },
+  methods: {
+    onCopy() {
+      this.copySuccess = true;
+    },
+    onError() {
+      this.copyError = true;
+    },
   },
 };
 </script>
