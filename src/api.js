@@ -8,7 +8,7 @@ const client = axios.create({
 });
 
 export default {
-  async execute (method, resource, data) {
+  async execute (method, resource, data, params) {
     let accessToken = await Vue.prototype.$auth.getAccessToken();
     return client({
       method,
@@ -17,9 +17,27 @@ export default {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
-    }).then(req => {
-      return req.data
-    })
+      params,
+    }).then(response => {
+      return response;
+    }).catch(err => {
+      return err;
+    });
+  },
+  postUser(fname, lname, email) {
+    let groupId = process.env.VUE_APP_PANELIST_ID;
+    const newOktaUser = {
+      profile: {
+        firstName: fname,
+        lastName: lname,
+        email,
+        login: email,
+      },
+      groupIds: [
+        groupId,
+      ],
+    };
+    return this.execute('post', '/oauth', newOktaUser, { activate: true });
   },
   getParts() {
     return this.execute('get', '/parts');
@@ -88,7 +106,7 @@ const VOTECODETEST = {
           3: 'Neutral',
         },
       },
-      answer_id: 1,
+      answer_id: '1',
     },
     {
       question: {
@@ -101,7 +119,7 @@ const VOTECODETEST = {
           3: 'Neutral',
         },
       },
-      answer_id: 2,
+      answer_id: '2',
     },
 
   ],

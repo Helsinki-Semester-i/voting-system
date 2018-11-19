@@ -1,71 +1,75 @@
 <template>
-  <div id="app">
-    <nav>
-    <div class="nav-wrapper">
-
-      <router-link
-      to="/"
-      class="brand-logo">
-      Helsinki voting system
-      </router-link>
-
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li>
-          <router-link
+  <v-app>
+    <v-toolbar dark>
+      <v-toolbar-title>Helsinki voting system</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn
+          flat
+          to="/"
+        >Home</v-btn>
+        <v-btn
+          flat
+          to="/profile"
+          v-if="authenticated"
+        >Profile</v-btn>
+        <v-btn
+          flat
+          to="/registerPanelist"
+          v-if="isAdmin"
+        >Register Panelist</v-btn>
+        <v-btn
+          flat
           to="/login"
-          v-if="!authenticated">
-          Login
-          </router-link>
-        </li>
-        <li>
-          <router-link
+          v-if="!authenticated"
+        >Login</v-btn>
+        <v-btn
+          flat
           to="/login"
           v-if="authenticated"
-          @click.native="logout()">
-          Logout
-          </router-link>
-        </li>
-        <li>
-          <router-link
-          to="/profile"
-          v-if="authenticated">
-          Profile
-          </router-link>
-        </li>
-      </ul>
-    </div>
-  </nav>
+          @click.native="logout()"
+        >Logout</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
     <router-view />
-  </div>
+  </v-app>
 </template>
 
 
 <script>
-/* eslint-disable */
+import userGroups from './utils/constants';
+
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
       activeUser: null,
       authenticated: false,
-    }
+    };
   },
-  async created () {
-    await this.refreshActiveUser();
+  created() {
+    this.refreshActiveUser();
   },
   watch: {
     // everytime a route is changed refresh the activeUser
-    '$route': 'refreshActiveUser'
+    $route: 'refreshActiveUser',
   },
   methods: {
-    async refreshActiveUser () {
+    async refreshActiveUser() {
       this.activeUser = await this.$auth.getUser();
       this.authenticated = await this.$auth.isAuthenticated();
     },
-    async logout () {
+    async logout() {
       await this.$auth.logout();
       await this.refreshActiveUser();
-    }
-  }
-}
+    },
+  },
+  computed: {
+    isAdmin() {
+      return this.authenticated
+      && this.activeUser != null
+      && this.activeUser.groups.includes(userGroups.adminGroup);
+    },
+  },
+};
 </script>
