@@ -6,7 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "postinstall": "npm run build",
+    "start": "node server.js"
   },
   "dependencies": {
     "@okta/okta-signin-widget": "^2.13.0",
@@ -26,6 +28,8 @@
     "@vue/eslint-config-airbnb": "^4.0.0",
     "@vue/test-utils": "^1.0.0-beta.20",
     "chai": "^4.1.2",
+    "express": "^4.16.4",
+    "serve-static": "^1.13.2",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {

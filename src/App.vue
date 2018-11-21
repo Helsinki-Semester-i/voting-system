@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-toolbar dark>
-      <v-toolbar-title>Helsinki voting system</v-toolbar-title>
+      <v-toolbar-title>Helsinki voting system try 3</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn
