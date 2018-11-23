@@ -4,10 +4,10 @@
       fluid
       grid-list-md>
       <h3 class="text-xs-center display-2">Tus votaciones abiertas</h3>
-      <v-layout row wrap :key="poll.id" v-for="poll in completedPolls">
+      <v-layout class="votaciones" wrap :key="poll.id" v-for="poll in completedPolls">
         <PollCard :poll=poll :details=false />
       </v-layout>
-      <v-layout row wrap :key="poll.id" v-for="poll in pendingPolls">
+      <v-layout class="votaciones" wrap :key="poll.id" v-for="poll in pendingPolls">
         <PollCard :poll=poll :details=false />
       </v-layout>
     </v-container>
@@ -22,6 +22,13 @@
     </v-container>
   </v-card>
 </template>
+
+<style>
+.votaciones{
+  width: 60%
+}
+
+</style>
 
 <script>
 import api from '@/api';

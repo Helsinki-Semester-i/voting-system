@@ -1,44 +1,39 @@
 <template>
-  <v-container grid-list-lg>
-    <v-layout row wrap>
-      <v-flex d-flex >
-       <v-carousel hide-delimiters>
+  <v-container grid-list-lg >
+    <v-layout >
+      <v-flex d-flex  >
+       <v-carousel hide-delimiters height=515>
         <v-carousel-item 
           v-for="(item) in images" 
           :key="item.id" 
-          :src="item.ImageUrl">
+          :src="item.ImageUrl"
+          >
         </v-carousel-item>
        </v-carousel>
       </v-flex>
       <v-flex xs3>
         <v-layout row wrap>
           <v-flex d-flex>
-            <v-card color="blue-grey darken-2" class="white--text">
+            <v-card color=#33B2AB class="white--text">
               <v-card-title primary-title>
                 <div class="headline">{{demoTitleVote}}</div>
               </v-card-title>
               <v-card-text>
                 <div>{{demoBodyVote}}</div>
               </v-card-text>
-              <v-card-actions>
-                <router-link
-                  to="/polls">
-                  <v-btn flat dark>{{demoLinkVote}}</v-btn>
-                </router-link>
+              <v-card-actions>  
+                <v-btn  to="/polls"> {{demoLinkVote}}</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
           <v-flex d-flex>
-            <v-card color="blue-grey darken-2" class="white--text">
+            <v-card color=#33B2AB class="white--text">
               <v-card-title primary-title>
                 <div class="headline">{{demoTitleResults}}</div>
                 <div>{{demoBodyResults}}</div>
               </v-card-title>
               <v-card-actions>
-                <router-link
-                  to="/result/1">
-                  <v-btn flat dark>{{demoLinkResults}}</v-btn>
-                </router-link>
+                  <v-btn  to="/result/1"> {{demoLinkResults}}</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
