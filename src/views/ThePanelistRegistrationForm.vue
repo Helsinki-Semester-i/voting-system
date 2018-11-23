@@ -59,6 +59,7 @@
               Email: {{response.email}}
             </v-card-text>
             <v-card-text v-else>
+              El usuario ya existe o hubo un error interno.
               Error, contacta al administrador
             </v-card-text>
             <v-divider></v-divider>
