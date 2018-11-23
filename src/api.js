@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Vue from 'vue';
 import axios from 'axios';
+import constants from './utils/strings';
 
 const client = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL,
@@ -24,7 +25,7 @@ export default {
       return err;
     });
   },
-  postUser(fname, lname, email) {
+  async postUser(fname, lname, email, phone) {
     let groupId = process.env.VUE_APP_PANELIST_ID;
     const newOktaUser = {
       profile: {
@@ -37,10 +38,34 @@ export default {
         groupId,
       ],
     };
-    return this.execute('post', '/oauth', newOktaUser, { activate: true });
+    const wikiUser = {
+      first_name: fname,
+      last_name: lname,
+      email,
+      phone,
+    };
+    let oktaResponse = await this.execute('post', '/oauth', newOktaUser, { activate: true });
+    let wikiApiResponse = await this.execute('post', '/users', wikiUser);
+    try {
+      let { profile } = oktaResponse.data;
+      let { phone } = wikiApiResponse; // Try to throw error if 'phone' atribute does not exists
+      return profile;
+    } catch(err) {
+      return constants.API_ERROR;
+    }
   },
-  getParts() {
-    return this.execute('get', '/parts');
+  async deleteUser(email) {
+    let oktaResponse = await this.execute('get', `/oauth/${email}`);
+    let wikiUserData = await this.execute('get', `/users/${email}`);
+    try {
+      let { id } = oktaResponse.data;
+      let wikiId = wikiUserData.id;
+      await this.execute('delete', `/oauth/${id}`);
+      await this.execute('delete', `/users/${wikiId}`);
+      return id;
+    } catch (err) {
+      return constants.API_ERROR;
+    }
   },
   test_getSinglePoll(id) {
     return USERPOLLS[id-1];

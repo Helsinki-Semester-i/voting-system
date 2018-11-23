@@ -15,6 +15,7 @@ import ResultComponent from './views/Result.vue';
 import EnterCodeComponent from './views/EnterCode.vue';
 import ShowCodeComponent from './demo_components/submitVote.vue';
 import AddPanelistComponent from './views/ThePanelistRegistrationForm.vue';
+import RemovePanelistComponent from './views/TheDeletePanelistView.vue';
 
 Vue.use(Router);
 Vue.use(Auth, {
@@ -74,6 +75,14 @@ const router = new Router({
     {
       path: '/registerPanelist',
       component: AddPanelistComponent,
+      meta: {
+        requiresAuth: true,
+        adminAuth: true,
+      },
+    },
+    {
+      path: '/deletePanelist',
+      component: RemovePanelistComponent,
       meta: {
         requiresAuth: true,
         adminAuth: true,
