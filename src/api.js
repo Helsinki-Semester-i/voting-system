@@ -45,10 +45,10 @@ export default {
       phone,
     };
     let oktaResponse = await this.execute('post', '/oauth', newOktaUser, { activate: true });
+    let wikiApiResponse = await this.execute('post', '/users', wikiUser);
     try {
       let { profile } = oktaResponse.data;
-      let wikiApiResponse = await this.execute('post', '/users', wikiUser);
-      // TODO: handle our api response for USER
+      let { phone } = wikiApiResponse; // Try to throw error if 'phone' atribute does not exists
       return profile;
     } catch(err) {
       return constants.API_ERROR;
@@ -56,13 +56,12 @@ export default {
   },
   async deleteUser(email) {
     let oktaResponse = await this.execute('get', `/oauth/${email}`);
-    let wikiUserData = await this.execute('get', `/users/${email}`); // TODO: have this implemented on API
+    let wikiUserData = await this.execute('get', `/users/${email}`);
     try {
       let { id } = oktaResponse.data;
       let wikiId = wikiUserData.id;
       await this.execute('delete', `/oauth/${id}`);
-      await this.execute('delete', `/users/${wikiId}`); // TODO: check api method in our API
-      // in case of one error on one request (either okta or our api), TODO: setup better logs in api to be able to handle this
+      await this.execute('delete', `/users/${wikiId}`);
       return id;
     } catch (err) {
       return constants.API_ERROR;
