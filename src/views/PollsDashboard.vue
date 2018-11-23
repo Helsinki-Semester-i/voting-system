@@ -4,11 +4,13 @@
       fluid
       grid-list-md>
       <h3 class="text-xs-center display-2">Tus votaciones abiertas</h3>
-      <v-layout class="votaciones" wrap :key="poll.id" v-for="poll in completedPolls">
+      <v-layout row wrap>
+      <v-flex xs4 :key="poll.id" v-for="poll in completedPolls">
         <PollCard :poll=poll :details=false />
-      </v-layout>
-      <v-layout class="votaciones" wrap :key="poll.id" v-for="poll in pendingPolls">
+      </v-flex>
+      <v-flex xs4 :key="poll.id" v-for="poll in pendingPolls">
         <PollCard :poll=poll :details=false />
+      </v-flex>
       </v-layout>
     </v-container>
 
@@ -16,19 +18,15 @@
       fluid
       grid-list-lg>
       <h3 class="text-xs-center display-2">Historial</h3>
-      <v-layout row wrap :key="poll.id" v-for="poll in closedPolls">
+       <v-layout row wrap>
+      <v-flex xs4 :key="poll.id" v-for="poll in closedPolls">
         <PollCard :poll=poll :details=false />
-      </v-layout>
+      </v-flex>
+       </v-layout>
     </v-container>
   </v-card>
 </template>
 
-<style>
-.votaciones{
-  width: 60%
-}
-
-</style>
 
 <script>
 import api from '@/api';
