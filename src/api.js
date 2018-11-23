@@ -25,8 +25,7 @@ export default {
       return err;
     });
   },
-  async postUser(fname, lname, email) {
-    // add user also in postgressDB
+  async postUser(fname, lname, email, phone) {
     let groupId = process.env.VUE_APP_PANELIST_ID;
     const newOktaUser = {
       profile: {
@@ -39,20 +38,31 @@ export default {
         groupId,
       ],
     };
-    let response = await this.execute('post', '/oauth', newOktaUser, { activate: true });
+    const wikiUser = {
+      first_name: fname,
+      last_name: lname,
+      email,
+      phone,
+    };
+    let oktaResponse = await this.execute('post', '/oauth', newOktaUser, { activate: true });
     try {
-      let { profile } = response.data;
+      let { profile } = oktaResponse.data;
+      let wikiApiResponse = await this.execute('post', '/users', wikiUser);
+      // TODO: handle our api response for USER
       return profile;
     } catch(err) {
       return constants.API_ERROR;
     }
   },
   async deleteUser(email) {
-    let response = await this.execute('get', `/oauth/${email}`);
-    console.log(constants.API_ERROR);
+    let oktaResponse = await this.execute('get', `/oauth/${email}`);
+    let wikiUserData = await this.execute('get', `/users/${email}`); // TODO: have this implemented on API
     try {
-      let { id } = response.data;
+      let { id } = oktaResponse.data;
+      let wikiId = wikiUserData.id;
       await this.execute('delete', `/oauth/${id}`);
+      await this.execute('delete', `/users/${wikiId}`); // TODO: check api method in our API
+      // in case of one error on one request (either okta or our api), TODO: setup better logs in api to be able to handle this
       return id;
     } catch (err) {
       return constants.API_ERROR;

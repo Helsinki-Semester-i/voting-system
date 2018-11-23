@@ -32,6 +32,14 @@
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
           ></v-text-field>
+          <v-text-field
+            v-model="phone"
+            :error-messages="phoneErrors"
+            label="Phone number"
+            required
+            @input="$v.phone.$touch()"
+            @blur="$v.phone.$touch()"
+          ></v-text-field>
 
           <v-btn @click="submit">submit</v-btn>
           <v-btn @click="clear">clear</v-btn>
@@ -80,7 +88,9 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import { required, maxLength, email } from 'vuelidate/lib/validators';
+import {
+  required, maxLength, email, numeric,
+} from 'vuelidate/lib/validators';
 import api from '@/api';
 import constants from '../utils/strings';
 
@@ -91,6 +101,7 @@ export default {
     fname: { required, maxLength: maxLength(15) },
     lname: { required, maxLength: maxLength(15) },
     email: { required, email },
+    phone: { required, numeric },
   },
 
   data() {
@@ -98,6 +109,7 @@ export default {
       fname: '',
       lname: '',
       email: '',
+      phone: '',
       response: '',
       loading: false,
       endDialog: false,
@@ -126,6 +138,13 @@ export default {
       if (!this.$v.email.required) errors.push('E-mail is required');
       return errors;
     },
+    phoneErrors() {
+      const errors = [];
+      if (!this.$v.phone.$dirty) return errors;
+      if (!this.$v.phone.numeric) errors.push('Must be valid phone number');
+      if (!this.$v.phone.required) errors.push('Phone number is required');
+      return errors;
+    },
     success() {
       return this.response !== constants.API_ERROR;
     },
@@ -136,7 +155,7 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.loading = true;
-        this.response = await api.postUser(this.fname, this.lname, this.email);
+        this.response = await api.postUser(this.fname, this.lname, this.email, this.phone);
         this.clear();
         this.loading = false;
         this.endDialog = true;
@@ -147,6 +166,7 @@ export default {
       this.fname = '';
       this.lname = '';
       this.email = '';
+      this.phone = '';
     },
     removeDialog() {
       this.response = '';
