@@ -51,9 +51,7 @@
             <v-card-title
               class="headline grey lighten-2"
               primary-title
-            >
-              Operacion realizada
-            </v-card-title>
+            >Operación realizada</v-card-title>
             <v-card-text v-if="success">
               Nuevo usuario creado <br>
               First name: {{response.data.profile.firstName}} <br>
@@ -138,10 +136,12 @@ export default {
   methods: {
     async submit() {
       this.$v.$touch();
-      this.loading = true;
-      this.response = await api.postUser(this.fname, this.lname, this.email);
-      this.clear();
-      this.loading = false;
+      if (!this.$v.$invalid) {
+        this.loading = true;
+        this.response = await api.postUser(this.fname, this.lname, this.email);
+        this.clear();
+        this.loading = false;
+      }
     },
     clear() {
       this.$v.$reset();

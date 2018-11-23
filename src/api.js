@@ -25,6 +25,7 @@ export default {
     });
   },
   postUser(fname, lname, email) {
+    // add user also in postgressDB
     let groupId = process.env.VUE_APP_PANELIST_ID;
     const newOktaUser = {
       profile: {
@@ -39,8 +40,16 @@ export default {
     };
     return this.execute('post', '/oauth', newOktaUser, { activate: true });
   },
-  getParts() {
-    return this.execute('get', '/parts');
+  async deleteUser(email) {
+    // TODO: handle error not email found
+    let response = await this.execute('get', `/oauth/${email}`);
+    try {
+      let { id } = response.data;
+      await this.execute('delete', `/oauth/${id}`);
+      return id;
+    } catch (err) {
+      return 'ERROR_API_WIKI';
+    }
   },
   test_getSinglePoll(id) {
     return USERPOLLS[id-1];
