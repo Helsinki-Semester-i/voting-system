@@ -21,10 +21,10 @@ export default {
     }).then(response => {
       return response;
     }).catch(err => {
-      return err;
+      return 'ERROR_API_WIKI';
     });
   },
-  postUser(fname, lname, email) {
+  async postUser(fname, lname, email) {
     // add user also in postgressDB
     let groupId = process.env.VUE_APP_PANELIST_ID;
     const newOktaUser = {
@@ -38,10 +38,15 @@ export default {
         groupId,
       ],
     };
-    return this.execute('post', '/oauth', newOktaUser, { activate: true });
+    let response = await this.execute('post', '/oauth', newOktaUser, { activate: true });
+    try {
+      let { profile } = response.data;
+      return profile;
+    } catch(err) {
+      return 'ERROR_API_WIKI';
+    }
   },
   async deleteUser(email) {
-    // TODO: handle error not email found
     let response = await this.execute('get', `/oauth/${email}`);
     try {
       let { id } = response.data;

@@ -44,9 +44,9 @@
             indeterminate
           ></v-progress-circular>
         <v-dialog
-          v-model="dialog"
+          v-model="endDialog"
           width="500"
-          >
+        >
           <v-card>
             <v-card-title
               class="headline grey lighten-2"
@@ -54,9 +54,9 @@
             >Operación realizada</v-card-title>
             <v-card-text v-if="success">
               Nuevo usuario creado <br>
-              First name: {{response.data.profile.firstName}} <br>
-              Last name: {{response.data.profile.lastName}} <br>
-              Email: {{response.data.profile.email}}
+              First name: {{response.firstName}} <br>
+              Last name: {{response.lastName}} <br>
+              Email: {{response.email}}
             </v-card-text>
             <v-card-text v-else>
               Error, contacta al administrador
@@ -67,10 +67,8 @@
               <v-btn
                 color="primary"
                 flat
-                @click="response = ''"
-              >
-                Ok
-              </v-btn>
+                @click="removeDialog()"
+              >Ok</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -100,6 +98,7 @@ export default {
       email: '',
       response: '',
       loading: false,
+      endDialog: false,
     };
   },
 
@@ -125,11 +124,8 @@ export default {
       if (!this.$v.email.required) errors.push('E-mail is required');
       return errors;
     },
-    dialog() {
-      return this.response !== '';
-    },
     success() {
-      return this.response.data;
+      return this.response !== 'ERROR_API_WIKI';
     },
   },
 
@@ -141,6 +137,7 @@ export default {
         this.response = await api.postUser(this.fname, this.lname, this.email);
         this.clear();
         this.loading = false;
+        this.endDialog = true;
       }
     },
     clear() {
@@ -148,6 +145,10 @@ export default {
       this.fname = '';
       this.lname = '';
       this.email = '';
+    },
+    removeDialog() {
+      this.response = '';
+      this.endDialog = false;
     },
   },
 };

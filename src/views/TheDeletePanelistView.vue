@@ -66,7 +66,7 @@
               <v-btn
                 color="primary"
                 flat
-                @click="response = ''; endDialog = false"
+                @click="removeDialog()"
               >Ok</v-btn>
             </v-card-actions>
           </v-card>
@@ -126,6 +126,10 @@ export default {
     clear() {
       this.$v.$reset();
       this.email = '';
+    },
+    removeDialog() {
+      this.response = '';
+      this.endDialog = false;
     },
   },
 };
