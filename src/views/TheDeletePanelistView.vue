@@ -80,6 +80,7 @@
 import { validationMixin } from 'vuelidate';
 import { required, email } from 'vuelidate/lib/validators';
 import api from '@/api';
+import constants from '../utils/strings';
 
 export default {
   mixins: [validationMixin],
@@ -106,7 +107,7 @@ export default {
       return errors;
     },
     success() {
-      return this.response !== 'ERROR_API_WIKI';
+      return this.response !== constants.API_ERROR;
     },
   },
   methods: {

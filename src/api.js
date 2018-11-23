@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Vue from 'vue';
 import axios from 'axios';
+import constants from './utils/strings';
 
 const client = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL,
@@ -21,7 +22,7 @@ export default {
     }).then(response => {
       return response;
     }).catch(err => {
-      return 'ERROR_API_WIKI';
+      return err;
     });
   },
   async postUser(fname, lname, email) {
@@ -43,17 +44,18 @@ export default {
       let { profile } = response.data;
       return profile;
     } catch(err) {
-      return 'ERROR_API_WIKI';
+      return constants.API_ERROR;
     }
   },
   async deleteUser(email) {
     let response = await this.execute('get', `/oauth/${email}`);
+    console.log(constants.API_ERROR);
     try {
       let { id } = response.data;
       await this.execute('delete', `/oauth/${id}`);
       return id;
     } catch (err) {
-      return 'ERROR_API_WIKI';
+      return constants.API_ERROR;
     }
   },
   test_getSinglePoll(id) {
