@@ -120,6 +120,36 @@
           <v-layout row align-center justify-center>
             <h4 class="display-1">Participantes</h4>
           </v-layout>
+          <v-layout :key="user.id" v-for="(user, index) in users">
+            <v-container grid-list-sm>
+              <v-layout row justify-space-between>
+                <v-flex xs10>
+                  <div>{{user}}</div>
+                </v-flex>
+                <v-flex xs2>
+                  <v-btn flat small color="error" @click="deleteUser(index)">Borrar</v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-layout>
+          <v-container grid-list-sm>
+            <v-layout row justify-space-between>
+              <v-flex xs10>
+                <v-text-field
+                  v-model="addingUser"
+                  :error-messages="addingUserErrors"
+                  :counter="50"
+                  label="email"
+                  @input="$v.addingUser.$touch()"
+                  @blur="$v.addingUser.$touch()"
+                  required
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs2>
+                <v-btn flat small color="success" @click="addUser(addingUser)">Agregar</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-container>
           <v-btn @click="submit">submit</v-btn>
           <v-btn @click="clear">clear</v-btn>
         </v-form>
@@ -176,6 +206,7 @@ export default {
     close_date: { required },
     question: { required, maxLength: maxLength(50) },
     //acceptance_percentage: {required},
+    addingUser: {email},
   },
 
   data() {
@@ -206,6 +237,14 @@ export default {
             ]
           }
         ],
+        users:[
+          "jose18carl@gmail.com",
+          "andres@andres.com",
+          "estefycp@hotmail.com",
+          "gerajuarez@homail.com",
+          "papatri@gmail.com", 
+        ],
+        addingUser: '',
         loading: false,
     };
   },
@@ -243,6 +282,11 @@ export default {
       if (!this.$v.question.maxLength) errors.push('La premisa debe de ser maximo de 50 caracteres.');
       if (!this.$v.question.required) errors.push('La premisa es requerida.');
       return errors;
+    },
+    addingUserErrors(){
+      const errors = [];
+      if (!this.$v.addingUser.$dirty) return errors;
+      if (!this.$v.addingUser.email) errors.push('Debes de escribir un correo.');
     },
     dialog() {
       return this.response !== '';
@@ -288,11 +332,29 @@ export default {
       this.$delete(this.questions, order);
     },
     createOption(order){
-        const newOption = {'option': '','value': 0};
-        this.questions[order].options.push(newOption);
+      const newOption = {'option': '','value': 0};
+      this.questions[order].options.push(newOption);
     },
     deleteOption(order, index){
-        this.$delete(this.questions[order].options, index);
+      this.$delete(this.questions[order].options, index);
+    },
+    async addUser(email){
+      let data = await api.userExistsByMail(email);
+      if(data){
+        for(var i=0; i < this.users.length; i++){
+          if( this.users[i] === email){
+            console.log("User is already in the list");
+            return
+          }
+        }
+        this.users.push(email);
+        this.addingUser = '';
+      }else{
+        console.log("User does not exists");
+      }
+    },
+    deleteUser(index){
+      this.$delete(this.users, index);
     },
   },
 };
