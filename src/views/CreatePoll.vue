@@ -63,6 +63,10 @@
             ></v-text-field>
             <v-date-picker v-model="close_date" @input="menu2 = false" no-title scrollable></v-date-picker>
           </v-menu>
+          <v-layout row align-center justify-center>
+            <h4 class="display-1">Premisas</h4>
+          </v-layout>
+          <create-question></create-question>
           <v-btn @click="submit">submit</v-btn>
           <v-btn @click="clear">clear</v-btn>
         </v-form>
@@ -102,19 +106,20 @@
         </v-dialog>
       </v-flex>
     </v-layout>
-
-
   </v-container>
 </template>
 
 <script>
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
+import CreateQuestion from '../components/CreateQuestion.vue';
 import api from '@/api';
 
 export default {
   mixins: [validationMixin],
-
+  components: {
+    CreateQuestion,
+  },
   validations: {
     title: { required, maxLength: maxLength(30) },
     details: { required, maxLength: maxLength(200) },
