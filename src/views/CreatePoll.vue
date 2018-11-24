@@ -66,7 +66,60 @@
           <v-layout row align-center justify-center>
             <h4 class="display-1">Premisas</h4>
           </v-layout>
-          <create-question></create-question>
+          <!-- CREAR PREGUNTAS -->
+          <v-container :key="question.id" v-for="(question, order) in questions">
+            <v-container fluid grid-list-md>
+              <v-layout row justify-space-between>
+                <v-flex xs10>
+                  <v-text-field
+                    v-model="question.question"
+                    :error-messages="questionErrors"
+                    :counter="50"
+                    label="Premisa"
+                    required
+                    @input="$v.question.$touch()"
+                    @blur="$v.question.$touch()"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs2>
+                  <v-btn column flat small @click="createOption(order)">Añadir</v-btn>
+                  <v-btn flat small color="error" @click="deleteQuestion(order)">Borrar</v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <!-- LISTAR OPCIONES -->
+            <v-layout :key="option.id" v-for="(option, index) in question.options">
+              <v-container grid-list-sm>
+                <v-layout row justify-space-between>
+                  <v-flex xs2>
+                    <v-text-field
+                      v-model="option.value"
+                      label="Valor"
+                      required
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs8>
+                    <v-text-field
+                      v-model="option.option"
+                      :counter="30"
+                      label="Opción"
+                      required
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs2>
+                    <v-btn flat small color="error" @click="deleteOption(order, index)">Borrar</v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            <!-- FIN LISTAR OPCIONES -->
+            </v-layout>
+            <v-divider></v-divider>
+          </v-container>
+          <!-- FIN CREAR PREGUNTAS -->
+          <v-btn block color="success" dark @click="createQuestion">Crear nueva premisa</v-btn>
+          <v-layout row align-center justify-center>
+            <h4 class="display-1">Participantes</h4>
+          </v-layout>
           <v-btn @click="submit">submit</v-btn>
           <v-btn @click="clear">clear</v-btn>
         </v-form>
@@ -112,19 +165,16 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email } from 'vuelidate/lib/validators';
-import CreateQuestion from '../components/CreateQuestion.vue';
 import api from '@/api';
 
 export default {
   mixins: [validationMixin],
-  components: {
-    CreateQuestion,
-  },
   validations: {
     title: { required, maxLength: maxLength(30) },
     details: { required, maxLength: maxLength(200) },
     creation_date: { required },
     close_date: { required },
+    question: { required, maxLength: maxLength(50) },
     //acceptance_percentage: {required},
   },
 
@@ -139,6 +189,23 @@ export default {
         close_date: '',
         acceptance_percentage: 50,
         response: '',
+        questions: [
+          {
+            'question':'Escribe algo aqui',
+            'options':[
+              {'option': 'Muy en contra',
+              'value': 1},
+              {'option': 'En contra',
+              'value': 2},
+              {'option': 'Neutral',
+              'value': 3},
+              {'option': 'A favor',
+              'value': 4},
+              {'option': 'Muy a favor',
+              'value': 5},
+            ]
+          }
+        ],
         loading: false,
     };
   },
@@ -170,6 +237,13 @@ export default {
       if (!this.$v.close_date.required) errors.push('La fecha final es requerida.');
       return errors;
     },
+    questionErrors() {
+      const errors = [];
+      if (!this.$v.question.$dirty) return errors;
+      if (!this.$v.question.maxLength) errors.push('La premisa debe de ser maximo de 50 caracteres.');
+      if (!this.$v.question.required) errors.push('La premisa es requerida.');
+      return errors;
+    },
     dialog() {
       return this.response !== '';
     },
@@ -194,6 +268,31 @@ export default {
         this.creation_date = '';
         this.close_date = '';
         this.acceptance_percentage = 50;
+    },
+    createQuestion(){
+      const newQuestion = {'question': '','options':[
+              {'option': 'Muy en contra',
+              'value': 1},
+              {'option': 'En contra',
+              'value': 2},
+              {'option': 'Neutral',
+              'value': 3},
+              {'option': 'A favor',
+              'value': 4},
+              {'option': 'Muy a favor',
+              'value': 5},
+            ]};
+      this.questions.push(newQuestion)
+    },
+    deleteQuestion(order){
+      this.$delete(this.questions, order);
+    },
+    createOption(order){
+        const newOption = {'option': '','value': 0};
+        this.questions[order].options.push(newOption);
+    },
+    deleteOption(order, index){
+        this.$delete(this.questions[order].options, index);
     },
   },
 };

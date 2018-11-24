@@ -4,23 +4,23 @@
         <v-layout row justify-space-between>
             <v-flex xs2>
                 <v-text-field
-                    v-model="localValue"
+                    v-model="value"
                     :error-messages="valueErrors"
                     label="Valor"
                     required
-                    @input="$v.localValue.$touch()"
-                    @blur="$v.localValue.$touch()"
+                    @input="$v.value.$touch()"
+                    @blur="$v.value.$touch()"
                 ></v-text-field>
             </v-flex>
             <v-flex xs8>
                 <v-text-field
-                    v-model="localOption"
+                    v-model="option"
                     :error-messages="optionErrors"
                     :counter="30"
                     label="Opción"
                     required
-                    @input="$v.localOption.$touch()"
-                    @blur="$v.localOption.$touch()"
+                    @input="$v.option.$touch()"
+                    @blur="$v.option.$touch()"
                 ></v-text-field>
             </v-flex>
             <v-flex xs2>
@@ -40,8 +40,8 @@ export default {
   mixins: [validationMixin],
 
   validations: {
-    localOption: { required, maxLength: maxLength(30) },
-    localValue: {required},
+    option: { required, maxLength: maxLength(30) },
+    value: {required},
   },
   props: {
     option: {
@@ -67,15 +67,15 @@ export default {
   computed: {
     optionErrors() {
       const errors = [];
-      if (!this.$v.localOption.$dirty) return errors;
-      if (!this.$v.localOption.maxLength) errors.push('El texto de la opción debe de ser maximo de 30 caracteres.');
-      if (!this.$v.localOption.required) errors.push('El texto de la opción es requerido.');
+      if (!this.$v.option.$dirty) return errors;
+      if (!this.$v.option.maxLength) errors.push('El texto de la opción debe de ser maximo de 30 caracteres.');
+      if (!this.$v.option.required) errors.push('El texto de la opción es requerido.');
       return errors;
     },
     valueErrors(){
         const errors = [];
-        if (!this.$v.localValue.$dirty) return errors;
-        if (!this.$v.localValue.required) errors.push('El valor de la opción es requerido.');
+        if (!this.$v.value.$dirty) return errors;
+        if (!this.$v.value.required) errors.push('El valor de la opción es requerido.');
         return errors;
     }
   },
