@@ -101,14 +101,14 @@
                 <v-layout row justify-space-between>
                   <v-flex xs2>
                     <v-text-field
-                      v-model="option.value"
+                      v-model="option.order_priority"
                       label="Valor"
                       required
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs8>
                     <v-text-field
-                      v-model="option.option"
+                      v-model="option.option_text"
                       :counter="30"
                       label="Opción"
                       required
@@ -186,9 +186,7 @@
             </v-card-title>
             <v-card-text v-if="success">
               Nueva votación creada <br>
-              Título: {{response.title}} <br>
-              Fecha de inicio: {{response.creation_date}} <br>
-              Fecha de cierre: {{response.close_date}} <br>
+              Respuesta: {{response.data}} <br>
             </v-card-text>
             <v-card-text v-else>
               Error, contacta al administrador
@@ -244,24 +242,24 @@ export default {
           question: 'Escribe algo aqui',
           options: [
             {
-              option: 'Muy en contra',
-              value: 1,
+              option_text: 'Muy en contra',
+              order_priority: 1,
             },
             {
-              option: 'En contra',
-              value: 2,
+              option_text: 'En contra',
+              order_priority: 2,
             },
             {
-              option: 'Neutral',
-              value: 3,
+              option_text: 'Neutral',
+              order_priority: 3,
             },
             {
-              option: 'A favor',
-              value: 4,
+              option_text: 'A favor',
+              order_priority: 4,
             },
             {
-              option: 'Muy a favor',
-              value: 5,
+              option_text: 'Muy a favor',
+              order_priority: 5,
             },
           ],
         },
@@ -334,7 +332,7 @@ export default {
     async submit() {
       this.$v.$touch();
       this.loading = true;
-      this.response = {
+      let poll = {
         title: this.title,
         details: this.details,
         creation_date: this.creation_date,
@@ -342,7 +340,10 @@ export default {
         users: this.users,
         acceptance_percentage: this.acceptance_percentage,
         anonymity: true,
-      }; // CALL API
+        questions: this.questions,
+      };
+
+      this.response = await api.createPoll(poll);
       this.clear();
       this.loading = false;
     },
@@ -359,24 +360,24 @@ export default {
         question: '',
         options: [
           {
-            option: 'Muy en contra',
-            value: 1,
+            option_text: 'Muy en contra',
+            order_prioryty: 1,
           },
           {
-            option: 'En contra',
-            value: 2,
+            option_text: 'En contra',
+            order_prioryty: 2,
           },
           {
-            option: 'Neutral',
-            value: 3,
+            option_text: 'Neutral',
+            order_prioryty: 3,
           },
           {
-            option: 'A favor',
-            value: 4,
+            option_text: 'A favor',
+            order_prioryty: 4,
           },
           {
-            option: 'Muy a favor',
-            value: 5,
+            option_text: 'Muy a favor',
+            order_prioryty: 5,
           },
         ],
       };

@@ -54,6 +54,9 @@ export default {
   test_getVote(unique_code){
     return VOTECODETEST;
   },
+  async createPoll(poll){
+    return this.execute('post', '/polls', poll);
+  },
   async userExistsByMail(email){
     console.log("executing query");
     let response = await this.execute('get', 'users/byMail/'+email);
