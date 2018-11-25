@@ -52,32 +52,41 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import { required, maxLength} from 'vuelidate/lib/validators';
-import api from '@/api';
+import { required, maxLength } from 'vuelidate/lib/validators';
 
 export default {
   mixins: [validationMixin],
   validations: {
     question: { required, maxLength: maxLength(50) },
-    //option: { required, maxLength: maxLength(30) },
-    //value: {required},
+    // option: { required, maxLength: maxLength(30) },
+    // value: {required},
   },
 
   data() {
     return {
       question: '',
       options: [
-        {'option': 'Muy en contra',
-        'value': 1},
-        {'option': 'En contra',
-        'value': 2},
-        {'option': 'Neutral',
-        'value': 3},
-        {'option': 'A favor',
-        'value': 4},
-        {'option': 'Muy a favor',
-        'value': 5},
-      ]
+        {
+          option: 'Muy en contra',
+          value: 1,
+        },
+        {
+          option: 'En contra',
+          value: 2,
+        },
+        {
+          option: 'Neutral',
+          value: 3,
+        },
+        {
+          option: 'A favor',
+          value: 4,
+        },
+        {
+          option: 'Muy a favor',
+          value: 5,
+        },
+      ],
     };
   },
 
@@ -108,19 +117,19 @@ export default {
     async submit() {
       this.$v.$touch();
       this.loading = true;
-      this.response = {'question': this.question}; //CALL API
+      this.response = { question: this.question }; // CALL API
       this.clear();
       this.loading = false;
     },
     clear() {
-        this.$v.$reset();
+      this.$v.$reset();
     },
-    createOption(){
-        const newOption = {'option': '','value': 0};
-        this.options.push(newOption);
+    createOption() {
+      const newOption = { option: '', value: 0 };
+      this.options.push(newOption);
     },
-    deleteOption(index){
-        this.$delete(this.options, index);
+    deleteOption(index) {
+      this.$delete(this.options, index);
     },
   },
 };

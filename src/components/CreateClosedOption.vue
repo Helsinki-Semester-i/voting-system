@@ -33,15 +33,14 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import { required, maxLength} from 'vuelidate/lib/validators';
-import api from '@/api';
+import { required, maxLength } from 'vuelidate/lib/validators';
 
 export default {
   mixins: [validationMixin],
 
   validations: {
     option: { required, maxLength: maxLength(30) },
-    value: {required},
+    value: { required },
   },
   props: {
     option: {
@@ -52,16 +51,16 @@ export default {
       type: Number,
       required: true,
     },
-    index:{
-        type: Number,
-        required: true,
-    }
+    index: {
+      type: Number,
+      required: true,
+    },
   },
-  data(){
-      return{
-          localOption : this.option,
-          localValue: this.value,
-      }
+  data() {
+    return {
+      localOption: this.option,
+      localValue: this.value,
+    };
   },
 
   computed: {
@@ -72,28 +71,28 @@ export default {
       if (!this.$v.option.required) errors.push('El texto de la opción es requerido.');
       return errors;
     },
-    valueErrors(){
-        const errors = [];
-        if (!this.$v.value.$dirty) return errors;
-        if (!this.$v.value.required) errors.push('El valor de la opción es requerido.');
-        return errors;
-    }
+    valueErrors() {
+      const errors = [];
+      if (!this.$v.value.$dirty) return errors;
+      if (!this.$v.value.required) errors.push('El valor de la opción es requerido.');
+      return errors;
+    },
   },
 
   methods: {
     async submit() {
       this.$v.$touch();
       this.loading = true;
-      this.response = {'option': this.option}; //CALL API
+      this.response = { option: this.option }; // CALL API
       this.clear();
       this.loading = false;
     },
     clear() {
-        this.$v.$reset();
+      this.$v.$reset();
     },
-    deleteClick(){
-        this.$emit("deleteClick", this.index);
-    }
+    deleteClick() {
+      this.$emit('deleteClick', this.index);
+    },
   },
 };
 </script>

@@ -33,7 +33,7 @@
             transition="scale-transition"
             offset-y
             full-width
-            min-width="290px"      
+            min-width="290px"
           >
             <v-text-field
             slot="activator"
@@ -42,7 +42,11 @@
             prepend-icon="event"
             readonly
             ></v-text-field>
-            <v-date-picker v-model="creation_date" @input="menu = false" no-title scrollable></v-date-picker>
+            <v-date-picker
+              v-model="creation_date"
+              @input="menu = false"
+              no-title scrollable>
+            </v-date-picker>
           </v-menu>
           <v-menu
             :close-on-content-click="false"
@@ -52,7 +56,7 @@
             transition="scale-transition"
             offset-y
             full-width
-            min-width="290px"   
+            min-width="290px"
           >
             <v-text-field
             slot="activator"
@@ -61,7 +65,11 @@
             prepend-icon="event"
             readonly
             ></v-text-field>
-            <v-date-picker v-model="close_date" @input="menu2 = false" no-title scrollable></v-date-picker>
+            <v-date-picker
+              v-model="close_date"
+              @input="menu2 = false"
+              no-title scrollable>
+            </v-date-picker>
           </v-menu>
           <v-layout row align-center justify-center>
             <h4 class="display-1">Premisas</h4>
@@ -107,7 +115,10 @@
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs2>
-                    <v-btn flat small color="error" @click="deleteOption(order, index)">Borrar</v-btn>
+                    <v-btn flat small color="error"
+                      @click="deleteOption(order, index)">
+                      Borrar
+                    </v-btn>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -150,6 +161,14 @@
               </v-flex>
             </v-layout>
           </v-container>
+          <v-subheader class="pl-0">Porcentaje de participación</v-subheader>
+          <v-slider
+          v-model="acceptance_percentage"
+          always-dirty
+          v-bind:hint="quorum"
+          persistent-hint
+          thumb-label="always"
+          ></v-slider>
           <v-btn @click="submit">submit</v-btn>
           <v-btn @click="clear">clear</v-btn>
         </v-form>
@@ -205,47 +224,57 @@ export default {
     creation_date: { required },
     close_date: { required },
     question: { required, maxLength: maxLength(50) },
-    //acceptance_percentage: {required},
-    addingUser: {email},
+    acceptance_percentage: { required },
+    addingUser: { email },
   },
 
   data() {
     return {
-        menu: false,
-        modal: false,
-        menu2: false,
-        title: '',
-        details: '',
-        creation_date: '',
-        close_date: '',
-        acceptance_percentage: 50,
-        response: '',
-        questions: [
-          {
-            'question':'Escribe algo aqui',
-            'options':[
-              {'option': 'Muy en contra',
-              'value': 1},
-              {'option': 'En contra',
-              'value': 2},
-              {'option': 'Neutral',
-              'value': 3},
-              {'option': 'A favor',
-              'value': 4},
-              {'option': 'Muy a favor',
-              'value': 5},
-            ]
-          }
-        ],
-        users:[
-          "jose18carl@gmail.com",
-          "andres@andres.com",
-          "estefycp@hotmail.com",
-          "gerajuarez@homail.com",
-          "papatri@gmail.com", 
-        ],
-        addingUser: '',
-        loading: false,
+      menu: false,
+      modal: false,
+      menu2: false,
+      title: '',
+      details: '',
+      creation_date: '',
+      close_date: '',
+      acceptance_percentage: 50,
+      response: '',
+      questions: [
+        {
+          question: 'Escribe algo aqui',
+          options: [
+            {
+              option: 'Muy en contra',
+              value: 1,
+            },
+            {
+              option: 'En contra',
+              value: 2,
+            },
+            {
+              option: 'Neutral',
+              value: 3,
+            },
+            {
+              option: 'A favor',
+              value: 4,
+            },
+            {
+              option: 'Muy a favor',
+              value: 5,
+            },
+          ],
+        },
+      ],
+      users: [
+        'jose18carl@gmail.com',
+        'andres@andres.com',
+        'estefycp@hotmail.com',
+        'gerajuarez@homail.com',
+        'papatri@gmail.com',
+      ],
+      addingUser: '',
+      loading: false,
     };
   },
 
@@ -283,17 +312,21 @@ export default {
       if (!this.$v.question.required) errors.push('La premisa es requerida.');
       return errors;
     },
-    addingUserErrors(){
+    addingUserErrors() {
       const errors = [];
       if (!this.$v.addingUser.$dirty) return errors;
       if (!this.$v.addingUser.email) errors.push('Debes de escribir un correo.');
+      return errors;
+    },
+    quorum() {
+      const quorum = this.users.length * (this.acceptance_percentage / 100);
+      return `Quorum: ${Math.round(quorum)} de ${this.users.length} participantes.`;
     },
     dialog() {
       return this.response !== '';
     },
     success() {
-        return this.response;
-      //return this.response.data;
+      return this.response.data;
     },
   },
 
@@ -301,59 +334,80 @@ export default {
     async submit() {
       this.$v.$touch();
       this.loading = true;
-      this.response = {'title': this.title, 'details': this.details, 'creation_date': this.creation_date, 'close_date': this.close_date}; //CALL API
+      this.response = {
+        title: this.title,
+        details: this.details,
+        creation_date: this.creation_date,
+        close_date: this.close_date,
+        users: this.users,
+        acceptance_percentage: this.acceptance_percentage,
+        anonymity: true,
+      }; // CALL API
       this.clear();
       this.loading = false;
     },
     clear() {
-        this.$v.$reset();
-        this.title = '';
-        this.details = '';
-        this.creation_date = '';
-        this.close_date = '';
-        this.acceptance_percentage = 50;
+      this.$v.$reset();
+      this.title = '';
+      this.details = '';
+      this.creation_date = '';
+      this.close_date = '';
+      this.acceptance_percentage = 50;
     },
-    createQuestion(){
-      const newQuestion = {'question': '','options':[
-              {'option': 'Muy en contra',
-              'value': 1},
-              {'option': 'En contra',
-              'value': 2},
-              {'option': 'Neutral',
-              'value': 3},
-              {'option': 'A favor',
-              'value': 4},
-              {'option': 'Muy a favor',
-              'value': 5},
-            ]};
-      this.questions.push(newQuestion)
+    createQuestion() {
+      const newQuestion = {
+        question: '',
+        options: [
+          {
+            option: 'Muy en contra',
+            value: 1,
+          },
+          {
+            option: 'En contra',
+            value: 2,
+          },
+          {
+            option: 'Neutral',
+            value: 3,
+          },
+          {
+            option: 'A favor',
+            value: 4,
+          },
+          {
+            option: 'Muy a favor',
+            value: 5,
+          },
+        ],
+      };
+      this.questions.push(newQuestion);
     },
-    deleteQuestion(order){
+    deleteQuestion(order) {
       this.$delete(this.questions, order);
     },
-    createOption(order){
-      const newOption = {'option': '','value': 0};
+    createOption(order) {
+      const newOption = { option: '', value: 0 };
       this.questions[order].options.push(newOption);
     },
-    deleteOption(order, index){
+    deleteOption(order, index) {
       this.$delete(this.questions[order].options, index);
     },
-    async addUser(email){
-      let data = await api.userExistsByMail(email);
-      if(data){
-        for(var i=0; i < this.users.length; i++){
-          if( this.users[i] === email){
-            console.log("User is already in the list");
-            return
+    async addUser(userMail) {
+      const data = await api.userExistsByMail(userMail);
+      if (data) {
+        for (let i = 0; i < this.users.length; i += 1) {
+          if (this.users[i] === userMail) {
+            console.log('User is already in the list');
+            return;
           }
         }
-        this.users.push(email);
+        this.users.push(userMail);
         this.addingUser = '';
-      }else{
-        console.log("User does not exists");
+      } else {
+        console.log('User does not exists');
       }
     },
-    deleteUser(index){
+    deleteUser(index) {
       this.$delete(this.users, index);
     },
   },
