@@ -32,6 +32,14 @@
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
           ></v-text-field>
+          <v-text-field
+            v-model="phone"
+            :error-messages="phoneErrors"
+            label="Phone number"
+            required
+            @input="$v.phone.$touch()"
+            @blur="$v.phone.$touch()"
+          ></v-text-field>
 
           <v-btn @click="submit">submit</v-btn>
           <v-btn @click="clear">clear</v-btn>
@@ -44,23 +52,22 @@
             indeterminate
           ></v-progress-circular>
         <v-dialog
-          v-model="dialog"
+          v-model="endDialog"
           width="500"
-          >
+        >
           <v-card>
             <v-card-title
               class="headline grey lighten-2"
               primary-title
-            >
-              Operacion realizada
-            </v-card-title>
+            >Operación realizada</v-card-title>
             <v-card-text v-if="success">
               Nuevo usuario creado <br>
-              First name: {{response.data.profile.firstName}} <br>
-              Last name: {{response.data.profile.lastName}} <br>
-              Email: {{response.data.profile.email}}
+              First name: {{response.firstName}} <br>
+              Last name: {{response.lastName}} <br>
+              Email: {{response.email}}
             </v-card-text>
             <v-card-text v-else>
+              El usuario ya existe o hubo un error interno.
               Error, contacta al administrador
             </v-card-text>
             <v-divider></v-divider>
@@ -69,10 +76,8 @@
               <v-btn
                 color="primary"
                 flat
-                @click="response = ''"
-              >
-                Ok
-              </v-btn>
+                @click="removeDialog()"
+              >Ok</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -83,8 +88,11 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import { required, maxLength, email } from 'vuelidate/lib/validators';
+import {
+  required, maxLength, email, numeric,
+} from 'vuelidate/lib/validators';
 import api from '@/api';
+import constants from '../utils/strings';
 
 export default {
   mixins: [validationMixin],
@@ -93,6 +101,7 @@ export default {
     fname: { required, maxLength: maxLength(15) },
     lname: { required, maxLength: maxLength(15) },
     email: { required, email },
+    phone: { required, numeric },
   },
 
   data() {
@@ -100,8 +109,10 @@ export default {
       fname: '',
       lname: '',
       email: '',
+      phone: '',
       response: '',
       loading: false,
+      endDialog: false,
     };
   },
 
@@ -127,27 +138,39 @@ export default {
       if (!this.$v.email.required) errors.push('E-mail is required');
       return errors;
     },
-    dialog() {
-      return this.response !== '';
+    phoneErrors() {
+      const errors = [];
+      if (!this.$v.phone.$dirty) return errors;
+      if (!this.$v.phone.numeric) errors.push('Must be valid phone number');
+      if (!this.$v.phone.required) errors.push('Phone number is required');
+      return errors;
     },
     success() {
-      return this.response.data;
+      return this.response !== constants.API_ERROR;
     },
   },
 
   methods: {
     async submit() {
       this.$v.$touch();
-      this.loading = true;
-      this.response = await api.postUser(this.fname, this.lname, this.email);
-      this.clear();
-      this.loading = false;
+      if (!this.$v.$invalid) {
+        this.loading = true;
+        this.response = await api.postUser(this.fname, this.lname, this.email, this.phone);
+        this.clear();
+        this.loading = false;
+        this.endDialog = true;
+      }
     },
     clear() {
       this.$v.$reset();
       this.fname = '';
       this.lname = '';
       this.email = '';
+      this.phone = '';
+    },
+    removeDialog() {
+      this.response = '';
+      this.endDialog = false;
     },
   },
 };

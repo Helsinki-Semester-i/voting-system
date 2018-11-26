@@ -32,7 +32,7 @@
             <v-list-tile-title>Register Panelist</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-if="isAdmin">
+        <v-list-tile to="/deletePanelist" v-if="isAdmin">
           <v-list-tile-action>
             <v-icon>delete</v-icon>
           </v-list-tile-action>
