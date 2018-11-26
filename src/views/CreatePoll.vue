@@ -186,7 +186,9 @@
             </v-card-title>
             <v-card-text v-if="success">
               Nueva votación creada <br>
-              Respuesta: {{response.data}} <br>
+              Titulo: {{response.data.title}} <br>
+              Fecha de inicio: {{response.data.creation_date}} <br>
+              Fecha de cierre: {{response.data.close_date}} <br>
             </v-card-text>
             <v-card-text v-else>
               Error, contacta al administrador
@@ -332,7 +334,7 @@ export default {
     async submit() {
       this.$v.$touch();
       this.loading = true;
-      let poll = {
+      const poll = {
         title: this.title,
         details: this.details,
         creation_date: this.creation_date,
@@ -361,23 +363,23 @@ export default {
         options: [
           {
             option_text: 'Muy en contra',
-            order_prioryty: 1,
+            order_priority: 1,
           },
           {
             option_text: 'En contra',
-            order_prioryty: 2,
+            order_priority: 2,
           },
           {
             option_text: 'Neutral',
-            order_prioryty: 3,
+            order_priority: 3,
           },
           {
             option_text: 'A favor',
-            order_prioryty: 4,
+            order_priority: 4,
           },
           {
             option_text: 'Muy a favor',
-            order_prioryty: 5,
+            order_priority: 5,
           },
         ],
       };
