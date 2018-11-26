@@ -35,7 +35,7 @@
               v-clipboard:error="onError"
               ><h1 class="display-4">{{code}}</h1></v-btn>
             </h1>
-            <br> <v-divider></v-divider> <br>
+            <br> <v-divider></v-divider>
             <v-btn
               to="/"
             >Continuar</v-btn>

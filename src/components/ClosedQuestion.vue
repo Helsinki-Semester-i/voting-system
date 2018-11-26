@@ -1,13 +1,17 @@
 <template>
-  <v-radio-group v-model="selectedAnswer">
-    <h5 class="headline">{{question.question}}</h5>
-    <v-radio v-for="(answer, index) in question.answers" :key="index"
-    :label="answer"
-    :value="index"
-    :disabled="disabled"
-    >
-    </v-radio>
-  </v-radio-group>
+    <v-card>
+      <v-container fluid grid-list-md>
+        <v-layout row wrap>
+          <v-radio-group class=" font-weight-medium align-start white black--text" v-model="selectedAnswer">
+           <h5 class="headline ">{{question.question}}</h5>
+            <v-layout v-for="(answer, index) in question.options" :key="index">
+              <v-radio :label ="answer.option_text" :value="index" :disabled="disabled">
+              </v-radio>
+            </v-layout>
+          </v-radio-group>
+          </v-layout>
+        </v-container>
+      </v-card>
 </template>
 
 <script>

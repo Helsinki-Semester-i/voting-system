@@ -3,12 +3,14 @@
     <v-layout align-center>
       <v-flex xs6 offset-xs2>
         <v-form>
-          <h3 class="display-2">{{poll.title}}</h3>
+          <h3 class="font-weight-bold display-2">{{poll.title}}</h3>
+           <br >
           <div v-for="question in questions" :key="question.id">
             <closed-question :question="question" :disabled="false" />
+             <br/>
           </div>
           <v-dialog v-model="dialog" persistent max-width="290">
-            <v-btn slot="activator" color="primary" dark>Submit</v-btn>
+            <v-btn slot="activator" color="flat dark" dark>Submit</v-btn>
             <v-card>
               <v-card-title class="headline" primary-title="">
                 Estas seguro de tu desicion?
@@ -71,7 +73,7 @@ export default {
   methods: {
     async getPollData() {
       const { id } = this.$route.params;
-      this.poll = await api.test_getSinglePoll(id);
+      this.poll = await api.getPoll(id);
       this.questions = this.poll.questions;
     },
   },

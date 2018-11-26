@@ -93,6 +93,16 @@ export default {
     }catch(err){
       return false;
     }
+  },
+  async getPoll(id){
+    let response = await this.execute('get', 'polls/'+id);
+    try{
+      console.log(response.data);
+      let check = response.data.id;
+      return response.data;
+    }catch(err){
+      return constants.API_ERROR;
+    }
   }
 };
 
