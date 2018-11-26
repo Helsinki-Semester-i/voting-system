@@ -5,8 +5,8 @@
         <v-form>
           <h3 class="font-weight-bold display-2">{{poll.title}}</h3>
            <br >
-          <div v-for="question in questions" :key="question.id">
-            <closed-question :question="question" :disabled="false" />
+          <div v-for="(question,index) in questions" :key="question.id">
+            <closed-question :question="question" :disabled="false" :index="index" @changeAnswer="changeAnswer" />
              <br/>
           </div>
           <v-dialog v-model="dialog" persistent max-width="290">
@@ -75,7 +75,15 @@ export default {
       const { id } = this.$route.params;
       this.poll = await api.getPoll(id);
       this.questions = this.poll.questions;
+      for(let i in this.questions){
+       this.questions[i]['response']='';
+      }
     },
+    changeAnswer(index, value){
+      this.questions[index].response=value;
+      console.log(this.poll);
+      
+    }
   },
   watch: {
     loadingDialog(val) {
