@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 sm6 offset-sm3>
+  <v-flex xs12 >
     <v-card
     @click="selectPoll"
     :color="asignColor"
@@ -15,7 +15,7 @@
         </div>
       </v-card-title>
       <v-divider light></v-divider>
-      <v-card-actions>
+      <v-card-actions align-end>
         <router-link v-if="available" :to="`/polls/${poll.id}`">
           <v-btn flat color="orange">
             Participar
@@ -37,6 +37,16 @@
     </v-card>
   </v-flex>
 </template>
+
+
+<style>
+.votaciones{
+
+  min-height: 200px
+}
+
+</style>
+
 
 <script>
 export default{
@@ -64,9 +74,9 @@ export default{
   computed: {
     asignColor() {
       if (this.poll.participation) {
-        return 'pink darken-4';
+        return 'red lighten-1';
       }
-      return 'deep-purple darken-1';
+      return 'light-green lighten-1';
     },
     available() {
       return !this.poll.participation && this.poll.active;
