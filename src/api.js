@@ -1,7 +1,6 @@
 /* eslint-disable */
 import Vue from 'vue';
 import axios from 'axios';
-import constants from './utils/strings';
 
 const client = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL,
@@ -9,7 +8,7 @@ const client = axios.create({
 });
 
 export default {
-  async execute (method, resource, data, params) {
+  async execute (method, resource, data) {
     let accessToken = await Vue.prototype.$auth.getAccessToken();
     return client({
       method,
@@ -18,54 +17,12 @@ export default {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
-      params,
-    }).then(response => {
-      return response;
-    }).catch(err => {
-      return err;
-    });
+    }).then(req => {
+      return req.data
+    })
   },
-  async postUser(fname, lname, email, phone) {
-    let groupId = process.env.VUE_APP_PANELIST_ID;
-    const newOktaUser = {
-      profile: {
-        firstName: fname,
-        lastName: lname,
-        email,
-        login: email,
-      },
-      groupIds: [
-        groupId,
-      ],
-    };
-    const wikiUser = {
-      first_name: fname,
-      last_name: lname,
-      email,
-      phone,
-    };
-    let oktaResponse = await this.execute('post', '/oauth', newOktaUser, { activate: true });
-    let wikiApiResponse = await this.execute('post', '/users', wikiUser);
-    try {
-      let { profile } = oktaResponse.data;
-      let { phone } = wikiApiResponse; // Try to throw error if 'phone' atribute does not exists
-      return profile;
-    } catch(err) {
-      return constants.API_ERROR;
-    }
-  },
-  async deleteUser(email) {
-    let oktaResponse = await this.execute('get', `/oauth/${email}`);
-    let wikiUserData = await this.execute('get', `/users/${email}`);
-    try {
-      let { id } = oktaResponse.data;
-      let wikiId = wikiUserData.id;
-      await this.execute('delete', `/oauth/${id}`);
-      await this.execute('delete', `/users/${wikiId}`);
-      return id;
-    } catch (err) {
-      return constants.API_ERROR;
-    }
+  getParts() {
+    return this.execute('get', '/parts');
   },
   test_getSinglePoll(id) {
     return USERPOLLS[id-1];
@@ -166,7 +123,7 @@ const VOTECODETEST = {
           3: 'Neutral',
         },
       },
-      answer_id: '1',
+      answer_id: 1,
     },
     {
       question: {
@@ -179,7 +136,7 @@ const VOTECODETEST = {
           3: 'Neutral',
         },
       },
-      answer_id: '2',
+      answer_id: 2,
     },
 
   ],

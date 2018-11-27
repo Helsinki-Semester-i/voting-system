@@ -7,5 +7,4 @@ export default Object.freeze({
     demoBodyResults: 'Te enseñaremos a utilizar la plataforma para ver los resultados de una votación y verificar tu voto con el código único que se te proporciona al finalizar una votación.',
     demoLinkResults: 'Demo para ver resultados',
   },
-  API_ERROR: 'ERROR_API_WIKI',
 });
