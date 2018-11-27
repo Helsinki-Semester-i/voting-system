@@ -1,18 +1,17 @@
 <template>
-    <v-card>
-      <v-container fluid grid-list-md>
-        <v-layout row wrap>
-           <h5 class="headline ">{{question.question}}</h5>
-          <v-radio-group class=" font-weight-medium align-start white black--text" v-model="selectedAnswer" @click="selectAnswer(selectedAnswer)">
-              <v-radio 
-              v-for="(answer, index) in question.options" :key="index"
-               :label ="answer.option_text" :value="answer.order_priority" >
-              </v-radio>
-          </v-radio-group>
-          <h1>{{selectedAnswer}}</h1>
-          </v-layout>
-        </v-container>
-      </v-card>
+  <div>
+    <h5>{{question.question}}</h5>
+    <form action="#">
+      <p v-for="(answer, index) in question.answers" :key="index">
+        <label>
+          <input v-if="checkedAnswer == index" checked
+          :name="question.id" type="radio" :disabled="disabled" />
+          <input v-else :name="question.id" type="radio" :disabled="disabled" />
+          <span>{{answer}}</span>
+        </label>
+      </p>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -25,24 +24,9 @@ export default {
     disabled: {
       type: Boolean,
     },
-    index:{
-      type: Number,
-      required: true,
-    },
     checkedAnswer: {
-      type: String,
+      type: Number,
     },
   },
-  data() {
-    return {
-      selectedAnswer: this.checkedAnswer,
-    };
-  },
-  methods:{
-    selectAnswer(value){
-      console.log(value);
-      this.$emit('changeAnswer',this.index,value);
-    }
-  }
 };
 </script>

@@ -4,19 +4,35 @@
       <h1 class="display-3">You are:</h1>
       <p class="lead">{{activeUser}}</p>
     </div>
+    <br>
+    <div>
+      <h1 class="display-3" v-show="loading">Loading...</h1>
+      <p class="lead">{{parts}}</p>
+    </div>
   </div>
 </template>
 
 <script>
+import api from '@/api';
 
 export default {
   data() {
     return {
       activeUser: null,
+      parts: [],
+      loading: false,
     };
+  },
+  methods: {
+    async refreshInfo() {
+      this.loading = true;
+      this.parts = await api.getParts();
+      this.loading = false;
+    },
   },
   async created() {
     this.activeUser = await this.$auth.getUser();
+    this.refreshInfo();
   },
 };
 </script>
