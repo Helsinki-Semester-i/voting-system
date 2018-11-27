@@ -97,19 +97,16 @@ export default {
   async getPoll(id){
     let response = await this.execute('get', 'polls/'+id);
     try{
-      console.log(response.data);
-      let check = response.data.id;
+      response.data.id;
       return response.data;
     }catch(err){
       return constants.API_ERROR;
     }
   },
   async submitVote(poll){
-    console.log(poll);
     let response = await this.execute('post', 'votes/', poll);
     try{
-      console.log(response.data);
-      return response.data;
+      return response.data.rows[0];
     }catch(err){
       return constants.API_ERROR;
     }
