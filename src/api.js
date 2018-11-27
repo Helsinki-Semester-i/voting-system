@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Vue from 'vue';
 import axios from 'axios';
+import constants from './utils/strings';
 
 const client = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL,
@@ -8,7 +9,7 @@ const client = axios.create({
 });
 
 export default {
-  async execute (method, resource, data) {
+  async execute (method, resource, data, params) {
     let accessToken = await Vue.prototype.$auth.getAccessToken();
     return client({
       method,
@@ -17,12 +18,54 @@ export default {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
-    }).then(req => {
-      return req.data
-    })
+      params,
+    }).then(response => {
+      return response;
+    }).catch(err => {
+      return err;
+    });
   },
-  getParts() {
-    return this.execute('get', '/parts');
+  async postUser(fname, lname, email, phone) {
+    let groupId = process.env.VUE_APP_PANELIST_ID;
+    const newOktaUser = {
+      profile: {
+        firstName: fname,
+        lastName: lname,
+        email,
+        login: email,
+      },
+      groupIds: [
+        groupId,
+      ],
+    };
+    const wikiUser = {
+      first_name: fname,
+      last_name: lname,
+      email,
+      phone,
+    };
+    let oktaResponse = await this.execute('post', '/oauth', newOktaUser, { activate: true });
+    let wikiApiResponse = await this.execute('post', '/users', wikiUser);
+    try {
+      let { profile } = oktaResponse.data;
+      let { phone } = wikiApiResponse; // Try to throw error if 'phone' atribute does not exists
+      return profile;
+    } catch(err) {
+      return constants.API_ERROR;
+    }
+  },
+  async deleteUser(email) {
+    let oktaResponse = await this.execute('get', `/oauth/${email}`);
+    let wikiUserData = await this.execute('get', `/users/${email}`);
+    try {
+      let { id } = oktaResponse.data;
+      let wikiId = wikiUserData.id;
+      await this.execute('delete', `/oauth/${id}`);
+      await this.execute('delete', `/users/${wikiId}`);
+      return id;
+    } catch (err) {
+      return constants.API_ERROR;
+    }
   },
   test_getSinglePoll(id) {
     return USERPOLLS[id-1];
@@ -36,6 +79,31 @@ export default {
   test_getVote(unique_code){
     return VOTECODETEST;
   },
+  async createPoll(poll){
+    return this.execute('post', '/polls', poll);
+  },
+  async userExistsByMail(email){
+    console.log("executing query");
+    let response = await this.execute('get', 'users/byMail/'+email);
+    console.log(response);
+    try{
+      console.log(response.data);
+      let check = response.data.id;
+      return true;
+    }catch(err){
+      return false;
+    }
+  },
+  async getPoll(id){
+    let response = await this.execute('get', 'polls/'+id);
+    try{
+      console.log(response.data);
+      let check = response.data.id;
+      return response.data;
+    }catch(err){
+      return constants.API_ERROR;
+    }
+  }
 };
 
 const VOTES_FOR_POLL_TEST = [
@@ -88,7 +156,7 @@ const VOTECODETEST = {
           3: 'Neutral',
         },
       },
-      answer_id: 1,
+      answer_id: '1',
     },
     {
       question: {
@@ -101,7 +169,7 @@ const VOTECODETEST = {
           3: 'Neutral',
         },
       },
-      answer_id: 2,
+      answer_id: '2',
     },
 
   ],
