@@ -80,8 +80,10 @@ export default {
   watch: {
     loadingDialog(val) {
       if (!val) return;
-      setTimeout(() => {
+      setTimeout( async () => {
         this.loadingDialog = false;
+        let data = await api.submitVote(this.poll);
+        console.log("Vote submited with code " + data);
         this.$router.push({ path: '/displaycode' });
       }, 4000);
     },

@@ -103,6 +103,16 @@ export default {
     }catch(err){
       return constants.API_ERROR;
     }
+  },
+  async submitVote(poll){
+    console.log(poll);
+    let response = await this.execute('post', 'votes/', poll);
+    try{
+      console.log(response.data);
+      return response.data;
+    }catch(err){
+      return constants.API_ERROR;
+    }
   }
 };
 
