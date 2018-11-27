@@ -1,26 +1,34 @@
 <template>
-  <div>
-    <div class="section container">
-      <h1 class="center-align section">Tus votaciones abiertas</h1>
-      <div :key="poll.id" v-for="poll in completedPolls">
+  <v-card>
+    <v-container
+      fluid
+      grid-list-md>
+      <h3 class="text-xs-center display-2">Tus votaciones abiertas</h3>
+      <v-layout row wrap>
+      <v-flex xs4 :key="poll.id" v-for="poll in completedPolls">
         <PollCard :poll=poll :details=false />
-      </div>
-      <div :key="poll.id" v-for="poll in pendingPolls">
+      </v-flex>
+      <v-flex xs4 :key="poll.id" v-for="poll in pendingPolls">
         <PollCard :poll=poll :details=false />
-      </div>
-    </div>
-    <br/><br/><br/>
-    <div class="divider"></div>
-    <div class="section container">
-      <h1 class="center-align section">Historial</h1>
-      <div :key="poll.id" v-for="poll in closedPolls">
-        <PollCard :poll=poll :details=false />
-      </div>
-    </div>
-  </div>
-</template>
-<script>
+      </v-flex>
+      </v-layout>
+    </v-container>
 
+    <v-container
+      fluid
+      grid-list-lg>
+      <h3 class="text-xs-center display-2">Historial</h3>
+       <v-layout row wrap>
+      <v-flex xs4 :key="poll.id" v-for="poll in closedPolls">
+        <PollCard :poll=poll :details=false />
+      </v-flex>
+       </v-layout>
+    </v-container>
+  </v-card>
+</template>
+
+
+<script>
 import api from '@/api';
 import PollCard from '../components/PollCardInformation.vue';
 
