@@ -1,59 +1,50 @@
 <template>
-  <v-container grid-list-lg >
-    <v-layout >
-      <v-flex d-flex  >
-       <v-carousel hide-delimiters height=515>
-        <v-carousel-item 
-          v-for="(item) in images" 
-          :key="item.id" 
-          :src="item.ImageUrl"
-          >
-        </v-carousel-item>
-       </v-carousel>
-      </v-flex>
-      <v-flex xs3>
-        <v-layout row wrap>
-          <v-flex d-flex>
-            <v-card color=#33B2AB class="white--text">
-              <v-card-title primary-title>
-                <div class="headline">{{demoTitleVote}}</div>
-              </v-card-title>
-              <v-card-text>
-                <div>{{demoBodyVote}}</div>
-              </v-card-text>
-              <v-card-actions>  
-                <v-btn  to="/polls"> {{demoLinkVote}}</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-          <v-flex d-flex>
-            <v-card color=#33B2AB class="white--text">
-              <v-card-title primary-title>
-                <div class="headline">{{demoTitleResults}}</div>
-                <div>{{demoBodyResults}}</div>
-              </v-card-title>
-              <v-card-actions>
-                  <v-btn  to="/result/1"> {{demoLinkResults}}</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <div class="container">
+    <div class="row">
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="col s9 center-align">
+        <h1>Hello World</h1>
+        <p>This is the homepage of your vue app</p>
+      </div>
+      <div class="col s3">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">{{demoTitleVote}}</span>
+            <p>{{demoBodyVote}}</p>
+          </div>
+          <div class="card-action">
+            <router-link
+            to="/polls">
+            {{demoLinkVote}}
+            </router-link>
+          </div>
+        </div>
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">{{demoTitleResults}}</span>
+            <p>{{demoBodyResults}}</p>
+          </div>
+          <div class="card-action">
+            <router-link
+            to="/result/1">
+            {{demoLinkResults}}
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import HomeData from '../utils/strings';
 
-
 export default {
   data() {
     return {
-      images: [{ImageUrl: 'http://wikipolitica.mx/wp-content/uploads/2017/04/14517450_1944055979161091_3312439522179145193_n.jpg', 
-      id:'1'},{ImageUrl: 'http://olgapalacios.mx/media/images/backgrounds/02.jpg',
-      id:'2'},{ImageUrl: 'https://www.debate.com.mx/__export/1525550571865/sites/debate/img/2018/05/05/dubytkfvmaapne1.jpg_423682103.jpg',
-      id:'3'}],
       demoTitleVote: HomeData.HOME_PAGE.demoTitleVote,
       demoBodyVote: HomeData.HOME_PAGE.demoBodyVote,
       demoLinkVote: HomeData.HOME_PAGE.demoLinkVote,
