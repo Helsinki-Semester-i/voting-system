@@ -82,8 +82,17 @@ export default {
   async createPoll(poll){
     return this.execute('post', '/polls', poll);
   },
+  async getUserByMail(email){
+    let response = await this.execute('get', 'users/byMail/'+email);
+    console.log(response);
+    try{
+      console.log(response.data);
+      return response.data;
+    }catch(err){
+      return constants.API_ERROR;
+    }
+  },
   async userExistsByMail(email){
-    console.log("executing query");
     let response = await this.execute('get', 'users/byMail/'+email);
     console.log(response);
     try{

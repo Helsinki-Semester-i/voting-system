@@ -18,6 +18,8 @@ import AddPanelistComponent from './views/ThePanelistRegistrationForm.vue';
 import RemovePanelistComponent from './views/TheDeletePanelistView.vue';
 import CreatePollComponent from './views/CreatePoll.vue';
 
+import api from './api';
+
 Vue.use(Router);
 Vue.use(Auth, {
   issuer: process.env.VUE_APP_AUTH_ISSUER,
@@ -48,10 +50,18 @@ const router = new Router({
     {
       path: '/polls',
       component: PollsViewComponent,
+      meta: {
+        requiresAuth: true,
+        panelistAuth: true,
+      },
     },
     {
       path: '/polls/:id',
       component: PollComponent,
+      meta: {
+        requiresAuth: true,
+        panelistAuth: true,
+      },
     },
     {
       path: '/result/:id',
@@ -60,6 +70,10 @@ const router = new Router({
     {
       path: '/vote',
       component: EnterCodeComponent,
+      meta: {
+        requiresAuth: true,
+        panelistAuth: true,
+      },
     },
     {
       path: '/vote/:unique_code',
@@ -114,7 +128,16 @@ const onAuthRequired = async (to, from, next) => {
     } else {
       next({ path: '/accessDenied' });
     }
-  } 
+  }else if (to.meta.panelistAuth){
+    const authUser = await Vue.prototype.$auth.getUser();
+    const isUserInDB = await api.userExistsByMail(authUser.email);
+    if (authUser.groups.includes(userGroups.panelistGroup) 
+    &&  isUserInDB) {
+      next();
+    } else {
+      next({ path: '/accessDenied' });
+    }
+  }
   else {
     next();
   }

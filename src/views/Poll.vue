@@ -65,10 +65,11 @@ export default {
       questions: [],
       dialog: false,
       loadingDialog: false,
+      activeUser: null,
     };
   },
   async created() {
-    this.getPollData();
+    await this.getPollData();
   },
   methods: {
     async getPollData() {
