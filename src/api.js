@@ -140,7 +140,6 @@ export default {
       return constants.API_ERROR;
     }
   },
-<<<<<<< HEAD
   async getPollResults(id){
     let response = await this.execute('get', 'results/' + id);
     try{
@@ -150,7 +149,6 @@ export default {
       return constants.API_ERROR;
     }
   },
-=======
   async getVoteByCode(code){
     let response = await this.execute('get', 'votes/'+code);
     try{
@@ -162,7 +160,6 @@ export default {
       return constants.API_ERROR;
     }
   }
->>>>>>> b5dbfd5d54aa043cb4ce96a51660b872421876bf
 };
 
 const VOTES_FOR_POLL_TEST = [
