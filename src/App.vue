@@ -48,12 +48,28 @@
             <v-list-tile-title>Crear Votacion</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-         <v-list-tile to="/polls" v-if="authenticated && !isAdmin">
+        <v-list-tile to="/polls" v-if="authenticated && !isAdmin">
           <v-list-tile-action>
             <v-icon>dashboard</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Mis votaciones</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile to="/history" v-if="authenticated && !isAdmin">
+          <v-list-tile-action>
+            <v-icon>assignment</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Historial</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile to="/vote" v-if="authenticated && !isAdmin">
+          <v-list-tile-action>
+            <v-icon>find_in_page</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Ver voto</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>

@@ -9,13 +9,15 @@
         >
           <v-radio
             v-for="(answer, index) in question.options" :key="index"
-            :label ="answer.option_text" :value="answer.order_priority" >
+            :label ="answer.option_text" :value="answer.order_priority"
+            :disabled="isResult" >
           </v-radio>
         </v-radio-group>
       </v-layout>
       <v-checkbox
-      :label="`Anular Voto: ${nullVote.toString()}`"
+      :label="'Anular voto'"
       v-model="nullVote"
+      :disabled="isResult"
       ></v-checkbox>
     </v-container>
   </v-card>
@@ -36,18 +38,27 @@ export default {
       required: true,
     },
     checkedAnswer: {
-      type: String,
+      type: Number,
+    },
+    viewAsResult: {
+      type: Boolean,
     },
   },
   data() {
     return {
       selectedAnswer: this.checkedAnswer,
       nullVote: false,
+      isResult: this.viewAsResult,
     };
+  },
+  async created() {
+    if (this.isResult && this.selectedAnswer === null) {
+      this.nullVote = true;
+    }
   },
   methods: {
     selectAnswer(value) {
-      if (this.nullVote) {
+      if (this.nullVote && !this.isResult) {
         this.$emit('changeAnswer', this.index, null);
       }
       this.$emit('changeAnswer', this.index, value);

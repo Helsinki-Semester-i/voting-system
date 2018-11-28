@@ -2,16 +2,13 @@
   <v-card>
     <v-container
       fluid
-      grid-list-md>
-      <h3 class="text-xs-center display-2">Tus votaciones abiertas</h3>
-      <v-layout row wrap>
-      <v-flex xs4 :key="poll.id" v-for="poll in completedPolls">
+      grid-list-lg>
+      <h3 class="text-xs-center display-2">Historial</h3>
+       <v-layout row wrap>
+      <v-flex xs4 :key="poll.id" v-for="poll in closedPolls">
         <PollCard :poll=poll :details=false />
       </v-flex>
-      <v-flex xs4 :key="poll.id" v-for="poll in pendingPolls">
-        <PollCard :poll=poll :details=false />
-      </v-flex>
-      </v-layout>
+       </v-layout>
     </v-container>
   </v-card>
 </template>
@@ -35,11 +32,8 @@ export default {
     this.getUserPolls();
   },
   computed: {
-    completedPolls() {
-      return this.polls.filter(poll => !this.participated(poll) && this.pollActive(poll));
-    },
-    pendingPolls() {
-      return this.polls.filter(poll => this.participated(poll) && this.pollActive(poll));
+    closedPolls() {
+      return this.polls.filter(poll => !this.pollActive(poll));
     },
   },
   methods: {
@@ -47,9 +41,6 @@ export default {
       const loggedUser = await this.$auth.getUser();
       const user = await api.getUserByMail(loggedUser.email);
       this.polls = await api.getUserPolls(user.id);
-    },
-    participated(poll) {
-      return (poll.vote_status === 'voted');
     },
     pollActive(poll) {
       let today = new Date();
