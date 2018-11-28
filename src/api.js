@@ -139,7 +139,16 @@ export default {
     }catch(err){
       return constants.API_ERROR;
     }
-  }
+  },
+  async getPollResults(id){
+    let response = await this.execute('get', 'results/' + id);
+    try{
+      response.data.id;
+      return response.data;
+    }catch(err){
+      return constants.API_ERROR;
+    }
+  },
 };
 
 const VOTES_FOR_POLL_TEST = [
