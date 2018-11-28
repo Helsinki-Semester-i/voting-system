@@ -56,7 +56,6 @@ export default {
   },
   data() {
     return {
-      // code = 'AGHAYWE',
       copyError: false,
       copySuccess: false,
     };
