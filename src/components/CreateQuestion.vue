@@ -101,7 +101,8 @@ export default {
     /* optionErrors() {
       const errors = [];
       if (!this.$v.option.$dirty) return errors;
-      if (!this.$v.option.maxLength) errors.push('El texto de la opción debe de ser maximo de 30 caracteres.');
+      if (!this.$v.option.maxLength)
+      errors.push('El texto de la opción debe de ser maximo de 30 caracteres.');
       if (!this.$v.option.required) errors.push('El texto de la opción es requerido.');
       return errors;
     },

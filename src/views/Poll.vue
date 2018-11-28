@@ -6,7 +6,8 @@
           <h3 class="font-weight-bold display-2">{{poll.title}}</h3>
            <br >
           <div v-for="(question,index) in questions" :key="question.id">
-            <closed-question :question="question" :disabled="false" :index="index" @changeAnswer="changeAnswer" />
+            <closed-question :question="question" :disabled="false"
+              :index="index" @changeAnswer="changeAnswer" />
              <br/>
           </div>
           <v-dialog v-model="dialog" persistent max-width="290">
@@ -76,21 +77,22 @@ export default {
       const { id } = this.$route.params;
       this.poll = await api.getPoll(id);
       this.questions = this.poll.questions;
-      for(let i in this.questions){
-       this.questions[i]['response']=null;
+      /* eslint-disable */
+      for (const i in this.questions) {
+        this.questions[i].response = null;
       }
     },
-    changeAnswer(index, value){
-      this.questions[index].response=value;
-    }
+    changeAnswer(index, value) {
+      this.questions[index].response = value;
+    },
   },
   watch: {
     loadingDialog(val) {
       if (!val) return;
-      setTimeout( async () => {
+      setTimeout(async () => {
         this.loadingDialog = false;
-        let data = await api.submitVote(this.poll);
-        console.log("Vote submited with code " + data.unique_code);
+        const data = await api.submitVote(this.poll);
+        console.log(`Vote submited with code ${data.unique_code}`);
         this.$router.push({ path: '/displaycode' });
       }, 4000);
     },

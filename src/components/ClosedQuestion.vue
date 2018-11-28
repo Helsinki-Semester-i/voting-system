@@ -3,10 +3,13 @@
       <v-container fluid grid-list-md>
         <v-layout row wrap>
            <h5 class="headline ">{{question.question}}</h5>
-             <v-radio-group class=" font-weight-medium align-start white black--text" v-model="selectedAnswer" @click="selectAnswer(selectedAnswer)">
-              <v-radio 
-              v-for="(answer, index) in question.options" :key="index"
-               :label ="answer.option_text" :value="answer.order_priority" >
+              <v-radio-group class=" font-weight-medium align-start white black--text"
+                v-model="selectedAnswer"
+                @click="selectAnswer(selectedAnswer)"
+              >
+              <v-radio
+                v-for="(answer, index) in question.options" :key="index"
+                :label ="answer.option_text" :value="answer.order_priority" >
               </v-radio>
           </v-radio-group>
           </v-layout>
@@ -24,7 +27,7 @@ export default {
     disabled: {
       type: Boolean,
     },
-    index:{
+    index: {
       type: Number,
       required: true,
     },
@@ -37,10 +40,10 @@ export default {
       selectedAnswer: this.checkedAnswer,
     };
   },
-  methods:{
-    selectAnswer(value){
-      this.$emit('changeAnswer',this.index,value);
-    }
-  }
+  methods: {
+    selectAnswer(value) {
+      this.$emit('changeAnswer', this.index, value);
+    },
+  },
 };
 </script>
