@@ -9,8 +9,8 @@
         <div>
           <div class="headline">{{poll.title}}</div>
           <span class="grey--text">
-              <p v-if="poll.active">cierra el: {{poll.closeDate}}</p>
-              <p v-else>Cerró el: {{poll.closeDate}}</p>
+              <p v-if="pollActive">cierra el: {{poll.close_date}}</p>
+              <p v-else>Cerró el: {{poll.close_date}}</p>
           </span>
         </div>
       </v-card-title>
@@ -41,7 +41,6 @@
 
 <style>
 .votaciones{
-
   min-height: 200px
 }
 
@@ -73,17 +72,34 @@ export default{
   },
   computed: {
     asignColor() {
-      if (this.poll.participation) {
+      if (this.participated) {
         return 'red lighten-1';
       }
       return 'light-green lighten-1';
     },
     available() {
-      return !this.poll.participation && this.poll.active;
+      return (this.participated === false) && this.pollActive;
     },
     participated() {
-      return this.poll.participation;
+      return (this.poll.vote_status === 'voted');
     },
+    pollActive(){
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+
+      if(dd<10) {
+          dd = '0'+dd
+      } 
+
+      if(mm<10) {
+          mm = '0'+mm
+      } 
+
+      today = yyyy + '/' + mm + '/' + dd;
+      return new Date(today) < new Date(this.poll.close_date);
+    }
   },
 };
 </script>

@@ -47,13 +47,13 @@ export default {
   },
   computed: {
     completedPolls() {
-      return this.polls.filter(poll => !poll.participation && poll.active);
+      return this.polls.filter(poll => !this.participated(poll) && this.pollActive(poll));
     },
     pendingPolls() {
-      return this.polls.filter(poll => poll.participation && poll.active);
+      return this.polls.filter(poll => this.participated(poll) && this.pollActive(poll));
     },
     closedPolls() {
-      return this.polls.filter(poll => !poll.active);
+      return this.polls.filter(poll => !this.pollActive(poll));
     },
   },
   methods: {
@@ -61,7 +61,29 @@ export default {
       this.side = !this.side;
     },
     async getUserPolls() {
-      this.polls = await api.test_getUserPolls();
+      const loggedUser = await this.$auth.getUser();
+      const user = await api.getUserByMail(loggedUser.email);
+      this.polls = await api.getUserPolls(user.id);
+    },
+    participated(poll) {
+      return (poll.vote_status === 'voted');
+    },
+    pollActive(poll){
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+
+      if(dd<10) {
+          dd = '0'+dd
+      } 
+
+      if(mm<10) {
+          mm = '0'+mm
+      } 
+
+      today = yyyy + '/' + mm + '/' + dd;
+      return new Date(today) < new Date(poll.close_date);
     },
   },
 };

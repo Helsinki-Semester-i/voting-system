@@ -79,7 +79,6 @@ export default {
       for(let i in this.questions){
        this.questions[i]['response']=null;
       }
-      console.log(this.poll.questions);
     },
     changeAnswer(index, value){
       this.questions[index].response=value;
