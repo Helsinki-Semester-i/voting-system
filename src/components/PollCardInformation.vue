@@ -8,9 +8,9 @@
       <v-card-title primary-title>
         <div>
           <div class="headline">{{poll.title}}</div>
-          <span class="grey--text">
-              <p v-if="pollActive">cierra el: {{poll.close_date}}</p>
-              <p v-else>Cerró el: {{poll.close_date}}</p>
+          <span >
+              <p class="red darken-4" v-if="pollActive">cierra el: {{cleanDate(poll.close_date)}}</p>
+              <p v-else>Cerró el: {{cleanDate(poll.close_date)}}</p>
           </span>
         </div>
       </v-card-title>
@@ -31,7 +31,7 @@
 
       <v-slide-y-transition>
         <v-card-text v-show="show">
-          {{poll.description}}
+          {{poll.details}}
         </v-card-text>
       </v-slide-y-transition>
     </v-card>
@@ -68,6 +68,17 @@ export default{
   methods: {
     selectPoll() {
       this.selected = !this.selected;
+    },
+    cleanDate(day){
+      var result = ' ';
+      for(var i = 0;i<day.length;i++){
+        
+        if(day.charAt(i) === 'T'){
+          
+          return result;
+        }
+        result+=day.charAt(i);
+      }
     },
   },
   computed: {
