@@ -17,6 +17,7 @@ import ShowCodeComponent from './components/submitVote.vue';
 import AddPanelistComponent from './views/ThePanelistRegistrationForm.vue';
 import RemovePanelistComponent from './views/TheDeletePanelistView.vue';
 import CreatePollComponent from './views/CreatePoll.vue';
+import HistoryDashboard from './views/History.vue';
 
 import api from './api';
 
@@ -50,6 +51,14 @@ const router = new Router({
     {
       path: '/polls',
       component: PollsViewComponent,
+      meta: {
+        requiresAuth: true,
+        panelistAuth: true,
+      },
+    },
+    {
+      path: '/history',
+      component: HistoryDashboard,
       meta: {
         requiresAuth: true,
         panelistAuth: true,

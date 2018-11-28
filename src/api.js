@@ -139,6 +139,18 @@ export default {
     }catch(err){
       return constants.API_ERROR;
     }
+  },
+  async getVoteByCode(code){
+    //42SsIthS
+    let response = await this.execute('get', 'votes/'+code);
+    try{
+      if(response.data){
+        return response.data;
+      }
+      return constants.API_ERROR;
+    }catch(err){
+      return constants.API_ERROR;
+    }
   }
 };
 
