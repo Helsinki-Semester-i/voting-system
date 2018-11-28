@@ -93,7 +93,8 @@ export default {
         this.loadingDialog = false;
         const data = await api.submitVote(this.poll);
         console.log(`Vote submited with code ${data.unique_code}`);
-        this.$router.push({ path: '/displaycode' });
+        this.$router.push({ name: 'uniqueCode' ,
+        params: { code: data.unique_code } } );
       }, 4000);
     },
   },

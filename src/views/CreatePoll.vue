@@ -241,7 +241,7 @@ export default {
       response: '',
       questions: [
         {
-          question: 'Escribe algo aqui',
+          question: '',
           options: [
             {
               option_text: 'Muy en contra',
@@ -266,16 +266,13 @@ export default {
           ],
         },
       ],
-      users: [
-        'jose18carl@gmail.com',
-        'andres@andres.com',
-        'estefycp@hotmail.com',
-        'gerajuarez@homail.com',
-        'papatri@gmail.com',
-      ],
+      users: [],
       addingUser: '',
       loading: false,
     };
+  },
+  async created() {
+    this.users = await this.getUsers();
   },
 
   computed: {
@@ -395,19 +392,20 @@ export default {
     deleteOption(order, index) {
       this.$delete(this.questions[order].options, index);
     },
+    async getUsers() {
+      const usersMails = await api.getUsersMails();
+      return usersMails;
+    },
     async addUser(userMail) {
       const data = await api.userExistsByMail(userMail);
       if (data) {
         for (let i = 0; i < this.users.length; i += 1) {
           if (this.users[i] === userMail) {
-            console.log('User is already in the list');
             return;
           }
         }
         this.users.push(userMail);
         this.addingUser = '';
-      } else {
-        console.log('User does not exists');
       }
     },
     deleteUser(index) {
