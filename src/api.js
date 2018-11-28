@@ -82,8 +82,17 @@ export default {
   async createPoll(poll){
     return this.execute('post', '/polls', poll);
   },
+  async getUserByMail(email){
+    let response = await this.execute('get', 'users/byMail/'+email);
+    console.log(response);
+    try{
+      console.log(response.data);
+      return response.data;
+    }catch(err){
+      return constants.API_ERROR;
+    }
+  },
   async userExistsByMail(email){
-    console.log("executing query");
     let response = await this.execute('get', 'users/byMail/'+email);
     console.log(response);
     try{
@@ -97,13 +106,28 @@ export default {
   async getPoll(id){
     let response = await this.execute('get', 'polls/'+id);
     try{
-      console.log(response.data);
-      let check = response.data.id;
+      response.data.id;
       return response.data;
     }catch(err){
       return constants.API_ERROR;
     }
-  }
+  },
+  async submitVote(poll){
+    let response = await this.execute('post', 'votes/', poll);
+    try{
+      return response.data;
+    }catch(err){
+      return constants.API_ERROR;
+    }
+  },
+  async getUserPolls(id){
+    let response = await this.execute('get', 'users/'+id);
+    try{
+      return response.data.polls;
+    }catch(err){
+      return constants.API_ERROR;
+    }
+  },
 };
 
 const VOTES_FOR_POLL_TEST = [

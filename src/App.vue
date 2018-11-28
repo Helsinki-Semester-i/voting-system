@@ -90,6 +90,7 @@
 
 <script>
 import userGroups from './utils/constants';
+import api from './api.js';
 
 export default {
   name: 'app',
@@ -98,6 +99,7 @@ export default {
       drawer: null,
       activeUser: null,
       authenticated: false,
+      session: null,
     };
   },
   created() {
