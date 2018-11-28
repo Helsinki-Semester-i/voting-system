@@ -82,6 +82,8 @@ const router = new Router({
     {
       path: '/displaycode',
       component: ShowCodeComponent,
+      props: true,
+      name: 'uniqueCode',
     },
     {
       path: '/implicit/callback',

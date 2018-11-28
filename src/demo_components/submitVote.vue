@@ -30,7 +30,7 @@
             <h1 class="display-4">
               <v-btn
               flat large color="info"
-              v-clipboard:copy="code"
+              v-clipboard:copy="this.code"
               v-clipboard:success="onCopy"
               v-clipboard:error="onError"
               ><h1 class="display-4">{{code}}</h1></v-btn>
@@ -48,9 +48,15 @@
 
 <script>
 export default {
+  props: {
+    code: {
+      type: String,
+      required: true, 
+    },
+  },
   data() {
     return {
-      code: 'TSLVHL',
+      //code = 'AGHAYWE',
       copyError: false,
       copySuccess: false,
     };
