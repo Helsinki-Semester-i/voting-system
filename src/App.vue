@@ -40,6 +40,14 @@
             <v-list-tile-title>Remove Panelist</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile to="/createPoll" v-if="isAdmin">
+          <v-list-tile-action>
+            <v-icon>create</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Crear Votacion</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
         <v-divider></v-divider>
         <v-list-tile to="/login" v-if="!authenticated">
           <v-list-tile-action>
@@ -90,7 +98,6 @@
 
 <script>
 import userGroups from './utils/constants';
-import api from './api.js';
 
 export default {
   name: 'app',

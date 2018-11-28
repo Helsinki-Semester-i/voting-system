@@ -68,21 +68,21 @@ export default {
     participated(poll) {
       return (poll.vote_status === 'voted');
     },
-    pollActive(poll){
-      var today = new Date();
-      var dd = today.getDate();
-      var mm = today.getMonth()+1; //January is 0!
-      var yyyy = today.getFullYear();
+    pollActive(poll) {
+      let today = new Date();
+      let dd = today.getDate();
+      let mm = today.getMonth() + 1; // January is 0!
+      const yyyy = today.getFullYear();
 
-      if(dd<10) {
-          dd = '0'+dd
-      } 
+      if (dd < 10) {
+        dd = `0${dd}`;
+      }
 
-      if(mm<10) {
-          mm = '0'+mm
-      } 
+      if (mm < 10) {
+        mm = `0${mm}`;
+      }
 
-      today = yyyy + '/' + mm + '/' + dd;
+      today = `${yyyy}/${mm}/${dd}`;
       return new Date(today) < new Date(poll.close_date);
     },
   },
