@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     selectAnswer(value) {
-      if(this.nullVote){
+      if (this.nullVote) {
         this.$emit('changeAnswer', this.index, null);
       }
       this.$emit('changeAnswer', this.index, value);

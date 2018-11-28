@@ -13,7 +13,7 @@ import PollComponent from './views/Poll.vue';
 import ViewVoteComponent from './views/ViewVote.vue';
 import ResultComponent from './views/Result.vue';
 import EnterCodeComponent from './views/EnterCode.vue';
-import ShowCodeComponent from './demo_components/submitVote.vue';
+import ShowCodeComponent from './components/submitVote.vue';
 import AddPanelistComponent from './views/ThePanelistRegistrationForm.vue';
 import RemovePanelistComponent from './views/TheDeletePanelistView.vue';
 import CreatePollComponent from './views/CreatePoll.vue';
@@ -84,6 +84,10 @@ const router = new Router({
       component: ShowCodeComponent,
       props: true,
       name: 'uniqueCode',
+      meta: {
+        requiresAuth: true,
+        panelistAuth: true,
+      },
     },
     {
       path: '/implicit/callback',

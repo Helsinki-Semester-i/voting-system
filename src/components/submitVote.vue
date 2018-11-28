@@ -51,12 +51,12 @@ export default {
   props: {
     code: {
       type: String,
-      required: true, 
+      required: true,
     },
   },
   data() {
     return {
-      //code = 'AGHAYWE',
+      // code = 'AGHAYWE',
       copyError: false,
       copySuccess: false,
     };

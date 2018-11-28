@@ -401,14 +401,11 @@ export default {
       if (data) {
         for (let i = 0; i < this.users.length; i += 1) {
           if (this.users[i] === userMail) {
-            console.log('User is already in the list');
             return;
           }
         }
         this.users.push(userMail);
         this.addingUser = '';
-      } else {
-        console.log('User does not exists');
       }
     },
     deleteUser(index) {

@@ -9,7 +9,10 @@
         <div>
           <div class="headline">{{poll.title}}</div>
           <span >
-              <p class="red darken-4" v-if="pollActive">cierra el: {{cleanDate(poll.close_date)}}</p>
+              <p class="red darken-4"
+                v-if="pollActive">
+                cierra el: {{cleanDate(poll.close_date)}}
+              </p>
               <p v-else>Cerró el: {{cleanDate(poll.close_date)}}</p>
           </span>
         </div>
@@ -69,16 +72,15 @@ export default{
     selectPoll() {
       this.selected = !this.selected;
     },
-    cleanDate(day){
-      var result = ' ';
-      for(var i = 0;i<day.length;i++){
-        
-        if(day.charAt(i) === 'T'){
-          
+    cleanDate(date) {
+      let result = ' ';
+      for (let i = 0; i < date.length; i += 1) {
+        if (date.charAt(i) === 'T') {
           return result;
         }
-        result+=day.charAt(i);
+        result += date.charAt(i);
       }
+      return date;
     },
   },
   computed: {
