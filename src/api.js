@@ -128,6 +128,18 @@ export default {
       return constants.API_ERROR;
     }
   },
+  async getUsersMails(){
+    let response = await this.execute('get', 'users/');
+    try{
+      let usersMails = [];
+      for(let i in response.data){
+        usersMails.push(response.data[i].email);
+      }
+      return usersMails;
+    }catch(err){
+      return constants.API_ERROR;
+    }
+  }
 };
 
 const VOTES_FOR_POLL_TEST = [
