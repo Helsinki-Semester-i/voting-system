@@ -141,7 +141,6 @@ export default {
     }
   },
   async getVoteByCode(code){
-    //42SsIthS
     let response = await this.execute('get', 'votes/'+code);
     try{
       if(response.data){

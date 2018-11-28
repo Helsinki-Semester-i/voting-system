@@ -40,9 +40,9 @@ export default {
     checkedAnswer: {
       type: Number,
     },
-    viewAsResult:{
+    viewAsResult: {
       type: Boolean,
-    }
+    },
   },
   data() {
     return {
@@ -52,7 +52,7 @@ export default {
     };
   },
   async created() {
-    if(this.isResult && this.selectedAnswer === null){
+    if (this.isResult && this.selectedAnswer === null) {
       this.nullVote = true;
     }
   },

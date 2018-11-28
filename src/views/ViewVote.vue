@@ -43,22 +43,21 @@ export default {
   },
   methods: {
     async getVoteData() {
-      let response = await api.getVoteByCode(this.$route.params.unique_code);
-      if(response.poll){
+      const response = await api.getVoteByCode(this.$route.params.unique_code);
+      if (response.poll) {
         this.result = response;
       }
     },
-    getCheckedAnswer(options){
-      console.log("Checking");
-      console.log(options);
-      for(var i in options){
-        if(options[i].chosen === true){
-          console.log(options[i].order_priority);
+    /* eslint-disable */ 
+    getCheckedAnswer(options) {
+      
+      for (const i in options) {
+        if (options[i].chosen === true) {
           return options[i].order_priority;
         }
       }
       return null;
-    }
+    },
   },
 };
 </script>
