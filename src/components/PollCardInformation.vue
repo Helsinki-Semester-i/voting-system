@@ -9,8 +9,7 @@
         <div>
           <div class="headline">{{poll.title}}</div>
           <span >
-              <p class="red darken-4"
-                v-if="pollActive">
+              <p v-if="pollActive">
                 cierra el: {{cleanDate(poll.close_date)}}
               </p>
               <p v-else>Cerró el: {{cleanDate(poll.close_date)}}</p>
@@ -24,8 +23,16 @@
             Participar
           </v-btn>
         </router-link>
-        <div v-else-if="participated">Ya participaste</div>
-        <div v-else>No participaste</div>
+        <div v-else-if="pollActive">
+          Ya participaste
+        </div>
+        <div v-else>
+          <router-link :to="`/result/${poll.id}`">
+            <v-btn flat color="orange">
+              Resultados
+            </v-btn>
+          </router-link>
+        </div>
         <v-spacer></v-spacer>
         <v-btn icon @click="show = !show">
           <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
