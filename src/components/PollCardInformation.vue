@@ -25,7 +25,7 @@
           </v-btn>
         </router-link>
         <div v-else-if="participated">Ya participaste</div>
-        <div v-else>No participastee</div>
+        <div v-else>No participaste</div>
         <v-spacer></v-spacer>
         <v-btn icon @click="show = !show">
           <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
@@ -94,7 +94,11 @@ export default{
       return (this.participated === false) && this.pollActive;
     },
     participated() {
-      return (this.poll.vote_status === 'voted');
+      try{
+        return (this.poll.vote_status === 'voted');
+      }catch(err){
+        return false;
+      }
     },
     pollActive() {
       let today = new Date();
