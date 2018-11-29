@@ -43,18 +43,19 @@ export default {
       const userPolls = await api.getUserPolls(user.id);
       return userPolls;
     },
-    async getPolls(){ //THIS COULD USE A REFACTOR
+    /* eslint-disable */
+    async getPolls() { // THIS COULD USE A REFACTOR
       const userPolls = await this.getUserPolls();
       const allPolls = await api.getPolls();
-      let oldPolls = [];
-      for(let i in allPolls){
+      const oldPolls = [];
+      for (const i in allPolls) {
         let repeated = false;
-        for(let j in userPolls){
-          if(allPolls[i].id === userPolls[j].id){
+        for (const j in userPolls) {
+          if (allPolls[i].id === userPolls[j].id) {
             repeated = true;
           }
         }
-        if(!repeated){
+        if (!repeated) {
           oldPolls.push(allPolls[i]);
         }
       }

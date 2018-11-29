@@ -9,7 +9,7 @@
         <div>
           <div class="headline">{{poll.title}}</div>
           <span >
-              <p v-if="pollActive">
+              <p  v-if="pollActive">
                 cierra el: {{cleanDate(poll.close_date)}}
               </p>
               <p v-else>Cerró el: {{cleanDate(poll.close_date)}}</p>
@@ -101,9 +101,9 @@ export default{
       return (this.participated === false) && this.pollActive;
     },
     participated() {
-      try{
+      try {
         return (this.poll.vote_status === 'voted');
-      }catch(err){
+      } catch (err) {
         return false;
       }
     },
