@@ -85,9 +85,7 @@ export default {
   },
   async getUserByMail(email){
     let response = await this.execute('get', 'users/byMail/'+email);
-    console.log(response);
     try{
-      console.log(response.data);
       return response.data;
     }catch(err){
       return constants.API_ERROR;
@@ -95,9 +93,7 @@ export default {
   },
   async userExistsByMail(email){
     let response = await this.execute('get', 'users/byMail/'+email);
-    console.log(response);
     try{
-      console.log(response.data);
       let check = response.data.id;
       return true;
     }catch(err){
