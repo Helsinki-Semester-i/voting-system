@@ -84,9 +84,9 @@ export default {
   },
   async getUserByMail(email){
     let response = await this.execute('get', 'users/byMail/'+email);
-    console.log(response);
+    // console.log(response);
     try{
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     }catch(err){
       return constants.API_ERROR;
@@ -94,9 +94,9 @@ export default {
   },
   async userExistsByMail(email){
     let response = await this.execute('get', 'users/byMail/'+email);
-    console.log(response);
+    // console.log(response);
     try{
-      console.log(response.data);
+      // console.log(response.data);
       let check = response.data.id;
       return true;
     }catch(err){
@@ -105,6 +105,15 @@ export default {
   },
   async getPoll(id){
     let response = await this.execute('get', 'polls/'+id);
+    try{
+      response.data.id;
+      return response.data;
+    }catch(err){
+      return constants.API_ERROR;
+    }
+  },
+  async getPolls(){
+    let response = await this.execute('get', 'polls/');
     try{
       response.data.id;
       return response.data;

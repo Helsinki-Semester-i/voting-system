@@ -18,6 +18,7 @@ import AddPanelistComponent from './views/ThePanelistRegistrationForm.vue';
 import RemovePanelistComponent from './views/TheDeletePanelistView.vue';
 import CreatePollComponent from './views/CreatePoll.vue';
 import HistoryDashboard from './views/History.vue';
+import PublicHistoryComponent from './views/PublicHistory.vue';
 
 import api from './api';
 
@@ -77,12 +78,12 @@ const router = new Router({
       component: ResultComponent,
     },
     {
+      path: '/results',
+      component: PublicHistoryComponent,
+    },
+    {
       path: '/vote',
       component: EnterCodeComponent,
-      meta: {
-        requiresAuth: true,
-        panelistAuth: true,
-      },
     },
     {
       path: '/vote/:unique_code',
