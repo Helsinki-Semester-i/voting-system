@@ -49,6 +49,33 @@
             </v-date-picker>
           </v-menu>
           <v-menu
+            ref="menu"
+            :close-on-content-click="false"
+            v-model="menu3"
+            :nudge-right="40"
+            :return-value.sync="creation_hour"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            max-width="290px"
+            min-width="290px"
+          >
+            <v-text-field
+              slot="activator"
+              v-model="creation_hour"
+              label="Hora de inicio"
+              prepend-icon="access_time"
+              readonly
+            ></v-text-field>
+            <v-time-picker
+              v-if="menu3"
+              v-model="creation_hour"
+              full-width
+              @change="$refs.menu.save(creation_hour)"
+            ></v-time-picker>
+          </v-menu>
+          <v-menu
             :close-on-content-click="false"
             v-model="menu2"
             :nudge-right="40"
@@ -70,6 +97,33 @@
               @input="menu2 = false"
               no-title scrollable>
             </v-date-picker>
+          </v-menu>
+          <v-menu
+            ref="menu2"
+            :close-on-content-click="false"
+            v-model="menu4"
+            :nudge-right="40"
+            :return-value.sync="close_hour"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            max-width="290px"
+            min-width="290px"
+          >
+            <v-text-field
+              slot="activator"
+              v-model="close_hour"
+              label="Hora de cierre"
+              prepend-icon="access_time"
+              readonly
+            ></v-text-field>
+            <v-time-picker
+              v-if="menu4"
+              v-model="close_hour"
+              full-width
+              @change="$refs.menu.save(close_hour)"
+            ></v-time-picker>
           </v-menu>
           <v-layout row align-center justify-center>
             <h4 class="display-1">Premisas</h4>
@@ -165,18 +219,13 @@
           <v-container>
             <div class="panel panel-sm">
               <div class="panel-heading"> 
-                <h4>CSV Import</h4>
+                <h4>Importar usuarios de CSV</h4>
               </div>
               <div class="panel-body">
                 <div class="form-group">
-                  <label for="csv_file" class="control-label col-sm-3 text-right">CSV file to import</label>
+                  <label for="csv_file" class="control-label col-sm-3 text-right">Escoge tu archivo</label>
                   <div class="col-sm-9">
                     <input type="file" id="csv_file" name="csv_file" class="form-control" @change="loadCSV($event)">
-                  </div>
-                </div>
-                <div class="col-sm-offset-3 col-sm-9">
-                  <div class="checkbox-inline">
-                    <label for="header_rows"><input type="checkbox" id="header_rows"> File contains header row?</label>
                   </div>
                 </div>
               </div>
@@ -254,10 +303,14 @@ export default {
       menu: false,
       modal: false,
       menu2: false,
+      menu3: false,
+      menu4: false,
       title: '',
       details: '',
       creation_date: '',
+      creation_hour: '',
       close_date: '',
+      close_hour: '',
       acceptance_percentage: 50,
       response: '',
       questions: [
@@ -394,7 +447,7 @@ export default {
           {
             option_text: 'Muy en contra',
             order_priority: 1,
-          },
+          },  
           {
             option_text: 'En contra',
             order_priority: 2,
@@ -446,8 +499,6 @@ export default {
     },
     csvJSON(csv){
       var lines = csv.split("\n")
-      console.log('LINES');
-      console.log(lines)
       var result = []
       var headers = lines[0].split(",")
       this.parse_header = lines[0].split(",") 
@@ -466,26 +517,19 @@ export default {
       })
       
       result.pop() // remove the last item because undefined values
-      console.log('JSON RESULT');
-      console.log(result);
       return result // JavaScript object
     },
     loadCSV(e) {
       var vm = this
-      console.log('Loading CSV');
       if (window.FileReader) {
         var reader = new FileReader();
         reader.readAsText(e.target.files[0]);
         // Handle errors load
         reader.onload = function(event) {
           var csv = event.target.result;
-          console.log(csv);
           const result = vm.csvJSON(csv);
           this.parse_csv = result;
-          console.log("PARSED CSV");
-          console.log(this.parse_csv);
-
-          console.log('PUTTING ALL MAILS IN VARIABLE');
+          
           for(var i in result){
             if(result[i].email !== ''){
               vm.users.push(result[i].email);
