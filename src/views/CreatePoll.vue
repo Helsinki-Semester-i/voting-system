@@ -476,8 +476,6 @@ export default {
       this.questions[order].options.push(newOption);
     },
     deleteOption(order, index) {
-      console.log(new Date(this.creation_date + 'T' +this.creation_hour+':00Z'))
-      console.log(new Date(this.close_date + 'T' +this.close_hour+':00Z'))
       this.$delete(this.questions[order].options, index);
     },
     async getUsers() {
