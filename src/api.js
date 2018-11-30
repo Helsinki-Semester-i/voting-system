@@ -76,6 +76,7 @@ export default {
   test_getPollResults(id) {
     return RESULT_TEST[0];
   },
+
   test_getVote(unique_code){
     return VOTECODETEST;
   },
@@ -157,6 +158,9 @@ export default {
     }catch(err){
       return constants.API_ERROR;
     }
+  },
+  async getPollResultsDemo(id){
+   return DEMORESULTS;
   },
   async getVoteByCode(code){
     let response = await this.execute('get', 'votes/'+code);
@@ -349,35 +353,31 @@ const USERPOLLS = [
 ];
 
 const DEMORESULTS = 
-  {
-    "id": 55,
-    "title": "Votación para decidir si las clases de Wizeline valen la pena",
-    "details": "Esta votación es solo para consolidar la opinion de los estudiantes de Wizeline para obtener feedback de las clases impartidas por Wizeline. La votación será anonima para que los alumnos sean honestos con las repsuestas.",
-    "creation_date": "2018-11-30T00:00:00",
-    "close_date": "2018-12-03T00:00:00",
-    "acceptance_percentage": 10,
-    "anonymity": true,
-    "accepted": true,
-    "questions": [
-        {
-            "question": "¿Que calificación le darías a la clase de Technical Writing?",
-            "vote_count": 54
-        },
-        {
-            "question": "¿Que calificación le darías a la clase de Seguridad?",
-            "vote_count": 54
-        },
-        {
-            "question": "¿Que calificación le darías a la clase de UX?",
-            "vote_count": 20
-        },
-        {
-            "question": "¿Que calificación le darías a la clase de Desarrollo Web?",
-            "vote_count": 45
-        }
-    ]
+{
+  "id": 1,
+  "title": "Votación para presidencia 2019",
+  "details": "En esta votación se seleccionará que candidato tomará el cargo de presidencia de Wikipolítica durante el periodo 2019-2010 comenzando el año que entra.",
+  "creation_date": "2018-11-30T00:00:00",
+  "close_date": "2018-12-03T00:00:00",
+  "acceptance_percentage": 70,
+  "anonymity": true,
+  "accepted": true,
+  "questions": [
+      {
+          "question": "Eduardo Rojas Lozano",
+          "vote_count": 6
+      },
+      {
+          "question": "Cipriano Barbas Mares",
+          "vote_count": 7
+      },
+      {
+          "question": "Lorena Marquez Moreno",
+          "vote_count": 10
+      }
+  ]
 };
-
+ 
 const POLLDEMO = 
 {
   "id": 1,
@@ -609,5 +609,5 @@ const USUARIODEMO = {
 }
 
 const UNIQUECODEDEMO = {
-  unique_code: 'PL45HWIR'
+  unique_code: '2NKklhfa'
 }

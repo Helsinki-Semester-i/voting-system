@@ -20,7 +20,7 @@ import CreatePollComponent from './views/CreatePoll.vue';
 import HistoryDashboard from './views/History.vue';
 import PollsViewComponentDemo from './demoComponents/PollDemo.vue';
 import PollsDashboardComponentDemo from './demoComponents/PollsDashboardDemo.vue';
-
+import ResultComponentDemo from './demoComponents/ResultDemo.vue';
 import api from './api';
 
 Vue.use(Router);
@@ -85,6 +85,10 @@ const router = new Router({
     {
       path: '/result/:id',
       component: ResultComponent,
+    },
+    {
+      path: '/resultDemo/:id',
+      component: ResultComponentDemo,
     },
     {
       path: '/vote',
