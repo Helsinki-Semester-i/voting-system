@@ -49,7 +49,7 @@
             </v-date-picker>
           </v-menu>
           <v-menu
-            ref="menu"
+            ref="hourpicker"
             :close-on-content-click="false"
             v-model="menu3"
             :nudge-right="40"
@@ -72,7 +72,7 @@
               v-if="menu3"
               v-model="creation_hour"
               full-width
-              @change="$refs.menu.save(creation_hour)"
+              @change="$refs.hourpicker.save(creation_hour)"
             ></v-time-picker>
           </v-menu>
           <v-menu
@@ -99,7 +99,7 @@
             </v-date-picker>
           </v-menu>
           <v-menu
-            ref="menu2"
+            ref="hourpicker2"
             :close-on-content-click="false"
             v-model="menu4"
             :nudge-right="40"
@@ -122,7 +122,7 @@
               v-if="menu4"
               v-model="close_hour"
               full-width
-              @change="$refs.menu.save(close_hour)"
+              @change="$refs.hourpicker2.save(close_hour)"
             ></v-time-picker>
           </v-menu>
           <v-layout row align-center justify-center>
@@ -420,8 +420,8 @@ export default {
       const poll = {
         title: this.title,
         details: this.details,
-        creation_date: this.creation_date,
-        close_date: this.close_date,
+        creation_date: new Date(this.creation_date + 'T' +this.creation_hour+':00Z'),
+        close_date: new Date(this.close_date + 'T' +this.close_hour+':00Z'),
         users: this.users,
         acceptance_percentage: this.acceptance_percentage,
         anonymity: true,
@@ -476,6 +476,8 @@ export default {
       this.questions[order].options.push(newOption);
     },
     deleteOption(order, index) {
+      console.log(new Date(this.creation_date + 'T' +this.creation_hour+':00Z'))
+      console.log(new Date(this.close_date + 'T' +this.close_hour+':00Z'))
       this.$delete(this.questions[order].options, index);
     },
     async getUsers() {
@@ -529,10 +531,10 @@ export default {
           var csv = event.target.result;
           const result = vm.csvJSON(csv);
           this.parse_csv = result;
-          
           for(var i in result){
             if(result[i].email !== ''){
-              vm.users.push(result[i].email);
+              //vm.users.push(result[i].email);
+              vm.addUser(result[i].email);
             }
           }
         };
