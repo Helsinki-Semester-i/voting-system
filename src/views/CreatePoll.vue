@@ -218,14 +218,18 @@
           <!--LECTURA DE CSV -->
           <v-container>
             <div class="panel panel-sm">
-              <div class="panel-heading"> 
+              <div class="panel-heading">
                 <h4>Importar usuarios de CSV</h4>
               </div>
               <div class="panel-body">
                 <div class="form-group">
-                  <label for="csv_file" class="control-label col-sm-3 text-right">Escoge tu archivo</label>
+                  <label for="csv_file" class="control-label col-sm-3 text-right">
+                    Escoge tu archivo
+                  </label>
                   <div class="col-sm-9">
-                    <input type="file" id="csv_file" name="csv_file" class="form-control" @change="loadCSV($event)">
+                    <input type="file" id="csv_file"
+                    name="csv_file" class="form-control"
+                    @change="loadCSV($event)">
                   </div>
                 </div>
               </div>
@@ -343,24 +347,13 @@ export default {
       users: [],
       addingUser: '',
       loading: false,
-      channel_name: '',
-      channel_fields: [],
-      channel_entries: [],
-      parse_header: [],
-      parse_csv: [],
-      sortOrders:{},
-      sortKey: '',
     };
   },
   filters: {
-    capitalize: function (str) {
-      return str.charAt(0).toUpperCase() + str.slice(1)
-    }
+    capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    },
   },
-  async created() {
-    //this.users = await this.getUsers();
-  },
-
   computed: {
     titleErrors() {
       const errors = [];
@@ -420,8 +413,8 @@ export default {
       const poll = {
         title: this.title,
         details: this.details,
-        creation_date: new Date(this.creation_date + 'T' +this.creation_hour+':00Z'),
-        close_date: new Date(this.close_date + 'T' +this.close_hour+':00Z'),
+        creation_date: new Date(`${this.creation_date}T${this.creation_hour}:00Z`),
+        close_date: new Date(`${this.close_date}T${this.close_hour}:00Z`),
         users: this.users,
         acceptance_percentage: this.acceptance_percentage,
         anonymity: true,
@@ -447,7 +440,7 @@ export default {
           {
             option_text: 'Muy en contra',
             order_priority: 1,
-          },  
+          },
           {
             option_text: 'En contra',
             order_priority: 2,
@@ -497,54 +490,53 @@ export default {
     deleteUser(index) {
       this.$delete(this.users, index);
     },
-    csvJSON(csv){
-      var lines = csv.split("\n")
-      var result = []
-      var headers = lines[0].split(",")
-      this.parse_header = lines[0].split(",") 
-      
-      lines.map(function(line, indexLine){
-        if (indexLine < 1) return // Jump header line
-        
-        var obj = {}
-        var currentline = line.split(",")
-        
-        headers.map(function(header, indexHeader){
-          obj[header] = currentline[indexHeader]
-        })
-        
-        result.push(obj)
-      })
-      
-      result.pop() // remove the last item because undefined values
-      return result // JavaScript object
+    /* eslint-disable */
+    csvJSON(csv) {
+      const lines = csv.split('\n');
+      const result = [];
+      const headers = lines[0].split(',');
+
+      lines.map((line, indexLine) => {
+        if (indexLine < 1) return; // Jump header line
+
+        const obj = {};
+        const currentline = line.split(',');
+
+        headers.map((header, indexHeader) => {
+          obj[header] = currentline[indexHeader];
+        });
+
+        result.push(obj);
+      });
+
+      result.pop(); // remove the last item because undefined values
+      return result; // JavaScript object
     },
     loadCSV(e) {
-      var vm = this
+      const vm = this;
       if (window.FileReader) {
-        var reader = new FileReader();
+        const reader = new FileReader();
         reader.readAsText(e.target.files[0]);
         // Handle errors load
-        reader.onload = function(event) {
-          var csv = event.target.result;
+        reader.onload = function (event) {
+          const csv = event.target.result;
           const result = vm.csvJSON(csv);
-          this.parse_csv = result;
-          for(var i in result){
-            if(result[i].email !== ''){
-              //vm.users.push(result[i].email);
+          for (const i in result) {
+            if (result[i].email !== '') {
+              // vm.users.push(result[i].email);
               vm.addUser(result[i].email);
             }
           }
         };
-        reader.onerror = function(evt) {
-          if(evt.target.error.name == "NotReadableError") {
+        reader.onerror = function (evt) {
+          if (evt.target.error.name === 'NotReadableError') {
             alert("Canno't read file !");
           }
         };
       } else {
         alert('FileReader are not supported in this browser.');
       }
-    }
+    },
   },
 };
 </script>
