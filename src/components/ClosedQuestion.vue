@@ -63,7 +63,7 @@ export default {
       if(value === null){
         this.selectedAnswer = null;}
        else if(this.nullVote){
-       this.nullVote = true;}
+       this.nullVote = false;}
         this.$emit('changeAnswer', this.index, value);
       }
     },
