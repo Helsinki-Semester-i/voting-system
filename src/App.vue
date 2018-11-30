@@ -12,7 +12,7 @@
             <v-icon>home</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Home</v-list-tile-title>
+            <v-list-tile-title>Inicio</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile to="/profile" v-if="authenticated">
@@ -20,16 +20,24 @@
             <v-icon>account_circle</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Profile</v-list-tile-title>
+            <v-list-tile-title>Perfil</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
+        <v-list-tile to="/results">
+          <v-list-tile-action>
+            <v-icon>history</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Historial Pasado</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
         <v-list-tile to="/registerPanelist" v-if="isAdmin">
           <v-list-tile-action>
             <v-icon>create</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Register Panelist</v-list-tile-title>
+            <v-list-tile-title>Registrar Panelista</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile to="/deletePanelist" v-if="isAdmin">
@@ -37,7 +45,39 @@
             <v-icon>delete</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Remove Panelist</v-list-tile-title>
+            <v-list-tile-title>Remover Panelista</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile to="/createPoll" v-if="isAdmin">
+          <v-list-tile-action>
+            <v-icon>note_add</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Crear Votacion</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile to="/polls" v-if="authenticated && !isAdmin">
+          <v-list-tile-action>
+            <v-icon>dashboard</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Mis votaciones</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile to="/history" v-if="authenticated && !isAdmin">
+          <v-list-tile-action>
+            <v-icon>assignment</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Historial</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile to="/vote" v-if="authenticated && !isAdmin">
+          <v-list-tile-action>
+            <v-icon>find_in_page</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Ver voto</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-divider></v-divider>
@@ -98,6 +138,7 @@ export default {
       drawer: null,
       activeUser: null,
       authenticated: false,
+      session: null,
     };
   },
   created() {

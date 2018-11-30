@@ -13,10 +13,16 @@ import PollComponent from './views/Poll.vue';
 import ViewVoteComponent from './views/ViewVote.vue';
 import ResultComponent from './views/Result.vue';
 import EnterCodeComponent from './views/EnterCode.vue';
-import ShowCodeComponent from './demo_components/submitVote.vue';
+import ShowCodeComponent from './components/submitVote.vue';
 import AddPanelistComponent from './views/ThePanelistRegistrationForm.vue';
 import RemovePanelistComponent from './views/TheDeletePanelistView.vue';
 import CreatePollComponent from './views/CreatePoll.vue';
+import HistoryDashboard from './views/History.vue';
+import PublicHistoryComponent from './views/PublicHistory.vue';
+import PollsViewComponentDemo from './demoComponents/PollDemo.vue';
+import PollsDashboardComponentDemo from './demoComponents/PollsDashboardDemo.vue';
+import ResultComponentDemo from './demoComponents/ResultDemo.vue';
+import api from './api';
 
 Vue.use(Router);
 Vue.use(Auth, {
@@ -48,14 +54,46 @@ const router = new Router({
     {
       path: '/polls',
       component: PollsViewComponent,
+      meta: {
+        requiresAuth: true,
+        panelistAuth: true,
+      },
+    },
+    {
+      path: '/pollsDemo',
+      component: PollsDashboardComponentDemo,
+    },
+    {
+      path: '/history',
+      component: HistoryDashboard,
+      meta: {
+        requiresAuth: true,
+        panelistAuth: true,
+      },
     },
     {
       path: '/polls/:id',
       component: PollComponent,
+      meta: {
+        requiresAuth: true,
+        panelistAuth: true,
+      },
+    },
+    {
+      path: '/pollsDemo/:id',
+      component: PollsViewComponentDemo,
     },
     {
       path: '/result/:id',
       component: ResultComponent,
+    },
+    {
+      path: '/results',
+      component: PublicHistoryComponent,
+    },
+    {
+      path: '/resultDemo/:id',
+      component: ResultComponentDemo,
     },
     {
       path: '/vote',
@@ -68,6 +106,12 @@ const router = new Router({
     {
       path: '/displaycode',
       component: ShowCodeComponent,
+      props: true,
+      name: 'uniqueCode',
+      meta: {
+        requiresAuth: true,
+        panelistAuth: true,
+      },
     },
     {
       path: '/implicit/callback',
@@ -92,6 +136,10 @@ const router = new Router({
     {
       path: '/createPoll',
       component: CreatePollComponent,
+      meta: {
+        requiresAuth: true,
+        adminAuth: true,
+      },
     },
     {
       path: '/accessDenied',
@@ -114,7 +162,16 @@ const onAuthRequired = async (to, from, next) => {
     } else {
       next({ path: '/accessDenied' });
     }
-  } 
+  }else if (to.meta.panelistAuth){
+    const authUser = await Vue.prototype.$auth.getUser();
+    const isUserInDB = await api.userExistsByMail(authUser.email);
+    if (authUser.groups.includes(userGroups.panelistGroup) 
+    &&  isUserInDB) {
+      next();
+    } else {
+      next({ path: '/accessDenied' });
+    }
+  }
   else {
     next();
   }

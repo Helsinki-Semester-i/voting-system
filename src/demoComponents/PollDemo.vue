@@ -75,7 +75,7 @@ export default {
   methods: {
     async getPollData() {
       const { id } = this.$route.params;
-      this.poll = await api.getPoll(id);
+      this.poll = await api.getPollDemo(id);
       this.questions = this.poll.questions;
       /* eslint-disable */
       for (const i in this.questions) {
@@ -91,7 +91,7 @@ export default {
       if (!val) return;
       setTimeout(async () => {
         this.loadingDialog = false;
-        const data = await api.submitVote(this.poll);
+        const data = await api.submitVoteDemo(this.poll);
         console.log(`Vote submited with code ${data.unique_code}`);
         this.$router.push({ name: 'uniqueCode' ,
         params: { code: data.unique_code } } );

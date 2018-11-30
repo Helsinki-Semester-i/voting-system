@@ -56,7 +56,7 @@ export default {
   methods: {
     async getResultData() {
       const { id } = this.$route.params;
-      this.poll = await api.getPollResults(id);
+      this.poll = await api.getPollResultsDemo(id);
     },
     getAnswersForChart(answers) {
       return answers.map(answer => [answer.question, answer.vote_count]);

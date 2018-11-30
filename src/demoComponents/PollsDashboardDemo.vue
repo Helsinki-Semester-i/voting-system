@@ -19,7 +19,7 @@
 
 <script>
 import api from '@/api';
-import PollCard from '../components/PollCardInformation.vue';
+import PollCard from './PollCardInformationDemo.vue';
 
 export default {
   components: {
@@ -44,9 +44,7 @@ export default {
   },
   methods: {
     async getUserPolls() {
-      const loggedUser = await this.$auth.getUser();
-      const user = await api.getUserByMail(loggedUser.email);
-      this.polls = await api.getUserPolls(user.id);
+      this.polls = await api.getUserPollsDemo();
     },
     participated(poll) {
       return (poll.vote_status === 'voted');

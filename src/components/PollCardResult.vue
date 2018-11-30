@@ -19,13 +19,11 @@
       </v-card-title>
       <v-divider light></v-divider>
       <v-card-actions align-end>
-        <router-link v-if="available" :to="`/polls/${poll.id}`">
+        <router-link :to="`/result/${poll.id}`">
           <v-btn flat color="orange">
-            Participar
+            Ver Resultados
           </v-btn>
         </router-link>
-        <div v-else-if="participated">Ya participaste</div>
-        <div v-else>No participaste</div>
         <v-spacer></v-spacer>
         <v-btn icon @click="show = !show">
           <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
