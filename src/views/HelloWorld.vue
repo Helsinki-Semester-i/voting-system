@@ -22,7 +22,7 @@
                 <div>{{demoBodyVote}}</div>
               </v-card-text>
               <v-card-actions>
-                <v-btn  to="/polls"> {{demoLinkVote}}</v-btn>
+                <v-btn  to="/pollsDemo"> {{demoLinkVote}}</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -33,7 +33,7 @@
                 <div>{{demoBodyResults}}</div>
               </v-card-title>
               <v-card-actions>
-                  <v-btn  to="/result/1"> {{demoLinkResults}}</v-btn>
+                  <v-btn  to="/resultDemo/1"> {{demoLinkResults}}</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>

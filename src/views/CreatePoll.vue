@@ -49,6 +49,33 @@
             </v-date-picker>
           </v-menu>
           <v-menu
+            ref="hourpicker"
+            :close-on-content-click="false"
+            v-model="menu3"
+            :nudge-right="40"
+            :return-value.sync="creation_hour"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            max-width="290px"
+            min-width="290px"
+          >
+            <v-text-field
+              slot="activator"
+              v-model="creation_hour"
+              label="Hora de inicio"
+              prepend-icon="access_time"
+              readonly
+            ></v-text-field>
+            <v-time-picker
+              v-if="menu3"
+              v-model="creation_hour"
+              full-width
+              @change="$refs.hourpicker.save(creation_hour)"
+            ></v-time-picker>
+          </v-menu>
+          <v-menu
             :close-on-content-click="false"
             v-model="menu2"
             :nudge-right="40"
@@ -70,6 +97,33 @@
               @input="menu2 = false"
               no-title scrollable>
             </v-date-picker>
+          </v-menu>
+          <v-menu
+            ref="hourpicker2"
+            :close-on-content-click="false"
+            v-model="menu4"
+            :nudge-right="40"
+            :return-value.sync="close_hour"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            max-width="290px"
+            min-width="290px"
+          >
+            <v-text-field
+              slot="activator"
+              v-model="close_hour"
+              label="Hora de cierre"
+              prepend-icon="access_time"
+              readonly
+            ></v-text-field>
+            <v-time-picker
+              v-if="menu4"
+              v-model="close_hour"
+              full-width
+              @change="$refs.hourpicker2.save(close_hour)"
+            ></v-time-picker>
           </v-menu>
           <v-layout row align-center justify-center>
             <h4 class="display-1">Premisas</h4>
@@ -161,6 +215,27 @@
               </v-flex>
             </v-layout>
           </v-container>
+          <!--LECTURA DE CSV -->
+          <v-container>
+            <div class="panel panel-sm">
+              <div class="panel-heading">
+                <h4>Importar usuarios de CSV</h4>
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <label for="csv_file" class="control-label col-sm-3 text-right">
+                    Escoge tu archivo
+                  </label>
+                  <div class="col-sm-9">
+                    <input type="file" id="csv_file"
+                    name="csv_file" class="form-control"
+                    @change="loadCSV($event)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </v-container>
+          <!-- FIN LECTURA DE CSV -->
           <v-subheader class="pl-0">Porcentaje de participación</v-subheader>
           <v-slider
           v-model="acceptance_percentage"
@@ -170,7 +245,6 @@
           thumb-label="always"
           ></v-slider>
           <v-btn @click="submit">submit</v-btn>
-          <v-btn @click="clear">clear</v-btn>
         </v-form>
         <v-progress-circular
             v-show="loading"
@@ -233,10 +307,14 @@ export default {
       menu: false,
       modal: false,
       menu2: false,
+      menu3: false,
+      menu4: false,
       title: '',
       details: '',
       creation_date: '',
+      creation_hour: '',
       close_date: '',
+      close_hour: '',
       acceptance_percentage: 50,
       response: '',
       questions: [
@@ -271,10 +349,11 @@ export default {
       loading: false,
     };
   },
-  async created() {
-    this.users = await this.getUsers();
+  filters: {
+    capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    },
   },
-
   computed: {
     titleErrors() {
       const errors = [];
@@ -334,8 +413,8 @@ export default {
       const poll = {
         title: this.title,
         details: this.details,
-        creation_date: this.creation_date,
-        close_date: this.close_date,
+        creation_date: new Date(`${this.creation_date}T${this.creation_hour}:00Z`),
+        close_date: new Date(`${this.close_date}T${this.close_hour}:00Z`),
         users: this.users,
         acceptance_percentage: this.acceptance_percentage,
         anonymity: true,
@@ -410,6 +489,53 @@ export default {
     },
     deleteUser(index) {
       this.$delete(this.users, index);
+    },
+    /* eslint-disable */
+    csvJSON(csv) {
+      const lines = csv.split('\n');
+      const result = [];
+      const headers = lines[0].split(',');
+
+      lines.map((line, indexLine) => {
+        if (indexLine < 1) return; // Jump header line
+
+        const obj = {};
+        const currentline = line.split(',');
+
+        headers.map((header, indexHeader) => {
+          obj[header] = currentline[indexHeader];
+        });
+
+        result.push(obj);
+      });
+
+      result.pop(); // remove the last item because undefined values
+      return result; // JavaScript object
+    },
+    loadCSV(e) {
+      const vm = this;
+      if (window.FileReader) {
+        const reader = new FileReader();
+        reader.readAsText(e.target.files[0]);
+        // Handle errors load
+        reader.onload = function (event) {
+          const csv = event.target.result;
+          const result = vm.csvJSON(csv);
+          for (const i in result) {
+            if (result[i].email !== '') {
+              // vm.users.push(result[i].email);
+              vm.addUser(result[i].email);
+            }
+          }
+        };
+        reader.onerror = function (evt) {
+          if (evt.target.error.name === 'NotReadableError') {
+            alert("Canno't read file !");
+          }
+        };
+      } else {
+        alert('FileReader are not supported in this browser.');
+      }
     },
   },
 };
