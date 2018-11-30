@@ -112,6 +112,9 @@ export default {
       return constants.API_ERROR;
     }
   },
+  async getPollDemo(id){
+    return POLLDEMO;
+  },
   async submitVote(poll){
     let response = await this.execute('post', 'votes/', poll);
     try{
@@ -120,6 +123,9 @@ export default {
       return constants.API_ERROR;
     }
   },
+  async submitVoteDemo(poll){
+   return UNIQUECODEDEMO;
+  },
   async getUserPolls(id){
     let response = await this.execute('get', 'users/'+id);
     try{
@@ -127,6 +133,9 @@ export default {
     }catch(err){
       return constants.API_ERROR;
     }
+  },
+  async getUserPollsDemo(){
+    return USUARIODEMO.polls;
   },
   async getUsersMails(){
     let response = await this.execute('get', 'users/');
@@ -279,6 +288,8 @@ const RESULT_TEST = [
     ]
   }
 ];
+
+
 const USERPOLLS = [
   {
     id: 1,
@@ -336,3 +347,267 @@ const USERPOLLS = [
     questions: [],
   },
 ];
+
+const DEMORESULTS = 
+  {
+    "id": 55,
+    "title": "Votación para decidir si las clases de Wizeline valen la pena",
+    "details": "Esta votación es solo para consolidar la opinion de los estudiantes de Wizeline para obtener feedback de las clases impartidas por Wizeline. La votación será anonima para que los alumnos sean honestos con las repsuestas.",
+    "creation_date": "2018-11-30T00:00:00",
+    "close_date": "2018-12-03T00:00:00",
+    "acceptance_percentage": 10,
+    "anonymity": true,
+    "accepted": true,
+    "questions": [
+        {
+            "question": "¿Que calificación le darías a la clase de Technical Writing?",
+            "vote_count": 54
+        },
+        {
+            "question": "¿Que calificación le darías a la clase de Seguridad?",
+            "vote_count": 54
+        },
+        {
+            "question": "¿Que calificación le darías a la clase de UX?",
+            "vote_count": 20
+        },
+        {
+            "question": "¿Que calificación le darías a la clase de Desarrollo Web?",
+            "vote_count": 45
+        }
+    ]
+};
+
+const POLLDEMO = 
+{
+  "id": 1,
+  "title": "Votación para presidencia 2019",
+  "details": "En esta votación se seleccionará que candidato tomará el cargo de presidencia de Wikipolítica durante el periodo 2019-2010 comenzando el año que entra.",
+  "creation_date": "2018-11-30T00:00:00",
+  "close_date": "2018-12-03T00:00:00",
+  "acceptance_percentage": 70,
+  "anonymity": true,
+  "questions": [
+      {
+          "question": "Eduardo Rojas Lozano",
+          "order_priority": 1,
+          "options": [
+              {
+                  "option_text": "Muy en contra",
+                  "order_priority": 1
+              },
+              {
+                  "option_text": "En contra",
+                  "order_priority": 2
+              },
+              {
+                  "option_text": "Neutral",
+                  "order_priority": 3
+              },
+              {
+                  "option_text": "Deacuerdo",
+                  "order_priority": 4
+              },
+              {
+                  "option_text": "Muy deacuerdo",
+                  "order_priority": 5
+              }
+          ]
+      },
+      {
+          "question": "Cipriano Barbas Mares",
+          "order_priority": 2,
+          "options": [
+              {
+                  "option_text": "Muy en contra",
+                  "order_priority": 1
+              },
+              {
+                  "option_text": "En contra",
+                  "order_priority": 2
+              },
+              {
+                  "option_text": "Neutral",
+                  "order_priority": 3
+              },
+              {
+                  "option_text": "Deacuerdo",
+                  "order_priority": 4
+              },
+              {
+                  "option_text": "Muy deacuerdo",
+                  "order_priority": 5
+              }
+          ]
+      },
+      {
+          "question": "Lorena Marquez Moreno",
+          "order_priority": 3,
+          "options": [
+              {
+                  "option_text": "Muy en contra",
+                  "order_priority": 1
+              },
+              {
+                  "option_text": "En contra",
+                  "order_priority": 2
+              },
+              {
+                  "option_text": "Neutral",
+                  "order_priority": 3
+              },
+              {
+                  "option_text": "Deacuerdo",
+                  "order_priority": 4
+              },
+              {
+                  "option_text": "Muy deacuerdo",
+                  "order_priority": 5
+              }
+          ]
+      }
+  ]
+};
+const USUARIODEMO = {
+  "id": 48,
+  "first_name": "postman",
+  "last_name": "panelist",
+  "email": "postman@panelist.com",
+  "phone": "1823717",
+  "polls": [
+      {
+          "id": 1,
+          "title": "Votación para presidencia 2019",
+          "details": "En esta votación se seleccionará que candidato tomará el cargo de presidencia de Wikipolítica durante el periodo 2019-2010 comenzando el año que entra.",
+          "creation_date": "2018-11-30T00:00:00",
+          "close_date": "2018-12-03T00:00:00",
+          "acceptance_percentage": 70,
+          "anonymity": true,
+          "vote_status": "not seen"
+      },
+      {
+          "id": 66,
+          "title": "Only poll for postman",
+          "details": "Only postman user can participate",
+          "creation_date": "2018-11-27T00:00:00",
+          "close_date": "2018-11-30T00:00:00",
+          "acceptance_percentage": 5,
+          "anonymity": true,
+          "vote_status": "voted"
+      },
+      {
+          "id": 75,
+          "title": "Que jose me deje jugar lol",
+          "details": "plz",
+          "creation_date": "2018-11-27T00:00:00",
+          "close_date": "2018-11-30T00:00:00",
+          "acceptance_percentage": 100,
+          "anonymity": true,
+          "vote_status": "voted"
+      },
+      {
+          "id": 71,
+          "title": "Votación prueba",
+          "details": "prueba 1",
+          "creation_date": "2018-11-27T00:00:00",
+          "close_date": "2018-11-30T00:00:00",
+          "acceptance_percentage": 80,
+          "anonymity": true,
+          "vote_status": "voted"
+      },
+      {
+          "id": 72,
+          "title": "Votación prueba 2",
+          "details": "prueba 2",
+          "creation_date": "2018-11-27T00:00:00",
+          "close_date": "2018-11-30T00:00:00",
+          "acceptance_percentage": 50,
+          "anonymity": true,
+          "vote_status": "voted"
+      },
+      {
+          "id": 78,
+          "title": "que jose me deje jugar",
+          "details": "plz",
+          "creation_date": "2018-11-27T00:00:00",
+          "close_date": "2018-11-28T00:00:00",
+          "acceptance_percentage": 50,
+          "anonymity": true,
+          "vote_status": "voted"
+      },
+      {
+          "id": 84,
+          "title": "jugar catan",
+          "details": "SIIIIIIIIIIIIIIIIII",
+          "creation_date": "2018-11-28T00:00:00",
+          "close_date": "2018-11-29T00:00:00",
+          "acceptance_percentage": 50,
+          "anonymity": true,
+          "vote_status": "voted"
+      },
+      {
+          "id": 94,
+          "title": "Lol es mejor que dota",
+          "details": "si o si",
+          "creation_date": "2018-11-29T00:00:00",
+          "close_date": "2018-11-30T00:00:00",
+          "acceptance_percentage": 50,
+          "anonymity": true,
+          "vote_status": "voted"
+      },
+      {
+          "id": 95,
+          "title": "vamos a dormir",
+          "details": "o fierrito se aparecerá",
+          "creation_date": "2018-11-29T00:00:00",
+          "close_date": "2018-11-30T00:00:00",
+          "acceptance_percentage": 50,
+          "anonymity": true,
+          "vote_status": "voted"
+      },
+      {
+          "id": 96,
+          "title": "gemelo da asesorias MUY buenas",
+          "details": "dice fierrito",
+          "creation_date": "2018-11-29T00:00:00",
+          "close_date": "2018-11-30T00:00:00",
+          "acceptance_percentage": 50,
+          "anonymity": true,
+          "vote_status": "voted"
+      },
+      {
+        "id": 97,
+            "title": "Vamos a la playa",
+            "details": "con agua",
+            "creation_date": "2018-11-29T00:00:00",
+            "close_date": "2018-11-30T00:00:00",
+            "acceptance_percentage": 50,
+            "anonymity": true,
+            "vote_status": "voted"
+        },
+        {
+            "id": 99,
+            "title": "compra nutella",
+            "details": "para crepas",
+            "creation_date": "2018-11-30T00:00:00",
+            "close_date": "2018-12-04T00:00:00",
+            "acceptance_percentage": 50,
+            "anonymity": true,
+            "vote_status": "voted"
+        },
+        {
+            "id": 101,
+            "title": "Prueba",
+            "details": "Test",
+            "creation_date": "2018-11-01T00:00:00",
+            "close_date": "2018-12-31T00:00:00",
+            "acceptance_percentage": 26,
+            "anonymity": true,
+            "vote_status": "voted"
+        }
+    ]
+}
+
+const UNIQUECODEDEMO = {
+  unique_code: 'PL45HWIR'
+}
