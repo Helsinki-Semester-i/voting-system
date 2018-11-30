@@ -109,6 +109,15 @@ export default {
       return constants.API_ERROR;
     }
   },
+  async getPolls(){
+    let response = await this.execute('get', 'polls/');
+    try{
+      response.data.id;
+      return response.data;
+    }catch(err){
+      return constants.API_ERROR;
+    }
+  },
   async getPollDemo(id){
     return POLLDEMO;
   },
