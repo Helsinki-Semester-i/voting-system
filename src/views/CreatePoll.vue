@@ -161,6 +161,28 @@
               </v-flex>
             </v-layout>
           </v-container>
+          <!--LECTURA DE CSV -->
+          <v-container>
+            <div class="panel panel-sm">
+              <div class="panel-heading"> 
+                <h4>CSV Import</h4>
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <label for="csv_file" class="control-label col-sm-3 text-right">CSV file to import</label>
+                  <div class="col-sm-9">
+                    <input type="file" id="csv_file" name="csv_file" class="form-control" @change="loadCSV($event)">
+                  </div>
+                </div>
+                <div class="col-sm-offset-3 col-sm-9">
+                  <div class="checkbox-inline">
+                    <label for="header_rows"><input type="checkbox" id="header_rows"> File contains header row?</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </v-container>
+          <!-- FIN LECTURA DE CSV -->
           <v-subheader class="pl-0">Porcentaje de participación</v-subheader>
           <v-slider
           v-model="acceptance_percentage"
@@ -170,7 +192,6 @@
           thumb-label="always"
           ></v-slider>
           <v-btn @click="submit">submit</v-btn>
-          <v-btn @click="clear">clear</v-btn>
         </v-form>
         <v-progress-circular
             v-show="loading"
@@ -269,10 +290,22 @@ export default {
       users: [],
       addingUser: '',
       loading: false,
+      channel_name: '',
+      channel_fields: [],
+      channel_entries: [],
+      parse_header: [],
+      parse_csv: [],
+      sortOrders:{},
+      sortKey: '',
     };
   },
+  filters: {
+    capitalize: function (str) {
+      return str.charAt(0).toUpperCase() + str.slice(1)
+    }
+  },
   async created() {
-    this.users = await this.getUsers();
+    //this.users = await this.getUsers();
   },
 
   computed: {
@@ -411,6 +444,63 @@ export default {
     deleteUser(index) {
       this.$delete(this.users, index);
     },
+    csvJSON(csv){
+      var lines = csv.split("\n")
+      console.log('LINES');
+      console.log(lines)
+      var result = []
+      var headers = lines[0].split(",")
+      this.parse_header = lines[0].split(",") 
+      
+      lines.map(function(line, indexLine){
+        if (indexLine < 1) return // Jump header line
+        
+        var obj = {}
+        var currentline = line.split(",")
+        
+        headers.map(function(header, indexHeader){
+          obj[header] = currentline[indexHeader]
+        })
+        
+        result.push(obj)
+      })
+      
+      result.pop() // remove the last item because undefined values
+      console.log('JSON RESULT');
+      console.log(result);
+      return result // JavaScript object
+    },
+    loadCSV(e) {
+      var vm = this
+      console.log('Loading CSV');
+      if (window.FileReader) {
+        var reader = new FileReader();
+        reader.readAsText(e.target.files[0]);
+        // Handle errors load
+        reader.onload = function(event) {
+          var csv = event.target.result;
+          console.log(csv);
+          const result = vm.csvJSON(csv);
+          this.parse_csv = result;
+          console.log("PARSED CSV");
+          console.log(this.parse_csv);
+
+          console.log('PUTTING ALL MAILS IN VARIABLE');
+          for(var i in result){
+            if(result[i].email !== ''){
+              vm.users.push(result[i].email);
+            }
+          }
+        };
+        reader.onerror = function(evt) {
+          if(evt.target.error.name == "NotReadableError") {
+            alert("Canno't read file !");
+          }
+        };
+      } else {
+        alert('FileReader are not supported in this browser.');
+      }
+    }
   },
 };
 </script>

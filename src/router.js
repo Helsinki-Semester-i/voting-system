@@ -121,10 +121,10 @@ const router = new Router({
     {
       path: '/createPoll',
       component: CreatePollComponent,
-      meta: {
-        requiresAuth: true,
-        adminAuth: true,
-      },
+      //meta: {
+      //  requiresAuth: true,
+      //  adminAuth: true,
+      //},
     },
     {
       path: '/accessDenied',
