@@ -18,7 +18,9 @@ import AddPanelistComponent from './views/ThePanelistRegistrationForm.vue';
 import RemovePanelistComponent from './views/TheDeletePanelistView.vue';
 import CreatePollComponent from './views/CreatePoll.vue';
 import HistoryDashboard from './views/History.vue';
-
+import PollsViewComponentDemo from './demoComponents/PollDemo.vue';
+import PollsDashboardComponentDemo from './demoComponents/PollsDashboardDemo.vue';
+import ResultComponentDemo from './demoComponents/ResultDemo.vue';
 import api from './api';
 
 Vue.use(Router);
@@ -57,6 +59,10 @@ const router = new Router({
       },
     },
     {
+      path: '/pollsDemo',
+      component: PollsDashboardComponentDemo,
+    },
+    {
       path: '/history',
       component: HistoryDashboard,
       meta: {
@@ -73,8 +79,16 @@ const router = new Router({
       },
     },
     {
+      path: '/pollsDemo/:id',
+      component: PollsViewComponentDemo,
+    },
+    {
       path: '/result/:id',
       component: ResultComponent,
+    },
+    {
+      path: '/resultDemo/:id',
+      component: ResultComponentDemo,
     },
     {
       path: '/vote',

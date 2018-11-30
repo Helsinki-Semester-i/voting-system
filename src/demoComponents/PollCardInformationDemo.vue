@@ -19,7 +19,7 @@
       </v-card-title>
       <v-divider light></v-divider>
       <v-card-actions align-end>
-        <router-link v-if="available" :to="`/polls/${poll.id}`">
+        <router-link v-if="available" :to="`/pollsDemo/${poll.id}`">
           <v-btn flat color="orange">
             Participar
           </v-btn>
