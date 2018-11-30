@@ -18,6 +18,7 @@
       :label="'Anular voto'"
       v-model="nullVote"
       :disabled="isResult"
+      @click="selectAnswer(selectedAnswer)
       ></v-checkbox>
     </v-container>
   </v-card>
@@ -59,6 +60,7 @@ export default {
   methods: {
     selectAnswer(value) {
       if (this.nullVote && !this.isResult) {
+        this.selectedAnswer = null;
         this.$emit('changeAnswer', this.index, null);
       }
       this.$emit('changeAnswer', this.index, value);

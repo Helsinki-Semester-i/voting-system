@@ -10,8 +10,6 @@
               :counter="50"
               label="Premisa"
               required
-              @input="$v.question.$touch()"
-              @blur="$v.question.$touch()"
             ></v-text-field>
           </v-flex>
           <v-flex xs2>
