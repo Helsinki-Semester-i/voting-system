@@ -108,10 +108,6 @@ const router = new Router({
       component: ShowCodeComponent,
       props: true,
       name: 'uniqueCode',
-      meta: {
-        requiresAuth: true,
-        panelistAuth: true,
-      },
     },
     {
       path: '/implicit/callback',

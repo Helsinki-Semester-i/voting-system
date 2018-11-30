@@ -111,7 +111,7 @@ export default{
       }
 
       today = `${yyyy}/${mm}/${dd}`;
-      return new Date(today) < new Date(this.poll.close_date);
+      return (new Date(today) < new Date(this.poll.close_date)) && (new Date(today) > new Date(this.poll.creation_date));
     },
   },
 };
